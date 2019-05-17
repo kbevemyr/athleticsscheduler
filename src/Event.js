@@ -2,7 +2,20 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { MinutesToPX, getBoxColor, getEvent } from './misc';
+import { setColor } from './store/actions';
+
+import { MinutesToPX, getEvent } from './misc';
+
+function getBoxColor(paintSchema, newColor, eventClass) {
+  var color = 'lightgray';
+  var paint = paintSchema.find(x => (x.id == eventClass));
+  if(paint == null) {
+    newColor(eventClass);
+  } else {
+    color = paint.color;
+  }
+  return color;
+}
 
 // time unit is minutes
 class Event extends Component {
@@ -12,7 +25,7 @@ class Event extends Component {
       name: "N."+this.props.id,
       starttime: parseInt(getEvent(this.props.comp, this.props.id).starttime, 10),
       duration: parseInt(getEvent(this.props.comp, this.props.id).duration, 10),
-      color: getBoxColor(getEvent(this.props.comp, this.props.id).class),
+      color: getBoxColor(this.props.paintschema, this.props.setNewColor, getEvent(this.props.comp, this.props.id).class),
     };
   }
 
@@ -38,11 +51,12 @@ class Event extends Component {
 
 const mapStateToProps = state => ({
   comp: state.competition,
+  paintschema: state.painting,
 });
 
 const mapDispatchToProps = dispatch => ({
-    getXxx: (cid) => {
-      console.log("implement dispatch(getXxx(cid)");
+    setNewColor: (c) => {
+      dispatch(setColor(c));
   },
 });
 

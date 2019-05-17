@@ -1,6 +1,8 @@
 import {
-  FETCH_USERDATA, FETCH_COMPETITION,
+  FETCH_USERDATA, FETCH_COMPETITION, SET_NEWCOLOR,
 } from './actions';
+
+import { COLORS } from '../misc';
 
 import { comptest } from './MOCKdata';
 
@@ -32,6 +34,12 @@ function rootReducer (state = initialstate, action) {
         isFetching: false,
         userprofile: action.data.username,
       })
+
+      case SET_NEWCOLOR:
+        return Object.assign({}, state, {
+          painting: [...state.painting, {id: action.id, color: COLORS[state.colorCount]}],
+          colorCount: state.colorCount+1, // peka ut nästa lediga färg
+        })
 
       case FETCH_COMPETITION:
         return Object.assign({}, state, {

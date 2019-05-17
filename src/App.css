@@ -16,6 +16,7 @@
 
 :root {
   --event-width: 100px;
+  --time-width: 50px;
   --day-length: 950px;
 }
 
@@ -31,6 +32,12 @@ body {
   height: 40px;
   border: 0px solid #ccc;
   font-size: small;
+}
+
+.timeline-main {
+  width: var(--time-width);
+  border: 0;
+  float: left;
 }
 
 .arena-main {

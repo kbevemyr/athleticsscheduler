@@ -26,6 +26,7 @@ class CompDay extends Component {
         <div className="compday-areanaarea">
           <Timeline key="timeline" id="timeline" height={this.state.arenaheight} />
           {this.state.arenas.map(x =>
+
                 (<Arena key={x} id={x} height={this.state.arenaheight} starttime={this.props.starttime} />)
               )}
         </div>

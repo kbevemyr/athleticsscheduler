@@ -8,23 +8,10 @@ const HOUR_PX = 60*MINUTE_PX;
 const DAY_HR = 9;
 const ARENA_PX = DAY_HR*HOUR_PX;
 
-var COLORS = ['darksalmon', 'darkseagreen', 'hotpink', 'lavender', 'lemonchiffon',
+export const COLORS = ['darksalmon', 'darkseagreen', 'hotpink', 'lavender', 'lemonchiffon',
     'lightblue', 'lightcoral', 'lightcyan', 'lightpink', 'lightgray', 'palegreen',
     'mediumaquamarine', 'mistyrose', 'navojowhite', 'oldlace', 'papayawhip', 'pink',
 'palegoldenrod', 'powderblue'];
-var colorCount = 0;
-var PAINTING = [];
-
-
-export function getBoxColor(klass) {
-    var eventClass = klass;
-    if(PAINTING[eventClass] == null) {
-        PAINTING[eventClass] = COLORS[colorCount];
-        colorCount++;
-    }
-
-    return PAINTING[eventClass];
-}
 
 /*
   Diverse funktioner, borde flyttas till actions?

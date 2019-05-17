@@ -2,18 +2,19 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { MinutesToPX } from './misc';
+import { MinutesToPX, presentTime } from './misc';
 
 import { Box } from 'grommet';
 //import { Grid, Box } from 'grommet'; Testade att ha en arena som en grid
 
 
-function getTimeLineData () {
-    return [0, 5, 20, 40];
-  }
+function getTimeLineData (comp) {
+    //return [0, 5, 20, 40];
+    return comp.events.map(e => e.starttime);
+}
 
 function createLocalStyle (time) {
-  return {height: MinutesToPX("5"),
+  return {height: MinutesToPX("5"), //TODO
                   top: MinutesToPX(time),
                   background: 'yellow',
                 };
@@ -25,7 +26,7 @@ class Timeline extends Component {
     this.state = {
       name: "Tid",
       color: 'yellow',
-      ts: getTimeLineData()
+      ts: getTimeLineData(this.props.comp),
     }
   }
 
@@ -34,7 +35,7 @@ class Timeline extends Component {
     //var ts = getTimeLineData();
 
     return (
-      <div className="arena-main">
+      <div className="timeline-main">
         <div className="arena-header">{this.state.name}</div>
         <div className="arena-eventarea" style={divStyle}>
         {this.state.ts.map(x =>
@@ -43,7 +44,7 @@ class Timeline extends Component {
               style={createLocalStyle(x)}
               className="event-main"
             >
-              kl
+              {presentTime(x)}
             </Box>
            ))
         }
