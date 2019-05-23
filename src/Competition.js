@@ -3,7 +3,9 @@ import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
 import './App.css';
+import Settings from './Settings';
 import CompDay from './CompDay';
+import TableView from './TableView';
 
 import { Tabs, Tab, Box, Text } from 'grommet';
 
@@ -17,10 +19,12 @@ class Competition extends Component {
 
   render() {
     return (
-      <div>
+      <Box key="competitionschema">
         <Box>
-          <Text>Competition: {this.props.name}</Text>
+          <Text>Competition: {this.props.name} ({this.props.compID})</Text>
+          Schema Version: {this.props.version}
         </Box>
+
         <Tabs justify="start">
           {this.props.days.map(x =>
             (
@@ -30,7 +34,9 @@ class Competition extends Component {
           )
           )}
         </Tabs>
-      </div>
+        <TableView></TableView>
+                <Settings />
+      </Box>
     );
   }
 }

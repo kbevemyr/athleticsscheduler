@@ -68,7 +68,7 @@ export function getArenaSize() {
 
 export function presentTime(timeunits) {
     var hh = Math.floor(timeunits/60);
-    console.log("hours: "+hh+ " units: "+timeunits);
+    //console.log("hours: "+hh+ " units: "+timeunits);
     var mm = timeunits - hh*60;
     if (hh < 10) {hh = "0"+hh;}
     if (mm < 10) {mm = "0"+mm;}

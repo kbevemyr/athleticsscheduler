@@ -18,15 +18,16 @@ class CompDay extends Component {
   }
 
   render() {
+    let key = new Date().valueOf();
+
     return (
       <Box className="compday-main">
         <Box className="compday-header">
-          {this.state.name}
+          {this.props.name}
         </Box>
         <div className="compday-areanaarea">
-          <Timeline key="timeline" id="timeline" height={this.state.arenaheight} />
+          <Timeline key={key} id={key} height={this.state.arenaheight} day={this.props.id}/>
           {this.state.arenas.map(x =>
-
                 (<Arena key={x} id={x} height={this.state.arenaheight} starttime={this.props.starttime} />)
               )}
         </div>
@@ -38,7 +39,6 @@ class CompDay extends Component {
 // Store handling
 
 const mapStateToProps = state => ({
-  name: "lördagen",
   comp: state.competition,
 });
 

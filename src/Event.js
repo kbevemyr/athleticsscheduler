@@ -8,7 +8,7 @@ import { MinutesToPX, getEvent } from './misc';
 
 function getBoxColor(paintSchema, newColor, eventClass) {
   var color = 'lightgray';
-  var paint = paintSchema.find(x => (x.id == eventClass));
+  var paint = paintSchema.find(x => (x.id === eventClass));
   if(paint == null) {
     newColor(eventClass);
   } else {
@@ -26,6 +26,7 @@ class Event extends Component {
       starttime: parseInt(getEvent(this.props.comp, this.props.id).starttime, 10),
       duration: parseInt(getEvent(this.props.comp, this.props.id).duration, 10),
       color: getBoxColor(this.props.paintschema, this.props.setNewColor, getEvent(this.props.comp, this.props.id).class),
+      marked: false,
     };
   }
 
@@ -34,13 +35,19 @@ class Event extends Component {
                     top: MinutesToPX(this.state.starttime),
                     background: this.state.color,
                   };
+    var lineStyle = {stroke:"rgb(255,0,0)"};
 
     return (
       <div id={this.props.id}
         style={divStyle}
         className="event-main"
-        onClick={() => this.setState({name: 'X'})}
+        onClick={() => this.setState({marked: !this.state.marked})}
       >
+      {this.state.marked &&
+      <svg height={210} width={500}>
+        <line x1={0} y1={0} x2={200} y2={0} style={lineStyle} />
+      </svg>
+      }
         {this.state.starttime}
       </div>
     );
