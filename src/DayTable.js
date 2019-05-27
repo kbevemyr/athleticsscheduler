@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { DataTable, Clock, Text, Box } from 'grommet';
 
-import { MinutesToPX, presentTime, getEvent } from './misc';
+import { MinutesToPX, presentTime } from './misc';
 
 class DayTable extends Component {
   constructor(props) {
@@ -17,46 +17,55 @@ class DayTable extends Component {
   render() {
     // days
     return (
-      <Box direction='column' >
-    <DataTable
-      alignSelf="start"
-      columns={[
-        {
-          property: 'id',
-          header: <Text>Id</Text>,
-          primary: true,
-        },
-        {
-          property: 'name',
-          header: <Text>Name</Text>,
-        },
-        {
-          property: 'starttime',
-          header: <Text>Start Time</Text>,
-        },
-      ]}
-      data={this.props.comp.days}
-    />
-    </Box>
-  )
+      <Box background='light-1' >
+        <DataTable
+          alignSelf="start"
+          size='small'
+          columns={[
+            {
+              property: 'id',
+              header: <Text>Id</Text>,
+              primary: true,
+            },
+            {
+              property: 'name',
+              header: <Text>Name</Text>,
+            },
+            {
+              property: 'starttime',
+              header: <Text>Start Time</Text>,
+              render: x => (
+                <Box>
+                  <Clock type="digital"
+                       precision="minutes"
+                       time={"T"+presentTime(x.starttime)+":00"}
+                  />
+                </Box>
+              ),
+            },
+            {
+              property: 'endtime',
+              header: <Text>End Time</Text>,
+              render: x => (
+                <Box>
+                  <Clock type="digital"
+                       precision="minutes"
+                       time={"T"+presentTime(x.endtime)+":00"}
+                  />
+                </Box>
+              ),
+            },
+          ]}
+          data={this.props.days}
+          />
+      </Box>
+    )
   }
 }
-/*
-render: x => (
-  <Box>
-  <Clock type="digital"
-         precision="minutes"
-         time={"T"+presentTime(x.starttime)+":00"}
-  />
-  </Box>
-),
-
-*/
 
   // Store handling
 
   const mapStateToProps = state => ({
-    comp: state.competition,
     days: state.competition.days,
   });
 

@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { getArenaSize, getEventsID, getArena } from './misc';
+import { getEventsID, getArena } from './misc';
 
 import Event from './Event';
 //import { Grid, Box } from 'grommet'; Testade att ha en arena som en grid
@@ -12,8 +12,8 @@ class Arena extends Component {
     super(props);
     this.state = {
       name: getArena(this.props.comp, this.props.id).name,
-      es: getEventsID(this.props.comp, this.props.id),
-      height: getArenaSize(),
+      es: getEventsID(this.props.comp, this.props.id, this.props.day),
+      background: 'navojowhite',
     }
   }
 
@@ -21,7 +21,7 @@ class Arena extends Component {
     //console.log("EVENTDATA "+this.eventstest[0].duration);
     //var divStyle = {height: getArenaSize()};
     //var es = getEventsID(comptest, this.props.id);
-    var divStyle = {height: this.state.height};
+    var divStyle = {height: this.props.height, background: this.state.background};
 
     return (
       <div className="arena-main">

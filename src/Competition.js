@@ -12,6 +12,7 @@ import { Tabs, Tab, Box, Text } from 'grommet';
 class Competition extends Component {
   constructor(props) {
     super(props);
+    this.props.getTheCompetitionData('local');
     this.state = {
       state: "dev",
     }
@@ -19,9 +20,9 @@ class Competition extends Component {
 
   render() {
     return (
-      <Box key="competitionschema">
+      <Box key="competitionschema" pad="small">
         <Box>
-          <Text>Competition: {this.props.name} ({this.props.compID})</Text>
+          <Text>{this.props.name} ({this.props.compID})</Text>
           Schema Version: {this.props.version}
         </Box>
 
@@ -29,13 +30,18 @@ class Competition extends Component {
           {this.props.days.map(x =>
             (
               <Tab key={"T."+x.id} title={x.name}>
-                  <CompDay key={x.id} id={x.id} name={x.name} starttime={x.starttime} />
+                <CompDay
+                  key={x.id}
+                  id={x.id}
+                  name={x.name}
+                  starttime={x.starttime}
+                  endtime={x.endtime} />
               </Tab>
-          )
+            )
           )}
         </Tabs>
-        <TableView></TableView>
-                <Settings />
+        <TableView>
+        </TableView>
       </Box>
     );
   }
@@ -51,9 +57,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    getTheFilter: (cid) => {
-      console.log("implement dispatch(getCompetitionData(cid)");
-  },
+    getTheCompetitionData: (cid) => {
+      //dispatch(getCompetitionData(cid));
+    },
 });
 
 const CompetitionContainer = connect(
@@ -62,5 +68,3 @@ const CompetitionContainer = connect(
 )(Competition);
 
 export default withRouter(CompetitionContainer);
-
-//export default Competition;

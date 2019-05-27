@@ -5,8 +5,9 @@
 
 const MINUTE_PX = 4;
 const HOUR_PX = 60*MINUTE_PX;
-const DAY_HR = 9;
-const ARENA_PX = DAY_HR*HOUR_PX;
+//const DAY_HR = 9;
+//const DAY_MIN = DAY_HR*60;
+//const ARENA_PX = DAY_HR*HOUR_PX;
 
 export const COLORS = ['darksalmon', 'darkseagreen', 'hotpink', 'lavender', 'lemonchiffon',
     'lightblue', 'lightcoral', 'lightcyan', 'lightpink', 'lightgray', 'palegreen',
@@ -16,23 +17,41 @@ export const COLORS = ['darksalmon', 'darkseagreen', 'hotpink', 'lavender', 'lem
 /*
   Diverse funktioner, borde flyttas till actions?
 */
+/*
+const debug = true;
+function debugOutput(cl) {
+  cl;
+}
+*/
 
 export function getDayStarttime(comp, day) {
-  //return "08:00";
-  //return SERVERdaysTest.filter(x => x.id === day).starttime;
-  return comp.days.filter(x => x.id === day).starttime;
+  return comp.days.find(x => x.id === day).starttime;
 }
 
-export function getArenas(comp, day) {
+export function getDayEndtime(comp, day) {
+  return comp.days.find(x => x.id === day).endtime;;
+}
+
+function getArenas_old(comp, day) {
   return comp.dxa.find(x => x.day === day).arenas;
 }
 
-export function getArena(comp, aid) {
-  return comp.arenas.find(x => x.id === aid);
+export function getArenas (comp, day) {
+  let es = comp.events.filter(e => e.day === day);
+  let ess = Array.from(new Set(es.map(e => e.arena)));
+  //console.log("getArenas. arenas ="+JSON.stringify(ess));
+  return ess;
 }
 
-export function getEventsID(comp, day) {
-  return comp.axe.find(x => x.arena === day).events;
+export function getArena(comp, aid) {
+  //console.log("getArena. "+aid);
+  let arena = comp.arenas.find(x => x.id === aid);
+  //console.log("getArena. arena = "+JSON.stringify(arena));
+  return arena;
+}
+
+export function getEventsID(comp, arena, day) {
+  return comp.events.filter(x => (x.arena === arena && x.day === day)).map(x => x.id);
 }
 
 export function getEvent(comp, eid) {
@@ -54,16 +73,12 @@ export function PXToMinutes(px) {
 
 export function timeStrToMinutes(time) {
     var x = time.split(':');
-    console.log("timeStrToPX: "+ x[0]+ "-"+x[1]);
+    //console.log("timeStrToPX: "+ x[0]+ "-"+x[1]);
     return (x[0]*60+x[1]*1);
 }
 
 export function timeStrToPX(time) {
   return MinutesToPX(timeStrToMinutes(time));
-}
-
-export function getArenaSize() {
-  return ARENA_PX;
 }
 
 export function presentTime(timeunits) {
@@ -74,4 +89,8 @@ export function presentTime(timeunits) {
     if (mm < 10) {mm = "0"+mm;}
 
     return (hh+":"+mm);
+}
+
+export function getBoxSize(start, end) {
+  return (end-start)*MINUTE_PX;
 }

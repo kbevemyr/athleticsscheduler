@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { getArenas, getArenaSize } from './misc';
+import { getArenas, getBoxSize } from './misc';
 
 import Arena from './Arena';
 import Timeline from './Timeline';
@@ -13,7 +13,7 @@ class CompDay extends Component {
     super(props);
     this.state = {
       arenas: getArenas(this.props.comp, this.props.id),
-      arenaheight: getArenaSize(),
+      arenaheight: getBoxSize(this.props.starttime, this.props.endtime),
     }
   }
 
@@ -28,7 +28,7 @@ class CompDay extends Component {
         <div className="compday-areanaarea">
           <Timeline key={key} id={key} height={this.state.arenaheight} day={this.props.id}/>
           {this.state.arenas.map(x =>
-                (<Arena key={x} id={x} height={this.state.arenaheight} starttime={this.props.starttime} />)
+                (<Arena key={x} id={x} day={this.props.id} height={this.state.arenaheight} />)
               )}
         </div>
       </Box>
@@ -54,5 +54,3 @@ const CompDayContainer = connect(
 )(CompDay);
 
 export default withRouter(CompDayContainer);
-
-//export default CompDay;

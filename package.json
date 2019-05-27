@@ -5,6 +5,8 @@
   "dependencies": {
     "grommet": "^2.6.6",
     "grommet-icons": "^4.2.0",
+    "grommet-styles": "^0.2.0",
+    "npm": "^6.9.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.3",

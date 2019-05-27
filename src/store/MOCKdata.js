@@ -4,12 +4,12 @@
 */
 
 var SERVERdaysTest = [
-    {"id": "801", "name": "lördag","starttime": 510},
+    {"id": "801", "name": "lördag","starttime": 510, "endtime": 1020},
   ];
 
 const comp2018daysTest = [
-    {"id": "lördag", "name": "lördag","starttime": 510},
-    {"id": "söndag", "name": "söndag","starttime": 510},
+    {"id": "lördag", "name": "lördag","starttime": 540, "endtime": 940},
+    {"id": "söndag", "name": "söndag","starttime": 540, "endtime": 960},
 ];
 
 var SERVERarenasTest = [
@@ -24,79 +24,80 @@ var SERVERarenasTest = [
 const comp2018arenasTest = [
     {"id": "l", "name": "Löpning", "grentyp": "löpning"},
     {"id": "k", "name": "Kula", "grentyp": "kula"},
+    {"id": "v", "name": "Vikt", "grentyp": "vikt"},
     {"id": "h", "name": "Höjd", "grentyp": "höjd"},
     {"id": "ld", "name": "Längd", "grentyp": "längd"},
     {"id": "s", "name": "Stav", "grentyp": "stav"},
 ];
 
 var SERVEReventsTest = [
-     {"id": "13", "day": "801","arena": "911", "starttime": 0, "duration": 25, "class": "P06", "gren": "60m"},
-     {"id": "25", "day": "801","arena": "911", "starttime": 25, "duration": 25, "class": "F04", "gren": "60m"},
-     {"id": "5", "day": "801","arena": "911", "starttime": 50, "duration": 15, "class": "P04", "gren": "60m"},
-     {"id": "21", "day": "801","arena": "911", "starttime": 65, "duration": 15, "class": "F03", "gren": "60m"},
-    {"id": "1", "day": "801","arena": "911", "starttime": 80, "duration": 10, "class": "P03", "gren": "60m"},
-    {"id": "33", "day": "801","arena": "911", "starttime": 90, "duration": 20, "class": "F06", "gren": "60m"},
-    {"id": "100", "day": "801","arena": "911", "starttime": 110, "duration": 5, "class": "P06", "gren": "60m F"},
-    {"id": "101", "day": "801","arena": "911", "starttime": 115, "duration": 5, "class": "P04", "gren": "60m F"},
-    {"id": "102", "day": "801","arena": "911", "starttime": 120, "duration": 5, "class": "F03", "gren": "60m F"},
-    {"id": "103", "day": "801","arena": "911", "starttime": 125, "duration": 5, "class": "P03", "gren": "60m F"},
-     {"id": "36", "day": "801","arena": "911", "starttime": 130, "duration": 30, "class": "F03", "gren": "60m"},
-     {"id": "104", "day": "801","arena": "911", "starttime": 160, "duration": 5, "class": "F04", "gren": "60m F"},
-     {"id": "16", "day": "801","arena": "911", "starttime": 165, "duration": 30, "class": "P07 ", "gren": "60m"},
-     {"id": "105", "day": "801","arena": "911", "starttime": 195, "duration": 5, "class": "F06", "gren": "60m"},
-     {"id": "29", "day": "801","arena": "911", "starttime": 200, "duration": 30, "class": "F05", "gren": "60m"},
-     {"id": "9", "day": "801","arena": "911", "starttime": 230, "duration": 20, "class": "P05", "gren": "60m"},
-    {"id": "106", "day": "801","arena": "911", "starttime": 250, "duration": 5, "class": "F07", "gren": "60m F"},
-    {"id": "107", "day": "801","arena": "911", "starttime": 255, "duration": 5, "class": "P07", "gren": "60m F"},
-    {"id": "39", "day": "801","arena": "911", "starttime": 260, "duration": 20, "class": "F08", "gren": "60m"},
-    {"id": "19", "day": "801","arena": "911", "starttime": 280, "duration": 20, "class": "P08", "gren": "60m"},
-    {"id": "108", "day": "801","arena": "911", "starttime": 300, "duration": 5, "class": "F05", "gren": "60m F"},
-    {"id": "14", "day": "801","arena": "911", "starttime": 305, "duration": 25, "class": "P06", "gren": "600m"},
-    {"id": "34", "day": "801","arena": "911", "starttime": 330, "duration": 20, "class": "F06", "gren": "600m"},
-    {"id": "6", "day": "801","arena": "911", "starttime": 350, "duration": 10, "class": "P04", "gren": "600m"},
-    {"id": "109", "day": "801","arena": "911", "starttime": 360, "duration": 5, "class": "P05", "gren": "60m F"},
-    {"id": "110", "day": "801","arena": "911", "starttime": 365, "duration": 5, "class": "F08", "gren": "60m F"},
-    {"id": "111", "day": "801","arena": "911", "starttime": 370, "duration": 5, "class": "P08", "gren": "60m F"},
-    {"id": "26", "day": "801","arena": "911", "starttime": 375, "duration": 20, "class": "F04", "gren": "600m"},
-    {"id": "10", "day": "801","arena": "911", "starttime": 395, "duration": 20, "class": "P05", "gren": "600m"},
-    {"id": "30", "day": "801","arena": "911", "starttime": 415, "duration": 25, "class": "F05", "gren": "600m"},
-    {"id": "37", "day": "801","arena": "911", "starttime": 440, "duration": 20, "class": "F07", "gren": "400m"},
-    {"id": "17", "day": "801","arena": "911", "starttime": 460, "duration": 30, "class": "P07", "gren": "400m"},
-    {"id": "22", "day": "801","arena": "911", "starttime": 490, "duration": 10, "class": "F03", "gren": "600m"},
-    {"id": "2", "day": "801","arena": "911", "starttime": 500, "duration": 5, "class": "P03", "gren": "600m"},
+     {"id": "13", "day": "801","arena": "911", "starttime": 510, "duration": 25, "class": "P06", "gren": "60m"},
+     {"id": "25", "day": "801","arena": "911", "starttime": 535, "duration": 25, "class": "F04", "gren": "60m"},
+     {"id": "5", "day": "801","arena": "911", "starttime": 560, "duration": 15, "class": "P04", "gren": "60m"},
+     {"id": "21", "day": "801","arena": "911", "starttime": 575, "duration": 15, "class": "F03", "gren": "60m"},
+    {"id": "1", "day": "801","arena": "911", "starttime": 590, "duration": 10, "class": "P03", "gren": "60m"},
+    {"id": "33", "day": "801","arena": "911", "starttime": 600, "duration": 20, "class": "F06", "gren": "60m"},
+    {"id": "100", "day": "801","arena": "911", "starttime": 620, "duration": 5, "class": "P06", "gren": "60m F"},
+    {"id": "101", "day": "801","arena": "911", "starttime": 625, "duration": 5, "class": "P04", "gren": "60m F"},
+    {"id": "102", "day": "801","arena": "911", "starttime": 630, "duration": 5, "class": "F03", "gren": "60m F"},
+    {"id": "103", "day": "801","arena": "911", "starttime": 635, "duration": 5, "class": "P03", "gren": "60m F"},
+     {"id": "36", "day": "801","arena": "911", "starttime": 640, "duration": 30, "class": "F03", "gren": "60m"},
+     {"id": "104", "day": "801","arena": "911", "starttime": 670, "duration": 5, "class": "F04", "gren": "60m F"},
+     {"id": "16", "day": "801","arena": "911", "starttime": 675, "duration": 30, "class": "P07 ", "gren": "60m"},
+     {"id": "105", "day": "801","arena": "911", "starttime": 705, "duration": 5, "class": "F06", "gren": "60m"},
+     {"id": "29", "day": "801","arena": "911", "starttime": 710, "duration": 30, "class": "F05", "gren": "60m"},
+     {"id": "9", "day": "801","arena": "911", "starttime": 740, "duration": 20, "class": "P05", "gren": "60m"},
+    {"id": "106", "day": "801","arena": "911", "starttime": 760, "duration": 5, "class": "F07", "gren": "60m F"},
+    {"id": "107", "day": "801","arena": "911", "starttime": 765, "duration": 5, "class": "P07", "gren": "60m F"},
+    {"id": "39", "day": "801","arena": "911", "starttime": 770, "duration": 20, "class": "F08", "gren": "60m"},
+    {"id": "19", "day": "801","arena": "911", "starttime": 790, "duration": 20, "class": "P08", "gren": "60m"},
+    {"id": "108", "day": "801","arena": "911", "starttime": 810, "duration": 5, "class": "F05", "gren": "60m F"},
+    {"id": "14", "day": "801","arena": "911", "starttime": 815, "duration": 25, "class": "P06", "gren": "600m"},
+    {"id": "34", "day": "801","arena": "911", "starttime": 840, "duration": 20, "class": "F06", "gren": "600m"},
+    {"id": "6", "day": "801","arena": "911", "starttime": 860, "duration": 10, "class": "P04", "gren": "600m"},
+    {"id": "109", "day": "801","arena": "911", "starttime": 870, "duration": 5, "class": "P05", "gren": "60m F"},
+    {"id": "110", "day": "801","arena": "911", "starttime": 875, "duration": 5, "class": "F08", "gren": "60m F"},
+    {"id": "111", "day": "801","arena": "911", "starttime": 880, "duration": 5, "class": "P08", "gren": "60m F"},
+    {"id": "26", "day": "801","arena": "911", "starttime": 885, "duration": 20, "class": "F04", "gren": "600m"},
+    {"id": "10", "day": "801","arena": "911", "starttime": 905, "duration": 20, "class": "P05", "gren": "600m"},
+    {"id": "30", "day": "801","arena": "911", "starttime": 925, "duration": 25, "class": "F05", "gren": "600m"},
+    {"id": "37", "day": "801","arena": "911", "starttime": 950, "duration": 20, "class": "F07", "gren": "400m"},
+    {"id": "17", "day": "801","arena": "911", "starttime": 970, "duration": 30, "class": "P07", "gren": "400m"},
+    {"id": "22", "day": "801","arena": "911", "starttime": 1000, "duration": 10, "class": "F03", "gren": "600m"},
+    {"id": "2", "day": "801","arena": "911", "starttime": 1010, "duration": 5, "class": "P03", "gren": "600m"},
 
-    {"id": "5633", "day": "801","arena": "912", "starttime": 40, "duration": 50, "class": "P06", "gren": "Längd"},
-    {"id": "5433", "day": "801","arena": "912", "starttime": 90, "duration": 50, "class": "F04", "gren": "Längd"},
-    {"id": "3233", "day": "801","arena": "912", "starttime": 140, "duration": 30, "class": "P04", "gren": "Längd"},
-    {"id": "6433", "day": "801","arena": "912", "starttime": 170, "duration": 60, "class": "F07", "gren": "Längd"},
-    {"id": "4533", "day": "801","arena": "912", "starttime": 250, "duration": 40, "class": "F06", "gren": "Längd"},
-    {"id": "7133", "day": "801","arena": "912", "starttime": 320, "duration": 65, "class": "P07", "gren": "Längd"},
-    {"id": "4433", "day": "801","arena": "912", "starttime": 400, "duration": 40, "class": "F08", "gren": "Längd"},
-    {"id": "5033", "day": "801","arena": "912", "starttime": 440, "duration": 45, "class": "P08", "gren": "Längd"},
+    {"id": "5633", "day": "801","arena": "912", "starttime": 550, "duration": 50, "class": "P06", "gren": "Längd"},
+    {"id": "5433", "day": "801","arena": "912", "starttime": 600, "duration": 50, "class": "F04", "gren": "Längd"},
+    {"id": "3233", "day": "801","arena": "912", "starttime": 650, "duration": 30, "class": "P04", "gren": "Längd"},
+    {"id": "6433", "day": "801","arena": "912", "starttime": 680, "duration": 60, "class": "F07", "gren": "Längd"},
+    {"id": "4533", "day": "801","arena": "912", "starttime": 760, "duration": 40, "class": "F06", "gren": "Längd"},
+    {"id": "7133", "day": "801","arena": "912", "starttime": 830, "duration": 65, "class": "P07", "gren": "Längd"},
+    {"id": "4433", "day": "801","arena": "912", "starttime": 910, "duration": 40, "class": "F08", "gren": "Längd"},
+    {"id": "5033", "day": "801","arena": "912", "starttime": 950, "duration": 45, "class": "P08", "gren": "Längd"},
 
-    {"id": "5644", "day": "801","arena": "913", "starttime": 40, "duration": 50, "class": "P06", "gren": "Längd"},
-    {"id": "5444", "day": "801","arena": "913", "starttime": 90, "duration": 50, "class": "F04", "gren": "Längd"},
-    {"id": "3244", "day": "801","arena": "913", "starttime": 140, "duration": 30, "class": "P04", "gren": "Längd"},
-    {"id": "6444", "day": "801","arena": "913", "starttime": 170, "duration": 60, "class": "F07", "gren": "Längd"},
-    {"id": "4544", "day": "801","arena": "913", "starttime": 250, "duration": 40, "class": "F06", "gren": "Längd"},
-    {"id": "7144", "day": "801","arena": "913", "starttime": 320, "duration": 65, "class": "P07", "gren": "Längd"},
-    {"id": "4444", "day": "801","arena": "913", "starttime": 400, "duration": 40, "class": "F08", "gren": "Längd"},
-    {"id": "5044", "day": "801","arena": "913", "starttime": 440, "duration": 45, "class": "P08", "gren": "Längd"},
+    {"id": "5644", "day": "801","arena": "913", "starttime": 550, "duration": 50, "class": "P06", "gren": "Längd"},
+    {"id": "5444", "day": "801","arena": "913", "starttime": 600, "duration": 50, "class": "F04", "gren": "Längd"},
+    {"id": "3244", "day": "801","arena": "913", "starttime": 650, "duration": 30, "class": "P04", "gren": "Längd"},
+    {"id": "6444", "day": "801","arena": "913", "starttime": 680, "duration": 60, "class": "F07", "gren": "Längd"},
+    {"id": "4544", "day": "801","arena": "913", "starttime": 760, "duration": 40, "class": "F06", "gren": "Längd"},
+    {"id": "7144", "day": "801","arena": "913", "starttime": 830, "duration": 65, "class": "P07", "gren": "Längd"},
+    {"id": "4444", "day": "801","arena": "913", "starttime": 910, "duration": 40, "class": "F08", "gren": "Längd"},
+    {"id": "5044", "day": "801","arena": "913", "starttime": 950, "duration": 45, "class": "P08", "gren": "Längd"},
 
-    {"id": "31a", "day": "801","arena": "914", "starttime": 30, "duration": 105, "class": "F05", "gren": "Höjd"},
-    {"id": "11a", "day": "801","arena": "914", "starttime": 140, "duration": 80, "class": "P05", "gren": "Höjd"},
-    {"id": "3", "day": "801","arena": "914", "starttime": 330, "duration": 50, "class": "P03", "gren": "Höjd"},
+    {"id": "31a", "day": "801","arena": "914", "starttime": 540, "duration": 105, "class": "F05", "gren": "Höjd"},
+    {"id": "11a", "day": "801","arena": "914", "starttime": 650, "duration": 80, "class": "P05", "gren": "Höjd"},
+    {"id": "3", "day": "801","arena": "914", "starttime": 740, "duration": 50, "class": "P03", "gren": "Höjd"},
 
-    {"id": "31b", "day": "801","arena": "915", "starttime": 30, "duration": 105, "class": "F05", "gren": "Höjd"},
-    {"id": "11b", "day": "801","arena": "915", "starttime": 140, "duration": 80, "class": "P05", "gren": "Höjd"},
-    {"id": "23", "day": "801","arena": "915", "starttime": 230, "duration": 100, "class": "F03", "gren": "Höjd"},
+    {"id": "31b", "day": "801","arena": "915", "starttime": 540, "duration": 105, "class": "F05", "gren": "Höjd"},
+    {"id": "11b", "day": "801","arena": "915", "starttime": 650, "duration": 80, "class": "P05", "gren": "Höjd"},
+    {"id": "23", "day": "801","arena": "915", "starttime": 740, "duration": 100, "class": "F03", "gren": "Höjd"},
 
-    {"id": "8", "day": "801","arena": "916", "starttime": 75, "duration": 105, "class": "P04", "gren": "Kula"},
-    {"id": "24", "day": "801","arena": "916", "starttime": 135, "duration": 80, "class": "F03", "gren": "Kula"},
-    {"id": "28", "day": "801","arena": "916", "starttime": 185, "duration": 50, "class": "F04", "gren": "Kula"},
-    {"id": "4", "day": "801","arena": "916", "starttime": 235, "duration": 25, "class": "P03", "gren": "Kula"},
-    {"id": "12", "day": "801","arena": "916", "starttime": 265, "duration": 50, "class": "P05", "gren": "Kula"},
-    {"id": "32", "day": "801","arena": "916", "starttime": 315, "duration": 80, "class": "F05", "gren": "Kula"},
+    {"id": "8", "day": "801","arena": "916", "starttime": 585, "duration": 105, "class": "P04", "gren": "Kula"},
+    {"id": "24", "day": "801","arena": "916", "starttime": 645, "duration": 80, "class": "F03", "gren": "Kula"},
+    {"id": "28", "day": "801","arena": "916", "starttime": 695, "duration": 50, "class": "F04", "gren": "Kula"},
+    {"id": "4", "day": "801","arena": "916", "starttime": 745, "duration": 25, "class": "P03", "gren": "Kula"},
+    {"id": "12", "day": "801","arena": "916", "starttime": 775, "duration": 50, "class": "P05", "gren": "Kula"},
+    {"id": "32", "day": "801","arena": "916", "starttime": 845, "duration": 80, "class": "F05", "gren": "Kula"},
 ];
 
 const comp2018eventsTest = [
@@ -185,7 +186,7 @@ const comp2018eventsTest = [
 ];
 
 var SERVERdxaTest = [
-    {"day": "801", "arenas": ["911", "912", "913", "914", "915", "916", "917"]},
+    {"day": "801", "arenas": ["911", "912", "913", "914", "915", "916"]},
   ];
 
 const comp2018dxaTest = [
@@ -200,7 +201,6 @@ var SERVERaxeTest = [
     {"arena": "914", "events": ["31a","11a","3"]},
     {"arena": "915", "events": ["31b","11b","23"]},
     {"arena": "916", "events": ["8","24","28","4","12","32"]},
-    {"arena": "917", "events": []},
   ];
 
 const comp2018axeTest = [
@@ -243,3 +243,4 @@ const comp2018 = {
 
 //export const comptest = SERVERcontestTest2017;
 export const comptest = comp2018;
+export const localComps = [SERVERcontestTest2017, comp2018];

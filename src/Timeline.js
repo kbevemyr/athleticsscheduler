@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { MinutesToPX, getArenaSize, presentTime } from './misc';
+import { MinutesToPX, presentTime, getDayStarttime } from './misc';
 
 import { Box } from 'grommet';
 //import { Grid, Box } from 'grommet'; Testade att ha en arena som en grid
@@ -13,10 +13,10 @@ function getTimeLineData (comp, day) {
   return Array.from(new Set(es.map(e => e.starttime)));
 }
 
-function createLocalStyle (time) {
+function createLocalStyle (time, color) {
   return {height: MinutesToPX("5"), //TODO
-          top: MinutesToPX(time)-getArenaSize,
-          background: 'yellow',
+          top: MinutesToPX(time),
+          background: color,
          };
 }
 
@@ -25,7 +25,7 @@ class Timeline extends Component {
     super(props);
     this.state = {
       name: "Tid",
-      color: 'yellow',
+      color: 'lightgray',
       ts: getTimeLineData(this.props.comp, this.props.day),
     }
   }
@@ -34,6 +34,7 @@ class Timeline extends Component {
     var divStyle = {height: this.props.height};
     //console.log(this.props.day+" times items: "+this.state.ts.length);
     let key = new Date().valueOf();
+    let daystart = getDayStarttime(this.props.comp, this.props.day);
 
     return (
       <div className="timeline-main">
@@ -42,8 +43,9 @@ class Timeline extends Component {
         {this.state.ts.map(x =>
            (
             <Box key={key+x} id={key+x}
-              style={createLocalStyle(x)}
+              style={createLocalStyle(x-daystart, this.state.color)}
               className="event-main"
+              justify='start'
             >
               {presentTime(x)}
             </Box>

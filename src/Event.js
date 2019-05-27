@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { setColor } from './store/actions';
 
-import { MinutesToPX, getEvent } from './misc';
+import { MinutesToPX, getEvent, getArenaSize, getDayStarttime } from './misc';
 
 function getBoxColor(paintSchema, newColor, eventClass) {
   var color = 'lightgray';
@@ -22,20 +22,20 @@ class Event extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "N."+this.props.id,
+      event: getEvent(this.props.comp, this.props.id),
       starttime: parseInt(getEvent(this.props.comp, this.props.id).starttime, 10),
       duration: parseInt(getEvent(this.props.comp, this.props.id).duration, 10),
-      color: getBoxColor(this.props.paintschema, this.props.setNewColor, getEvent(this.props.comp, this.props.id).class),
       marked: false,
     };
   }
 
   render() {
-    var divStyle = {height: MinutesToPX(this.state.duration),
-                    top: MinutesToPX(this.state.starttime),
-                    background: this.state.color,
+    let color = getBoxColor(this.props.paintschema, this.props.setNewColor, getEvent(this.props.comp, this.props.id).class);
+    let divStyle = {height: MinutesToPX(this.state.duration),
+                    top: MinutesToPX(this.state.starttime-parseInt(getDayStarttime(this.props.comp, this.state.event.day), 10)),
+                    background: color,
                   };
-    var lineStyle = {stroke:"rgb(255,0,0)"};
+    let lineStyle = {stroke:"rgb(255,0,0)"};
 
     return (
       <div id={this.props.id}
@@ -48,7 +48,7 @@ class Event extends Component {
         <line x1={0} y1={0} x2={200} y2={0} style={lineStyle} />
       </svg>
       }
-        {this.state.starttime}
+        {this.state.event.class+" "+this.state.event.gren}
       </div>
     );
   }

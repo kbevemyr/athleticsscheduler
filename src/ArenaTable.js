@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { setColor } from './store/actions';
 import { DataTable, Text, Box } from 'grommet';
 
 import { MinutesToPX } from './misc';
@@ -18,9 +17,10 @@ class ArenaTable extends Component {
   render() {
     // arenas
     return (
-      <Box direction='column'>
+      <Box background='light-1' >
           <DataTable
             alignContent='start'
+            size='small'
             columns={[
               {
                 property: 'id',

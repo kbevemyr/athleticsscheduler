@@ -6,7 +6,8 @@ import { setColor } from './store/actions';
 import DayTable from './DayTable';
 import ArenaTable from './ArenaTable';
 import EventTable from './EventTable';
-import { Text, Box } from 'grommet';
+import EventForm from './EventForm';
+import { Accordion, AccordionPanel, Text, Box } from 'grommet';
 
 import { MinutesToPX, getEvent } from './misc';
 
@@ -21,13 +22,21 @@ class TableView extends Component {
   render() {
     // competition
     return (
-      <Box direction='column' >
+      <Box direction='column' pad='medium'>
         <Text>{this.state.name}</Text>
-        <Box direction='row' align='start'>
-        <DayTable />
-        <ArenaTable />
-        <EventTable />
-        </Box>
+        <Accordion>
+          <AccordionPanel label="Days">
+            <DayTable />
+          </AccordionPanel>
+          <AccordionPanel label="Arenas">
+            <ArenaTable />
+          </AccordionPanel>
+          <AccordionPanel label="Events">
+            <EventTable />
+          </AccordionPanel>
+        </Accordion>
+        <EventForm>
+        </EventForm>
       </Box>
   )
   }

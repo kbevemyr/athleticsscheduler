@@ -1,8 +1,10 @@
 import { serverLogin, serverGet, serverPost } from './support.js';
+import { localComps } from './MOCKdata';
 
 export const FETCH_USERDATA = 'FETCH_USERDATA';
 export const FETCH_COMPETITION = 'FETCH_COMPETITION';
 export const SET_NEWCOLOR = 'SET_NEWCOLOR';
+export const SAVE_COMPETITION = 'SAVE_COMPETITION';
 
 
 // Action Creators - Functions that create actions
@@ -21,14 +23,19 @@ function gotCompetition(data) {
   }
 }
 
+function savedCompetitionData(timestamp) {
+  return {
+    type: SAVE_COMPETITION,
+    timestamp,
+  }
+}
+
 export function setColor(id) {
   return {
     type: SET_NEWCOLOR,
     id: id,
   }
 }
-
-
 
 
 // Backend functions calls
@@ -44,24 +51,60 @@ function getClassColor(id) {
 
 */
 
-export function getCompetitionData (cid) {
-  console.log("actions. getCompetitionData "+JSON.stringify(cid));
-
-  let args = {
-    key: cid,
-  };
+export function saveCompetitionData (key, comp){
+  console.log("saveCompetitionData. with key "+key);
 
   return dispatch => {
+    serverPost("put?key="+key, comp).then(
+      (res) => {
+        if(res.status === "error") {
+          console.log("saveCompetitionData. failed "+res.reason);
+        }
+        else {
+          console.log("saveCompetitionData. OK "+key);
+          dispatch(savedCompetitionData(new Date()));
+        }
+      }
+    )
+  }
+}
+
+export function getCompetitionData (key) {
+  console.log("actions. getCompetitionData "+key);
+
+  let args = {
+    key: key,
+  };
+
+  let local2017Data = dispatch => {
+    console.log("getCompetitionData. local ");
+    dispatch(gotCompetition(localComps[0]));
+  };
+
+  let local2018Data = dispatch => {
+    console.log("getCompetitionData. local ");
+    dispatch(gotCompetition(localComps[1]));
+  };
+
+  let serverData = dispatch => {
     serverGet("get", args).then(
       (res) => {
         if(res.status === "error") {
           console.log("getCompetitionData. failed: "+res.reason);
         }
         else {
-          console.log("getCompetitionData. OK ");
-          dispatch(gotCompetition(JSON.parse(res.body)));
+          console.log("getCompetitionData. OK "+JSON.stringify(res));
+          dispatch(gotCompetition(res));
         }
       }
     )
+  };
+
+  if (key === "2017") {
+    return local2017Data;
+  } else if (key === "2018") {
+    return local2018Data;
+  } else {
+    return serverData;
   }
 }

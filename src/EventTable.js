@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { DataTable, Clock, Text, Box } from 'grommet';
 
-import { MinutesToPX, presentTime, getEvent } from './misc';
+import { MinutesToPX, presentTime } from './misc';
 
 class EventTable extends Component {
   constructor(props) {
@@ -17,9 +17,10 @@ class EventTable extends Component {
   render() {
     // events
     return (
-      <Box direction='column' >
+      <Box background='light-1' >
     <DataTable
       alignSelf="start"
+      size='small'
       columns={[
         {
           property: 'id',
@@ -31,12 +32,32 @@ class EventTable extends Component {
           header: <Text>Day</Text>,
         },
         {
+          property: 'arena',
+          header: <Text>Arena</Text>,
+        },
+        {
           property: 'starttime',
           header: <Text>Start Time</Text>,
+          render: x => (
+            <Box>
+            <Clock type="digital"
+                   precision="minutes"
+                   time={"T"+presentTime(x.starttime)+":00"}
+            />
+            </Box>
+          ),
         },
         {
           property: 'duration',
           header: <Text>Duration</Text>,
+          render: x => (
+            <Box>
+            <Clock type="digital"
+                   precision="minutes"
+                   time={"T"+presentTime(x.duration)+":00"}
+            />
+            </Box>
+          ),
         },
         {
           property: 'class',

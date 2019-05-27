@@ -1,16 +1,15 @@
 import {
-  FETCH_USERDATA, FETCH_COMPETITION, SET_NEWCOLOR,
+  FETCH_USERDATA, FETCH_COMPETITION, SET_NEWCOLOR, SAVE_COMPETITION
 } from './actions';
 
 import { COLORS } from '../misc';
 
-import { comptest } from './MOCKdata';
+import { localComps } from './MOCKdata';
 
 const EmptyCompetition = {
             "key": "empty key",
             "name": "empty name",
             "version": "1.0",
-            "GLOBALID": 0,
             "days": [],
             "arenas": [],
             "events": [],
@@ -20,7 +19,7 @@ const EmptyCompetition = {
 
 // state for auth
 const initialstate = {
-  competition: comptest,
+  competition: localComps[0], //EmptyCompetition, //comptest,
   colorCount: 0, //Antal färger som är använda.
   painting: [], // Iden är att det ska vara en lista av klass/colorid.
 }
@@ -43,7 +42,14 @@ function rootReducer (state = initialstate, action) {
 
       case FETCH_COMPETITION:
         return Object.assign({}, state, {
-          accounts: action.data.competition,
+          competition: action.data,
+          colorCount: 0,
+          painting: [],
+        })
+
+      case SAVE_COMPETITION:
+        return Object.assign({}, state, {
+          saved: action.timestamp,
         })
 
     default:
