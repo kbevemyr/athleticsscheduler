@@ -51,27 +51,12 @@ class EventForm extends Component {
             mask={[
               {
                 length: [1, 2],
-                options: [
-                  '1',
-                  '2',
-                  '3',
-                  '4',
-                  '5',
-                  '6',
-                  '7',
-                  '8',
-                  '9',
-                  '10',
-                  '11',
-                  '12',
-                ],
                 regexp: /^1[1-2]$|^[0-9]$/,
                 placeholder: 'hh',
               },
               { fixed: ':' },
               {
                 length: 2,
-                options: ['00', '15', '30', '45'],
                 regexp: /^[0-5][0-9]$|^[0-9]$/,
                 placeholder: 'mm',
               },
@@ -85,27 +70,12 @@ class EventForm extends Component {
             mask={[
               {
                 length: [1, 2],
-                options: [
-                  '1',
-                  '2',
-                  '3',
-                  '4',
-                  '5',
-                  '6',
-                  '7',
-                  '8',
-                  '9',
-                  '10',
-                  '11',
-                  '12',
-                ],
                 regexp: /^1[1-2]$|^[0-9]$/,
                 placeholder: 'hh',
               },
               { fixed: ':' },
               {
                 length: 2,
-                options: ['00', '15', '30', '45'],
                 regexp: /^[0-5][0-9]$|^[0-9]$/,
                 placeholder: 'mm',
               },
@@ -118,11 +88,7 @@ class EventForm extends Component {
           <Select
             options={this.state.classOptions}
             value={this.state.classValue}
-            onSearch={(txt) => {
-              const regexp = new RegExp(txt, 'i');
-              this.setState({ classOptions: cOPTIONS.filter(o => o.match(regexp))});
-            }}
-            onChange={(event) => this.setState({
+            Change={(event) => this.setState({
                 classValue: event.value,
                 classOptions: cOPTIONS,
               })}
@@ -142,6 +108,13 @@ class EventForm extends Component {
   )
   }
 }
+/*
+onSearch={(txt) => {
+  const regexp = new RegExp(txt, 'i');
+  this.setState({ classOptions: cOPTIONS.filter(o => o.match(regexp))});
+}}
+on
+*/
 
   // Store handling
 
