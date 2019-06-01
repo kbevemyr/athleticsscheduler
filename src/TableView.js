@@ -15,14 +15,14 @@ class TableView extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "TableViews",
+      name: "Table View",
     };
   }
 
   render() {
     // competition
     return (
-      <Box direction='column' pad='medium'>
+      <Box direction='column' pad='medium' background="light-1">
         <Text>{this.state.name}</Text>
         <Accordion>
           <AccordionPanel label="Days">
@@ -35,7 +35,7 @@ class TableView extends Component {
             <EventTable />
           </AccordionPanel>
         </Accordion>
-        <EventForm>
+        <EventForm id="25">
         </EventForm>
       </Box>
   )

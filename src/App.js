@@ -40,8 +40,10 @@ class App extends Component {
           <strong>Athletics Scheduler</strong>
           <Menu
             dropAlign={{ top: 'top', right: 'right' }}
-            items={[{ label: '2017', onClick: () => { this.handleSetCompDataEvent('2017') }},
+            items={[
+                    { label: '2017', onClick: () => { this.handleSetCompDataEvent('2017') }},
                     { label: '2018', onClick: () => { this.handleSetCompDataEvent('2018') }},
+                    { label: '2019', onClick: () => { this.handleSetCompDataEvent('2019') }},
                     { label: 'test', onClick: () => { this.handleSetCompDataEvent('test') }},
                     { label: 'save', onClick: () => { this.handleSaveCompDataEvent('test') }},
                    ]}

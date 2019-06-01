@@ -6,6 +6,8 @@ export const FETCH_COMPETITION = 'FETCH_COMPETITION';
 export const SET_NEWCOLOR = 'SET_NEWCOLOR';
 export const SAVE_COMPETITION = 'SAVE_COMPETITION';
 
+export const UPDATE_EVENT = 'UPDATE_EVENT'
+
 
 // Action Creators - Functions that create actions
 
@@ -34,6 +36,13 @@ export function setColor(id) {
   return {
     type: SET_NEWCOLOR,
     id: id,
+  }
+}
+
+export function updateEvent(event) {
+  return {
+    type: UPDATE_EVENT,
+    event,
   }
 }
 
@@ -86,6 +95,11 @@ export function getCompetitionData (key) {
     dispatch(gotCompetition(localComps[1]));
   };
 
+  let local2019Data = dispatch => {
+    console.log("getCompetitionData. local ");
+    dispatch(gotCompetition(localComps[2]));
+  };
+
   let serverData = dispatch => {
     serverGet("get", args).then(
       (res) => {
@@ -104,6 +118,8 @@ export function getCompetitionData (key) {
     return local2017Data;
   } else if (key === "2018") {
     return local2018Data;
+  } else if (key === "2019") {
+    return local2019Data;
   } else {
     return serverData;
   }

@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { DataTable, Clock, Text, Box } from 'grommet';
+import { DataTable, Clock, Text, Box, Button } from 'grommet';
 
 import { MinutesToPX, presentTime } from './misc';
 
@@ -66,6 +66,12 @@ class EventTable extends Component {
         {
           property: 'gren',
           header: <Text>Gren</Text>,
+        },
+        {
+          property: 'editEvent',
+          render: x => (
+            <Button>Edit {x.id}</Button>
+          ),
         },
       ]}
       data={this.props.comp.events}

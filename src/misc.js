@@ -11,17 +11,11 @@ const HOUR_PX = 60*MINUTE_PX;
 
 export const COLORS = ['darksalmon', 'darkseagreen', 'hotpink', 'lavender', 'lemonchiffon',
     'lightblue', 'lightcoral', 'lightcyan', 'lightpink', 'lightgray', 'palegreen',
-    'mediumaquamarine', 'mistyrose', 'navojowhite', 'oldlace', 'papayawhip', 'pink',
-'palegoldenrod', 'powderblue'];
+    'mediumaquamarine', 'mistyrose', 'oldlace', 'papayawhip', 'pink',
+'palegoldenrod', 'powderblue', 'yellow', 'red', 'darkblue'];
 
 /*
   Diverse funktioner, borde flyttas till actions?
-*/
-/*
-const debug = true;
-function debugOutput(cl) {
-  cl;
-}
 */
 
 export function getDayStarttime(comp, day) {
@@ -39,7 +33,7 @@ function getArenas_old(comp, day) {
 export function getArenas (comp, day) {
   let es = comp.events.filter(e => e.day === day);
   let ess = Array.from(new Set(es.map(e => e.arena)));
-  //console.log("getArenas. arenas ="+JSON.stringify(ess));
+  console.log("getArenas. arenas ="+JSON.stringify(ess));
   return ess;
 }
 
