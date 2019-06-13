@@ -32,7 +32,6 @@ class Timeline extends Component {
 
   render() {
     var divStyle = {height: this.props.height};
-    //console.log(this.props.day+" times items: "+this.state.ts.length);
     let key = new Date().valueOf();
     let daystart = getDayStarttime(this.props.comp, this.props.day);
 
@@ -46,6 +45,7 @@ class Timeline extends Component {
               style={createLocalStyle(x-daystart, this.state.color)}
               className="event-main"
               justify='start'
+              border={{ color: 'black', size: 'small' , 'side': 'top'}}
             >
               {presentTime(x)}
             </Box>

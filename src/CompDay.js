@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { getArenas, getBoxSize } from './misc';
+import { getArenas, getDayStarttime, getDayEndtime, getBoxSize } from './misc';
 
 import Arena from './Arena';
 import Timeline from './Timeline';
@@ -13,12 +13,14 @@ class CompDay extends Component {
     super(props);
     this.state = {
       arenas: getArenas(this.props.comp, this.props.id),
-      arenaheight: getBoxSize(this.props.starttime, this.props.endtime),
-    }
+      starttime: getDayStarttime(this.props.comp, this.props.id),
+      endtime: getDayEndtime(this.props.comp, this.props.id),
+    };
   }
 
   render() {
     let key = new Date().valueOf();
+    var arenaheight = getBoxSize(this.state.starttime, this.state.endtime);
 
     return (
       <Box className="compday-main">
@@ -26,10 +28,15 @@ class CompDay extends Component {
           {this.props.name}
         </Box>
         <div className="compday-areanaarea">
-          <Timeline key={key} id={key} height={this.state.arenaheight} day={this.props.id}/>
-          {this.state.arenas.map(x =>
-                (<Arena key={x} id={x} day={this.props.id} height={this.state.arenaheight} />)
-              )}
+          <Timeline key={key} id={key} height={arenaheight} day={this.props.id}/>
+          {this.state.arenas.filter(z => z === 'löpning').map(x =>
+                (<Arena key={x} id={x} day={this.props.id} height={arenaheight} />)
+              )
+          }
+          {this.state.arenas.filter(z => z !== 'löpning').map(x =>
+                (<Arena key={x} id={x} day={this.props.id} height={arenaheight} />)
+              )
+          }
         </div>
       </Box>
     );
