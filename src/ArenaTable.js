@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 
 import { DataTable, Text, Box } from 'grommet';
 
-import { MinutesToPX } from './misc';
-
 class ArenaTable extends Component {
   constructor(props) {
     super(props);

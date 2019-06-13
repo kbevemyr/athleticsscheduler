@@ -2,9 +2,7 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { DataTable, Clock, Text, Box } from 'grommet';
-
-import { MinutesToPX, presentTime } from './misc';
+import { DataTable, Text, Box } from 'grommet';
 
 class DayTable extends Component {
   constructor(props) {
@@ -30,30 +28,6 @@ class DayTable extends Component {
             {
               property: 'name',
               header: <Text>Name</Text>,
-            },
-            {
-              property: 'starttime',
-              header: <Text>Start Time</Text>,
-              render: x => (
-                <Box>
-                  <Clock type="digital"
-                       precision="minutes"
-                       time={"T"+presentTime(x.starttime)+":00"}
-                  />
-                </Box>
-              ),
-            },
-            {
-              property: 'endtime',
-              header: <Text>End Time</Text>,
-              render: x => (
-                <Box>
-                  <Clock type="digital"
-                       precision="minutes"
-                       time={"T"+presentTime(x.endtime)+":00"}
-                  />
-                </Box>
-              ),
             },
           ]}
           data={this.props.days}
