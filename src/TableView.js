@@ -2,14 +2,12 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { setColor } from './store/actions';
+//import { setColor } from './store/actions';
 import DayTable from './DayTable';
 import ArenaTable from './ArenaTable';
 import EventTable from './EventTable';
 import EventForm from './EventForm';
 import { Accordion, AccordionPanel, Text, Box } from 'grommet';
-
-import { MinutesToPX, getEvent } from './misc';
 
 class TableView extends Component {
   constructor(props) {
@@ -23,7 +21,7 @@ class TableView extends Component {
     // competition
     return (
       <Box direction='column' pad='medium' background="light-1">
-        <Text>{this.state.name}</Text>
+        <Text weight="bold" >{this.state.name}</Text>
         <Accordion>
           <AccordionPanel label="Days">
             <DayTable />
@@ -35,8 +33,9 @@ class TableView extends Component {
             <EventTable />
           </AccordionPanel>
         </Accordion>
-        <EventForm id="25">
-        </EventForm>
+        {(this.props.id !== -1) &&
+          <EventForm id={this.props.id} />
+        }
       </Box>
   )
   }
@@ -46,7 +45,7 @@ class TableView extends Component {
 
   const mapStateToProps = state => ({
     comp: state.competition,
-
+    id: state.activeID,
   });
 
   const mapDispatchToProps = dispatch => ({

@@ -3,8 +3,10 @@ import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
 import { DataTable, Clock, Text, Box, Button } from 'grommet';
+import { Edit } from 'grommet-icons';
 
-import { MinutesToPX, presentTime } from './misc';
+import { presentTime } from './misc';
+import { setActiveEvent } from './store/actions';
 
 class EventTable extends Component {
   constructor(props) {
@@ -70,7 +72,11 @@ class EventTable extends Component {
         {
           property: 'editEvent',
           render: x => (
-            <Button>Edit {x.id}</Button>
+            <Button
+              icon={<Edit />}
+              lable="Edit"
+              onClick={() => this.props.setTheActiveEvent(x.id)}
+            />
           ),
         },
       ]}
@@ -97,11 +103,12 @@ render: x => (
   const mapStateToProps = state => ({
     comp: state.competition,
     events: state.competition.events,
+    active: state.activeID,
   });
 
   const mapDispatchToProps = dispatch => ({
-      setXXXColor: (c) => {
-        //dispatch(setXXX(c));
+      setTheActiveEvent: (id) => {
+        dispatch(setActiveEvent(id));
     },
   });
 

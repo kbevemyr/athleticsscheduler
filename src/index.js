@@ -7,10 +7,11 @@ import * as serviceWorker from './serviceWorker';
 import { Route, HashRouter as Router} from 'react-router-dom';
 //import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux';
-import { createStore, compose, applyMiddleware } from 'redux';
+import { createStore, applyMiddleware } from 'redux';
 import rootReducer from './store/reducers';
 import thunkMiddleware from 'redux-thunk';
 //import { configSocket } from './WebSocketService';
+import { composeWithDevTools } from 'redux-devtools-extension/developmentOnly';
 
 const logger = store => next => action => {
   console.log('dispatching', action)
@@ -22,8 +23,8 @@ const logger = store => next => action => {
 /* eslint-disable no-underscore-dangle */
 const store = createStore(
   rootReducer,
-  compose (applyMiddleware(logger, thunkMiddleware),
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  composeWithDevTools(
+    applyMiddleware(thunkMiddleware, logger)
   )
 );
 /* eslint-enable */

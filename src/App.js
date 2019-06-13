@@ -1,9 +1,12 @@
 import React, {Component} from 'react';
-import { withRouter } from "react-router-dom";
+import { Route, Link, Switch, withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
 import './App.css';
 import Competition from './Competition';
+import TableView from './TableView';
+import EventForm from './EventForm';
+import Settings from './Settings';
 import { getCompetitionData, saveCompetitionData } from './store/actions';
 
 import { Grommet, grommet, Box, Menu } from 'grommet';
@@ -37,6 +40,13 @@ class App extends Component {
           align='center'
           flex={false}
         >
+        <Menu
+          dropAlign={{ top: 'top', right: 'left' }}
+          items={[
+                  { label: 'tables', onClick: (e) => { alert("<Link to=tables />") }},
+                 ]}
+          icon={<MenuIcon color='white' />}
+          />
           <strong>Athletics Scheduler</strong>
           <Menu
             dropAlign={{ top: 'top', right: 'right' }}
@@ -50,7 +60,13 @@ class App extends Component {
             icon={<MenuIcon color='white' />}
             />
         </Box>
-        <Competition key="mycomp"/>
+        <Switch>
+          <Route path="/" exact component={Competition} />
+          <Route path="/tables" component={TableView} />
+          <Route path="/form/:id" component={EventForm} />
+          <Route path="/settings" component={Settings} />
+        </Switch>
+
         <Box tag='footer'
              direction='row'
              justify='end'

@@ -1,9 +1,10 @@
 import {
   FETCH_USERDATA, FETCH_COMPETITION, SET_NEWCOLOR, SAVE_COMPETITION,
-  UPDATE_EVENT,
+  UPDATE_EVENT, SET_ACTIVE
 } from './actions';
 
-import { COLORS } from '../misc';
+import { COLORS, defaultColor } from '../misc';
+import { healthCheckSchema } from '../misc';
 
 import { localComps } from './MOCKdata';
 
@@ -23,6 +24,7 @@ const initialstate = {
   competition: localComps[2], //EmptyCompetition, //comptest,
   colorCount: 0, //Antal färger som är använda.
   painting: [], // Iden är att det ska vara en lista av klass/colorid.
+  activeID: -1,
 }
 
 function rootReducer (state = initialstate, action) {
@@ -36,12 +38,19 @@ function rootReducer (state = initialstate, action) {
       })
 
       case SET_NEWCOLOR:
+        var newColor = defaultColor;
+        if (state.colorCount < COLORS.length) {
+          newColor = COLORS[state.colorCount];
+        } else {
+          console.log("Out of colors, used defaultColor for "+action.id);
+        }
         return Object.assign({}, state, {
-          painting: [...state.painting, {id: action.id, color: COLORS[state.colorCount]}],
+          painting: [...state.painting, {id: action.id, color: newColor}],
           colorCount: state.colorCount+1, // peka ut nästa lediga färg
         })
 
       case FETCH_COMPETITION:
+        healthCheckSchema(action.data.events);
         return Object.assign({}, state, {
           competition: action.data,
           colorCount: 0,
@@ -55,8 +64,13 @@ function rootReducer (state = initialstate, action) {
 
       case UPDATE_EVENT:
         return Object.assign({}, state, {
-          //events: [...state.competition.events, action.event], //TODO replace
-          //state.competition.events.map((x) => {if(x.id === action.event.id) {return action.event;} else {return x;}})
+          events: state.competition.events.map((x) => {if(x.id === action.event.id) {return action.event;} else {return x;}}),
+          activeID: -1,
+        })
+
+      case SET_ACTIVE:
+        return Object.assign({}, state, {
+          activeID: action.id
         })
 
     default:

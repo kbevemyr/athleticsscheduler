@@ -3,9 +3,8 @@ import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
 import './App.css';
-import Settings from './Settings';
 import CompDay from './CompDay';
-import TableView from './TableView';
+import EventForm from './EventForm';
 
 import { Tabs, Tab, Box, Text } from 'grommet';
 
@@ -34,14 +33,11 @@ class Competition extends Component {
                   key={x.id}
                   id={x.id}
                   name={x.name}
-                  starttime={x.starttime}
-                  endtime={x.endtime} />
+                />
               </Tab>
             )
           )}
         </Tabs>
-        <TableView>
-        </TableView>
       </Box>
     );
   }

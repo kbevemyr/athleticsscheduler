@@ -6,7 +6,8 @@ export const FETCH_COMPETITION = 'FETCH_COMPETITION';
 export const SET_NEWCOLOR = 'SET_NEWCOLOR';
 export const SAVE_COMPETITION = 'SAVE_COMPETITION';
 
-export const UPDATE_EVENT = 'UPDATE_EVENT'
+export const UPDATE_EVENT = 'UPDATE_EVENT';
+export const SET_ACTIVE = 'SET_ACTIVE';
 
 
 // Action Creators - Functions that create actions
@@ -46,6 +47,13 @@ export function updateEvent(event) {
   }
 }
 
+export function setActiveEvent(id) {
+  return {
+    type: SET_ACTIVE,
+    id,
+  }
+}
+
 
 // Backend functions calls
 
@@ -80,47 +88,42 @@ export function saveCompetitionData (key, comp){
 
 export function getCompetitionData (key) {
   console.log("actions. getCompetitionData "+key);
-
+  var index = -1;
+  var data = [];
   let args = {
     key: key,
   };
 
-  let local2017Data = dispatch => {
-    console.log("getCompetitionData. local ");
-    dispatch(gotCompetition(localComps[0]));
-  };
-
-  let local2018Data = dispatch => {
-    console.log("getCompetitionData. local ");
-    dispatch(gotCompetition(localComps[1]));
-  };
-
-  let local2019Data = dispatch => {
-    console.log("getCompetitionData. local ");
-    dispatch(gotCompetition(localComps[2]));
-  };
-
-  let serverData = dispatch => {
-    serverGet("get", args).then(
-      (res) => {
-        if(res.status === "error") {
-          console.log("getCompetitionData. failed: "+res.reason);
-        }
-        else {
-          console.log("getCompetitionData. OK "+JSON.stringify(res));
-          dispatch(gotCompetition(res));
-        }
-      }
-    )
-  };
-
   if (key === "2017") {
-    return local2017Data;
+    index = 0;
   } else if (key === "2018") {
-    return local2018Data;
+    index = 1;
   } else if (key === "2019") {
-    return local2019Data;
-  } else {
-    return serverData;
+    index = 2;
+  } else { //goto server
+    index = -1;
   }
+
+  if(index > -1) {
+    data = dispatch => {
+      console.log("getCompetitionData. local ");
+      dispatch(gotCompetition(localComps[index]));
+    }
+  } else {
+    data = dispatch => {
+      serverGet("get", args).then(
+        (res) => {
+          if(res.status === "error") {
+            console.log("getCompetitionData. failed: "+res.reason);
+          }
+          else {
+            console.log("getCompetitionData. OK "+JSON.stringify(res));
+            dispatch(gotCompetition(res));
+          }
+        }
+      )
+    };
+  }
+
+  return data;
 }
