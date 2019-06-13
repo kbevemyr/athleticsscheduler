@@ -1,4 +1,4 @@
-import { serverLogin, serverGet, serverPost } from './support.js';
+import { serverGet, serverPost } from './support.js';
 import { localComps } from './MOCKdata';
 
 export const FETCH_USERDATA = 'FETCH_USERDATA';
@@ -12,12 +12,14 @@ export const SET_ACTIVE = 'SET_ACTIVE';
 
 // Action Creators - Functions that create actions
 
+/*
 function gotUserdata(data) {
   return {
     type: FETCH_USERDATA,
     data
   }
 }
+*/
 
 function gotCompetition(data) {
   return {

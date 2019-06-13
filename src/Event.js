@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { Stack, Text } from 'grommet';
+import { Stack } from 'grommet';
 import { setColor, setActiveEvent } from './store/actions';
 
 import { defaultColor, getTextColor, MinutesToPX, getEvent, getDayStarttime } from './misc';

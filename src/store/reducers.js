@@ -8,6 +8,7 @@ import { healthCheckSchema } from '../misc';
 
 import { localComps } from './MOCKdata';
 
+/*
 const EmptyCompetition = {
             "key": "empty key",
             "name": "empty name",
@@ -18,6 +19,7 @@ const EmptyCompetition = {
             "dxa": [],
             "axe": []
         };
+        */
 
 // state for auth
 const initialstate = {

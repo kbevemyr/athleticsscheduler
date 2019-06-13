@@ -59,7 +59,7 @@ export function getTextColor(color) {
         color.length < 5 && /./g, '$&$&'));
 
         r = color >> 16;
-        g = color >> 8 & 255;
+        g = (color >> 8) & 255;
         b = color & 255;
     }
 

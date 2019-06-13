@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import './App.css';
 import CompDay from './CompDay';
-import EventForm from './EventForm';
 
 import { Tabs, Tab, Box, Text } from 'grommet';
 

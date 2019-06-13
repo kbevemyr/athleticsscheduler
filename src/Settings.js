@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { Form, FormField, Button } from 'grommet';
 
-import { MinutesToPX, getEvent } from './misc';
+//import { getEvent } from './misc';
 
 class Settings extends Component {
   constructor(props) {
