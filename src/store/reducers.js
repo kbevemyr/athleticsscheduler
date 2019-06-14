@@ -65,8 +65,9 @@ function rootReducer (state = initialstate, action) {
         })
 
       case UPDATE_EVENT:
+        var updatedEvents = state.competition.events.map((x) => {if(x.id === action.event.id) {return action.event;} else {return x;}});
         return Object.assign({}, state, {
-          events: state.competition.events.map((x) => {if(x.id === action.event.id) {return action.event;} else {return x;}}),
+          competition: Object.assign({}, state.competition, {events: updatedEvents});
           activeID: -1,
         })
 
