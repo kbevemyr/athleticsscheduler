@@ -43,7 +43,8 @@ class App extends Component {
         <Menu
           dropAlign={{ top: 'top', right: 'left' }}
           items={[
-                  { label: 'tables', onClick: (e) => { alert("<Link to=tables />") }},
+                  { label: 'tables', href: "#tables"},
+                  { label: 'schema', href: "#"},
                  ]}
           icon={<MenuIcon color='white' />}
           />
