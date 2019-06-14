@@ -23,7 +23,10 @@ before_deploy:
   -in deploy_rsa.enc -out /tmp/deploy_rsa -d
 - eval "$(ssh-agent -s)"
 - chmod 600 /tmp/deploy_rsa
+- echo -e "Host $SERVER_IP_ADDRESS\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 - ssh-add /tmp/deploy_rsa
+- ssh -i ./deploy_key root@138.68.163.126 pwd
+
 deploy:
 - provider: script
   skip_cleanup: true
