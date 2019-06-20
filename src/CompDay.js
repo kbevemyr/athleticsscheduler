@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { getArenas, getDayStarttime, getDayEndtime, getBoxSize } from './misc';
+import { getArenas, getTypeArenas, getDayStarttime, getDayEndtime, getBoxSize } from './misc';
 
 import Arena from './Arena';
 import Timeline from './Timeline';
@@ -15,6 +15,8 @@ class CompDay extends Component {
       arenas: getArenas(this.props.comp, this.props.id),
       starttime: getDayStarttime(this.props.comp, this.props.id),
       endtime: getDayEndtime(this.props.comp, this.props.id),
+      runarenas: getTypeArenas(this.props.comp, this.props.id, "run"),
+      techarenas: getTypeArenas(this.props.comp, this.props.id, "tech"),
     };
   }
 
@@ -35,7 +37,7 @@ class CompDay extends Component {
             margin={{horizontal:"small", vertical:"xxsmall"}}
             className="compday-areanaarea">
             <Timeline key={key} id={key} height={arenaheight} day={this.props.id} grentyp="run"/>
-            {this.state.arenas.filter(z => z === 'löpning').map(x =>
+            {this.state.runarenas.map(x =>
                   (<Arena key={x} id={x} day={this.props.id} height={arenaheight} />)
                 )
             }
@@ -45,7 +47,7 @@ class CompDay extends Component {
             margin={{horizontal:"small", vertical:"xxsmall"}}
             className="compday-areanaarea">
             <Timeline key={key} id={key} height={arenaheight} day={this.props.id} grentyp="tech"/>
-            {this.state.arenas.filter(z => z !== 'löpning').map(x =>
+            {this.state.techarenas.map(x =>
                   (<Arena key={x} id={x} day={this.props.id} height={arenaheight} />)
                 )
             }

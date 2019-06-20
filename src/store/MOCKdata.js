@@ -20,20 +20,20 @@ const comp2019daysTest = [
 
 var SERVERarenasTest = [
     {"id": "911", "name": "Löpning", "grentyp": "run"},
-    {"id": "912", "name": "LängdA", "grentyp": "tech"},
-    {"id": "913", "name": "LängdB", "grentyp": "tech"},
-    {"id": "914", "name": "HöjdA", "grentyp": "tech"},
-    {"id": "915", "name": "HöjdB", "grentyp": "tech"},
-    {"id": "916", "name": "Kula", "grentyp": "tech"},
+    {"id": "912", "name": "LängdA", "grentyp": "tech_hopp"},
+    {"id": "913", "name": "LängdB", "grentyp": "tech_hopp"},
+    {"id": "914", "name": "HöjdA", "grentyp": "tech_hopp"},
+    {"id": "915", "name": "HöjdB", "grentyp": "tech_hopp"},
+    {"id": "916", "name": "Kula", "grentyp": "tech_kast"},
 ];
 
 const comp2018arenasTest = [
     {"id": "l", "name": "Löpning", "grentyp": "run"},
-    {"id": "k", "name": "Kula", "grentyp": "tech"},
-    {"id": "v", "name": "Vikt", "grentyp": "tech"},
-    {"id": "h", "name": "Höjd", "grentyp": "tech"},
-    {"id": "ld", "name": "Längd", "grentyp": "tech"},
-    {"id": "s", "name": "Stav", "grentyp": "tech"},
+    {"id": "k", "name": "Kula", "grentyp": "tech_kast"},
+    {"id": "v", "name": "Vikt", "grentyp": "tech_kast"},
+    {"id": "h", "name": "Höjd", "grentyp": "tech_hopp"},
+    {"id": "ld", "name": "Längd", "grentyp": "tech_hopp"},
+    {"id": "s", "name": "Stav", "grentyp": "tech_hopp"},
 ];
 
 const comp2019arenasTest = [

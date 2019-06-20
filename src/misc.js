@@ -104,6 +104,15 @@ export function getArenas (comp, day) {
   return ess;
 }
 
+export function getTypeArenas (comp, day, type) {
+  let es = comp.events.filter(e => e.day === day);
+  console.dir(es);
+  console.dir(comp.arenas);
+  var ess = comp.arenas.filter(x => (x.grentyp.startsWith(type) && (es.find(z => (z.arena === x.id)) != null))).map(y => y.id);
+  console.log("getTypeArenas("+type+"). arenas ="+JSON.stringify(ess));
+  return ess;
+}
+
 export function getAllDays (events) {
   let ess = Array.from(new Set(events.map(e => e.day)));
   return ess;
