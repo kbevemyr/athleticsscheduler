@@ -3,8 +3,9 @@ import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
 import { Stack } from 'grommet';
-import { setColor, setActiveEvent } from './store/actions';
+import { Accessibility as HLIcon } from 'grommet-icons';
 
+import { setColor, setActiveEvent } from './store/actions';
 import { defaultColor, getTextColor, MinutesToPX, getEvent, getDayStarttime } from './misc';
 
 function getBoxColor(paintSchema, newColor, eventClass) {
@@ -18,6 +19,16 @@ function getBoxColor(paintSchema, newColor, eventClass) {
   return color;
 }
 
+function isActive(as, x) {
+  var res = as[x];
+  if (res == null) {
+    res = false;
+  }
+
+  console.log("isActive "+res);
+  return res;
+}
+
 // time unit is minutes
 class Event extends Component {
   constructor(props) {
@@ -29,10 +40,14 @@ class Event extends Component {
       marked: false,
     };
     this.handleMarkEvent = this.handleMarkEvent.bind(this);
+    this.handleHighLightEvent = this.handleHighLightEvent.bind(this);
   }
 
   handleMarkEvent(e) {
     this.setState({marked: !this.state.marked});
+  }
+
+  handleHighLightEvent(e) {
     this.props.setTheActiveEvent(this.props.id);
   }
 
@@ -50,7 +65,7 @@ class Event extends Component {
         <div id={this.props.id}
           style={divStyle}
           className="event-main"
-          onClick={this.handleMarkEvent}
+          onClick={this.handleHighLightEvent}
         >
           <Stack anchor="top">
             {this.state.event.class+" "+this.state.event.gren}
@@ -58,6 +73,9 @@ class Event extends Component {
               <svg height={20} width={500}>
                 <line x1={0} y1={0} x2={600} y2={0} style={lineStyle} />
               </svg>
+            }
+            {isActive(this.props.activeIDs, this.props.id) &&
+              <HLIcon color="accent-1" />
             }
           </Stack>
         </div>
@@ -70,6 +88,7 @@ class Event extends Component {
 const mapStateToProps = state => ({
   comp: state.competition,
   paintschema: state.painting,
+  activeIDs: state.activeID,
 });
 
 const mapDispatchToProps = dispatch => {
@@ -78,8 +97,6 @@ const mapDispatchToProps = dispatch => {
     setTheActiveEvent: (id) => dispatch( setActiveEvent(id) ),
   }
 }
-
-
 
 const EventContainer = connect(
   mapStateToProps,

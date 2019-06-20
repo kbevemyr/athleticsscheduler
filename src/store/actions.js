@@ -7,7 +7,8 @@ export const SET_NEWCOLOR = 'SET_NEWCOLOR';
 export const SAVE_COMPETITION = 'SAVE_COMPETITION';
 
 export const UPDATE_EVENT = 'UPDATE_EVENT';
-export const SET_ACTIVE = 'SET_ACTIVE';
+export const SET_ACTIVE_EVENT = 'SET_ACTIVE_EVENT';
+export const SET_ACTIVE_CLASS = 'SET_ACTIVE_CLASS';
 
 
 // Action Creators - Functions that create actions
@@ -51,8 +52,15 @@ export function updateEvent(event) {
 
 export function setActiveEvent(id) {
   return {
-    type: SET_ACTIVE,
+    type: SET_ACTIVE_EVENT,
     id,
+  }
+}
+
+export function setActiveClass(c) {
+  return {
+    type: SET_ACTIVE_CLASS,
+    c,
   }
 }
 

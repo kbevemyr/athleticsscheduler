@@ -1,6 +1,6 @@
 import {
   FETCH_USERDATA, FETCH_COMPETITION, SET_NEWCOLOR, SAVE_COMPETITION,
-  UPDATE_EVENT, SET_ACTIVE
+  UPDATE_EVENT, SET_ACTIVE_EVENT, SET_ACTIVE_CLASS
 } from './actions';
 
 import { COLORS, defaultColor } from '../misc';
@@ -26,7 +26,8 @@ const initialstate = {
   competition: localComps[2], //EmptyCompetition, //comptest,
   colorCount: 0, //Antal färger som är använda.
   painting: [], // Iden är att det ska vara en lista av klass/colorid.
-  activeID: -1,
+  activeID: {},
+  activeC: "",
 }
 
 function rootReducer (state = initialstate, action) {
@@ -68,12 +69,25 @@ function rootReducer (state = initialstate, action) {
         var updatedEvents = state.competition.events.map((x) => {if(x.id === action.event.id) {return action.event;} else {return x;}});
         return Object.assign({}, state, {
           competition: Object.assign({}, state.competition, {events: updatedEvents}),
-          activeID: -1,
         })
 
-      case SET_ACTIVE:
+      case SET_ACTIVE_EVENT:
+        var status = state.activeID[action.id];
+        if (status == null) {
+          status = true;
+        } else {
+          status = !status;
+        }
+        var updatedActiveID = Object.assign({}, state.activeID);
+        updatedActiveID[action.id] = status;
         return Object.assign({}, state, {
-          activeID: action.id
+          activeID: updatedActiveID,
+        })
+
+      case SET_ACTIVE_CLASS:
+      //TOdo: find all events for a class and add their id to activeID
+        return Object.assign({}, state, {
+          activeC: action.c
         })
 
     default:

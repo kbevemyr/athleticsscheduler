@@ -27,17 +27,30 @@ class CompDay extends Component {
         <Box className="compday-header">
           {this.props.name}
         </Box>
-        <div className="compday-areanaarea">
-          <Timeline key={key} id={key} height={arenaheight} day={this.props.id}/>
-          {this.state.arenas.filter(z => z === 'löpning').map(x =>
-                (<Arena key={x} id={x} day={this.props.id} height={arenaheight} />)
-              )
-          }
-          {this.state.arenas.filter(z => z !== 'löpning').map(x =>
-                (<Arena key={x} id={x} day={this.props.id} height={arenaheight} />)
-              )
-          }
-        </div>
+        <Box
+          direction="row"
+          pad={{horizontal:"small", vertical:"xxsmall"}}>
+          <Box
+            direction="row"
+            margin={{horizontal:"small", vertical:"xxsmall"}}
+            className="compday-areanaarea">
+            <Timeline key={key} id={key} height={arenaheight} day={this.props.id} grentyp="run"/>
+            {this.state.arenas.filter(z => z === 'löpning').map(x =>
+                  (<Arena key={x} id={x} day={this.props.id} height={arenaheight} />)
+                )
+            }
+          </Box>
+          <Box
+            direction="row"
+            margin={{horizontal:"small", vertical:"xxsmall"}}
+            className="compday-areanaarea">
+            <Timeline key={key} id={key} height={arenaheight} day={this.props.id} grentyp="tech"/>
+            {this.state.arenas.filter(z => z !== 'löpning').map(x =>
+                  (<Arena key={x} id={x} day={this.props.id} height={arenaheight} />)
+                )
+            }
+          </Box>
+        </Box>
       </Box>
     );
   }

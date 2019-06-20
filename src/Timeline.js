@@ -8,8 +8,13 @@ import { Box } from 'grommet';
 //import { Grid, Box } from 'grommet'; Testade att ha en arena som en grid
 
 
-function getTimeLineData (comp, day) {
-  var es = comp.events.filter(e => e.day === day);
+function getTimeLineData (comp, day, grentype) {
+  var es = [];
+  if (grentype === "run") {
+    es = comp.events.filter(e => (e.day === day && e.arena ==="löpning"));
+  } else {
+    es = comp.events.filter(e => (e.day === day && e.arena !=="löpning"));
+  }
   return Array.from(new Set(es.map(e => e.starttime)));
 }
 
@@ -26,7 +31,7 @@ class Timeline extends Component {
     this.state = {
       name: "Tid",
       color: 'lightgray',
-      ts: getTimeLineData(this.props.comp, this.props.day),
+      ts: getTimeLineData(this.props.comp, this.props.day, this.props.grentyp),
     }
   }
 
