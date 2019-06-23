@@ -2,13 +2,13 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { MinutesToPX, presentTime, getDayStarttime } from './misc';
+import { getTimeLineData, MinutesToPX, presentTime, getDayStarttime } from './misc';
 
 import { Box } from 'grommet';
 //import { Grid, Box } from 'grommet'; Testade att ha en arena som en grid
 
 
-function getTimeLineData (comp, day, grentype) {
+function getTimeLineData0 (comp, day, grentype) {
   var es = [];
   if (grentype === "run") {
     es = comp.events.filter(e => (e.day === day && e.arena ==="löpning"));

@@ -105,12 +105,19 @@ export function getArenas (comp, day) {
 }
 
 export function getTypeArenas (comp, day, type) {
-  let es = comp.events.filter(e => e.day === day);
-  console.dir(es);
-  console.dir(comp.arenas);
-  var ess = comp.arenas.filter(x => (x.grentyp.startsWith(type) && (es.find(z => (z.arena === x.id)) != null))).map(y => y.id);
-  console.log("getTypeArenas("+type+"). arenas ="+JSON.stringify(ess));
+  let es = comp.events.filter(e => (e.day === day && e.grentype.startsWith(type)));
+  let ess = Array.from(new Set(es.map(e => e.arena)));
+  //console.log("getTypeArenas("+type+"). arenas =");
+  //console.dir(ess);
   return ess;
+}
+
+export function getTimeLineData (comp, day, type) {
+  let ts = comp.events.filter(e => (e.day === day && e.grentype.startsWith(type)));
+  let tss = Array.from(new Set(ts.map(e => e.starttime)));
+  console.log("getTimeLineData("+type+"). times =");
+  console.log(tss);
+  return tss;
 }
 
 export function getAllDays (events) {
@@ -136,7 +143,7 @@ export function getAllGrens (events) {
 export function getArena(comp, aid) {
   //console.log("getArena. "+aid);
   let arena = comp.arenas.find(x => x.id === aid);
-  //console.log("getArena. arena = "+JSON.stringify(arena));
+  console.log("getArena. arena("+aid+") = "+JSON.stringify(arena));
   return arena;
 }
 
