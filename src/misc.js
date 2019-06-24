@@ -112,14 +112,6 @@ export function getTypeArenas (comp, day, type) {
   return ess;
 }
 
-export function getTimeLineData (comp, day, type) {
-  let ts = comp.events.filter(e => (e.day === day && e.grentype.startsWith(type)));
-  let tss = Array.from(new Set(ts.map(e => e.starttime)));
-  console.log("getTimeLineData("+type+"). times =");
-  console.log(tss);
-  return tss;
-}
-
 export function getAllDays (events) {
   let ess = Array.from(new Set(events.map(e => e.day)));
   return ess;

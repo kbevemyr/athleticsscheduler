@@ -2,20 +2,18 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { getTimeLineData, MinutesToPX, presentTime, getDayStarttime } from './misc';
+import { MinutesToPX, presentTime, getDayStarttime } from './misc';
 
 import { Box } from 'grommet';
 //import { Grid, Box } from 'grommet'; Testade att ha en arena som en grid
 
 
-function getTimeLineData0 (comp, day, grentype) {
-  var es = [];
-  if (grentype === "run") {
-    es = comp.events.filter(e => (e.day === day && e.arena ==="löpning"));
-  } else {
-    es = comp.events.filter(e => (e.day === day && e.arena !=="löpning"));
-  }
-  return Array.from(new Set(es.map(e => e.starttime)));
+function getTimeLineData (comp, day, type) {
+  let ts = comp.events.filter(e => (e.day === day && e.grentype.startsWith(type)));
+  let tss = Array.from(new Set(ts.map(e => e.starttime)));
+  //console.log("getTimeLineData("+type+"). times =");
+  //console.log(tss);
+  return tss;
 }
 
 function createLocalStyle (time, color) {
