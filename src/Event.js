@@ -25,7 +25,7 @@ function isActive(as, x) {
     res = false;
   }
 
-  console.log("isActive "+res);
+  //console.log("isActive "+res);
   return res;
 }
 
@@ -40,11 +40,19 @@ class Event extends Component {
       marked: false,
     };
     this.handleMarkEvent = this.handleMarkEvent.bind(this);
+    this.handleUnMarkEvent = this.handleUnMarkEvent.bind(this);
     this.handleHighLightEvent = this.handleHighLightEvent.bind(this);
   }
 
-  handleMarkEvent(e) {
-    this.setState({marked: !this.state.marked});
+  handleMarkEvent(e, y) {
+    this.setState({marked: true});
+    console.log("handleMarkEvent "+this.props.markedW);
+    this.props.onMarked(y, this.handleUnMarkEvent);
+  }
+
+  handleUnMarkEvent(e) {
+    this.setState({marked: false});
+    console.log("handleUnMarkEvent ");
   }
 
   handleHighLightEvent(e) {
@@ -54,26 +62,23 @@ class Event extends Component {
   render() {
     let color = getBoxColor(this.props.paintschema, this.props.setNewColor, getEvent(this.props.comp, this.props.id).class);
     let textColor = getTextColor(color);
-    let divStyle = {height: MinutesToPX(this.state.duration),
-                    top: MinutesToPX(this.state.starttime-parseInt(getDayStarttime(this.props.comp, this.state.event.day), 10)),
+    let heightE = MinutesToPX(this.state.duration);
+    let topE = MinutesToPX(this.state.starttime-parseInt(getDayStarttime(this.props.comp, this.state.event.day), 10));
+    let divStyle = {height: heightE,
+                    top: topE,
                     background: color,
                     color: textColor,
                   };
-    let lineStyle = {stroke: "black", "strokeWidth": 4};
 
     return (
         <div id={this.props.id}
           style={divStyle}
           className="event-main"
-          onClick={this.handleHighLightEvent}
+          onDoubleClick={this.handleHighLightEvent}
+          onClick={e => this.handleMarkEvent(e, topE)}
         >
           <Stack anchor="top">
             {this.state.event.class+" "+this.state.event.gren}
-            {this.state.marked &&
-              <svg height={20} width={500}>
-                <line x1={0} y1={0} x2={600} y2={0} style={lineStyle} />
-              </svg>
-            }
             {isActive(this.props.activeIDs, this.props.id) &&
               <HLIcon color="accent-1" />
             }

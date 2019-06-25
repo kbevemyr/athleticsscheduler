@@ -2,27 +2,50 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { getArenas, getTypeArenas, getDayStarttime, getDayEndtime, getBoxSize } from './misc';
+import { getTypeArenas, getDayStarttime, getDayEndtime, getBoxSize } from './misc';
 
 import Arena from './Arena';
 import Timeline from './Timeline';
-import { Box } from 'grommet';
+import { Box, Stack } from 'grommet';
 
 class CompDay extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      arenas: getArenas(this.props.comp, this.props.id),
       starttime: getDayStarttime(this.props.comp, this.props.id),
       endtime: getDayEndtime(this.props.comp, this.props.id),
       runarenas: getTypeArenas(this.props.comp, this.props.id, "run"),
       techarenas: getTypeArenas(this.props.comp, this.props.id, "tech"),
+
+      marked: false,
+      markedPosY: 0,
+      unset: "",
     };
+
+    this.handleMarked = this.handleMarked.bind(this);
+    this.handleUnMarked = this.handleUnMarked.bind(this);
+  }
+
+  handleMarked(y,cb) {
+    console.log("handleMarked: "+y);
+    this.setState({marked: true, markedPosY: y, unset: cb});
+  }
+
+  handleUnMarked() {
+    console.log("handleUnMarked");
+    this.setState({marked: false});
+    //this.state.unset;
   }
 
   render() {
     let key = new Date().valueOf();
     var arenaheight = getBoxSize(this.state.starttime, this.state.endtime);
+    var wRun = (this.state.runarenas.length + 0.5)*100;
+    var wTech = (this.state.techarenas.length + 0.5)*100;
+    let hOffset = 26;
+
+    // Line present when Event is marked.
+    let lineStyle = {stroke: "black", "strokeWidth": 3};
 
     return (
       <Box className="compday-main">
@@ -30,28 +53,46 @@ class CompDay extends Component {
           {this.props.name}
         </Box>
         <Box
-          direction="row"
+          direction="row-responsive"
           pad={{horizontal:"small", vertical:"xxsmall"}}>
-          <Box
-            direction="row"
-            margin={{horizontal:"small", vertical:"xxsmall"}}
-            className="compday-areanaarea">
-            <Timeline key={key} id={key} height={arenaheight} day={this.props.id} grentyp="run"/>
-            {this.state.runarenas.map(x =>
-                  (<Arena key={x} id={x} day={this.props.id} height={arenaheight} />)
-                )
+          <Stack>
+            <Box
+              direction="row"
+              margin={{horizontal:"small", vertical:"xxsmall"}}
+              className="compday-areanaarea">
+              <Timeline key={key} id={key} height={arenaheight} day={this.props.id} grentyp="run"/>
+              {this.state.runarenas.map(x =>
+                    (<Arena key={x} id={x} day={this.props.id} height={arenaheight} markedW={wTech} onMarkedEvent={this.handleMarked}/>)
+                  )
+              }
+            </Box>
+            {this.state.marked &&
+              <Box margin={{horizontal:"small", vertical:"xxsmall"}} onClick={this.handleUnMarked}>
+                <svg height={arenaheight} width={wRun}>
+                  <line x1={0} y1={this.state.markedPosY+hOffset} x2={wRun} y2={this.state.markedPosY+hOffset} style={lineStyle} />
+                </svg>
+              </Box>
             }
-          </Box>
-          <Box
-            direction="row"
-            margin={{horizontal:"small", vertical:"xxsmall"}}
-            className="compday-areanaarea">
-            <Timeline key={key} id={key} height={arenaheight} day={this.props.id} grentyp="tech"/>
-            {this.state.techarenas.map(x =>
-                  (<Arena key={x} id={x} day={this.props.id} height={arenaheight} />)
-                )
+          </Stack>
+          <Stack>
+            <Box
+              direction="row"
+              margin={{horizontal:"small", vertical:"xxsmall"}}
+              className="compday-areanaarea">
+              <Timeline key={key} id={key} height={arenaheight} day={this.props.id} grentyp="tech"/>
+              {this.state.techarenas.map(x =>
+                    (<Arena key={x} id={x} day={this.props.id} height={arenaheight} markedW={wTech} onMarkedEvent={this.handleMarked}/>)
+                  )
+              }
+            </Box>
+            {this.state.marked &&
+              <Box margin={{horizontal:"small", vertical:"xxsmall"}} onClick={this.handleUnMarked}>
+                <svg height={arenaheight} width={wTech}>
+                  <line x1={0} y1={this.state.markedPosY+hOffset} x2={wTech} y2={this.state.markedPosY+hOffset} style={lineStyle} />
+                </svg>
+              </Box>
             }
-          </Box>
+          </Stack>
         </Box>
       </Box>
     );
