@@ -5,6 +5,7 @@ import {
 
 import { COLORS, defaultColor } from '../misc';
 import { healthCheckSchema } from '../misc';
+import { getClassEventsID } from '../misc';
 
 import { localComps } from './MOCKdata';
 
@@ -86,13 +87,34 @@ function rootReducer (state = initialstate, action) {
 
       case SET_ACTIVE_CLASS:
       //TOdo: find all events for a class and add their id to activeID
+        var es = getClassEventsID(state.competition, action.c);
+        console.log("es ");console.dir(es);
+        var newActiveID = Object.assign({}, state.activeID);
+        for(let e of es) {
+          setActiveID(newActiveID, e);
+        }
         return Object.assign({}, state, {
-          activeC: action.c
+          activeC: action.c,
+          activeID: newActiveID,
         })
 
     default:
       return state;
   }
+}
+
+// helpers
+function setActiveID(aid, id) {
+  console.log("setActiveID");
+  console.dir(aid);
+  var status = aid[id];
+  if (status == null) {
+    status = true;
+  } else {
+    status = !status;
+  }
+  aid[id] = status;
+  console.log(aid);
 }
 
 export default rootReducer;

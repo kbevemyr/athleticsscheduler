@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Stack } from 'grommet';
 import { Accessibility as HLIcon } from 'grommet-icons';
 
-import { setColor, setActiveEvent } from './store/actions';
+import { setColor, setActiveEvent, setActiveClass } from './store/actions';
 import { defaultColor, getTextColor, MinutesToPX, getEvent, getDayStarttime } from './misc';
 
 function getBoxColor(paintSchema, newColor, eventClass) {
@@ -56,7 +56,8 @@ class Event extends Component {
   }
 
   handleHighLightEvent(e) {
-    this.props.setTheActiveEvent(this.props.id);
+    //this.props.setTheActiveEvent(this.props.id);
+    this.props.setTheActiveClass(this.state.event.class);
   }
 
   render() {
@@ -100,6 +101,7 @@ const mapDispatchToProps = dispatch => {
   return {
     setNewColor: (c) => dispatch( setColor(c) ),
     setTheActiveEvent: (id) => dispatch( setActiveEvent(id) ),
+    setTheActiveClass: (cl) => dispatch( setActiveClass(cl) ),
   }
 }
 

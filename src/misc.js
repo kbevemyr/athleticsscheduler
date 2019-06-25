@@ -135,12 +135,16 @@ export function getAllGrens (events) {
 export function getArena(comp, aid) {
   //console.log("getArena. "+aid);
   let arena = comp.arenas.find(x => x.id === aid);
-  console.log("getArena. arena("+aid+") = "+JSON.stringify(arena));
+  //console.log("getArena. arena("+aid+") = "+JSON.stringify(arena));
   return arena;
 }
 
 export function getEventsID(comp, arena, day) {
   return comp.events.filter(x => (x.arena === arena && x.day === day)).map(x => x.id);
+}
+
+export function getClassEventsID(comp, c) {
+  return comp.events.filter(x => (x.class === c)).map(x => x.id);
 }
 
 export function getEvent(comp, eid) {
