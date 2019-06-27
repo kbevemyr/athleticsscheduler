@@ -24,6 +24,7 @@ function isActive(as, x) {
   if (res == null) {
     res = false;
   }
+  //if (res) all is false -> no activeID then all schould be active ...
 
   //console.log("isActive "+res);
   return res;
@@ -45,23 +46,36 @@ class Event extends Component {
   }
 
   handleMarkEvent(e, y) {
-    this.setState({marked: true});
-    console.log("handleMarkEvent "+this.props.markedW);
-    this.props.onMarked(y, this.handleUnMarkEvent);
+    if (e.shiftKey) {
+      this.handleHighLightEvent(e);
+    } else {
+      this.setState({marked: true});
+      console.log("handleMarkEvent "+y);
+      this.props.onMarked(y, this.handleUnMarkEvent);
+    }
   }
 
   handleUnMarkEvent(e) {
-    this.setState({marked: false});
-    console.log("handleUnMarkEvent ");
+    if (e.shiftKey) {
+      this.handleHighLightEvent(e);
+    } else {
+      this.setState({marked: false});
+      console.log("handleUnMarkEvent ");
+    }
   }
 
   handleHighLightEvent(e) {
-    //this.props.setTheActiveEvent(this.props.id);
+    console.log("handelHighLightEvent");
     this.props.setTheActiveClass(this.state.event.class);
   }
 
   render() {
-    let color = getBoxColor(this.props.paintschema, this.props.setNewColor, getEvent(this.props.comp, this.props.id).class);
+    let color = getBoxColor(this.props.paintschema, this.props.setNewColor, this.state.event.class);
+    if (isActive(this.props.activeIDs, this.props.id) || Object.keys(this.props.activeIDs).length === 0) {
+      //color = colorLuminance(color, 0.50);
+    } else {
+      color = defaultColor;
+     }
     let textColor = getTextColor(color);
     let heightE = MinutesToPX(this.state.duration);
     let topE = MinutesToPX(this.state.starttime-parseInt(getDayStarttime(this.props.comp, this.state.event.day), 10));
@@ -81,7 +95,7 @@ class Event extends Component {
           <Stack anchor="top">
             {this.state.event.class+" "+this.state.event.gren}
             {isActive(this.props.activeIDs, this.props.id) &&
-              <HLIcon color="accent-1" />
+              <HLIcon color="status-critical" />
             }
           </Stack>
         </div>

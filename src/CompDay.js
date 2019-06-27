@@ -42,10 +42,10 @@ class CompDay extends Component {
     var arenaheight = getBoxSize(this.state.starttime, this.state.endtime);
     var wRun = (this.state.runarenas.length + 0.5)*100;
     var wTech = (this.state.techarenas.length + 0.5)*100;
-    let hOffset = 26;
+    let hOffset = 27;
 
     // Line present when Event is marked.
-    let lineStyle = {stroke: "black", "strokeWidth": 3};
+    let lineStyle = {stroke: "#333333", "strokeWidth": 2};
 
     return (
       <Box className="compday-main">
@@ -62,7 +62,7 @@ class CompDay extends Component {
               className="compday-areanaarea">
               <Timeline key={key} id={key} height={arenaheight} day={this.props.id} grentyp="run"/>
               {this.state.runarenas.map(x =>
-                    (<Arena key={x} id={x} day={this.props.id} height={arenaheight} markedW={wTech} onMarkedEvent={this.handleMarked}/>)
+                    (<Arena key={x} id={x} day={this.props.id} height={arenaheight} onMarkedEvent={this.handleMarked}/>)
                   )
               }
             </Box>
@@ -81,7 +81,7 @@ class CompDay extends Component {
               className="compday-areanaarea">
               <Timeline key={key} id={key} height={arenaheight} day={this.props.id} grentyp="tech"/>
               {this.state.techarenas.map(x =>
-                    (<Arena key={x} id={x} day={this.props.id} height={arenaheight} markedW={wTech} onMarkedEvent={this.handleMarked}/>)
+                    (<Arena key={x} id={x} day={this.props.id} height={arenaheight} onMarkedEvent={this.handleMarked}/>)
                   )
               }
             </Box>

@@ -61,7 +61,7 @@ function makeJSONRequest(opts) {
 export function serverGet(key, params) {
     var opts =
         { method: "GET",
-          url: "https://gt16.se/idrott/"+key,
+          url: "https://"+window.location.hostname+"/idrott/"+key,
         };
 
     if (params) {
@@ -80,7 +80,7 @@ export function serverPost(key, params) {
 
   var opts =
          { method: "POST",
-           url: "https://gt16.se/idrott/"+key,
+           url: "https://"+window.location.hostname+"/idrott/"+key,
            contentType: "application/json",
           };
 
@@ -97,7 +97,7 @@ export function serverPost(key, params) {
 export function serverLogin(username, password, remember) {
   var opts =
          { method: "GET",
-           url: "https://"+window.location.hostname+"/people/login",
+           url: "https://"+window.location.hostname+"/idrott/login",
            query:  ("user="+username+
                     "&password="+encodeURIComponent(password)+
                     "&remember="+remember+

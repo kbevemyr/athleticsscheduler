@@ -86,15 +86,23 @@ function rootReducer (state = initialstate, action) {
         })
 
       case SET_ACTIVE_CLASS:
-      //TOdo: find all events for a class and add their id to activeID
+      // find all events for a class and add their id to activeID
         var es = getClassEventsID(state.competition, action.c);
         console.log("es ");console.dir(es);
-        var newActiveID = Object.assign({}, state.activeID);
-        for(let e of es) {
-          setActiveID(newActiveID, e);
+
+        var newActiveID = {};
+        var newActiveC = "";
+        // if class is active then unset class else add active ids
+        if (state.activeC !== action.c) {
+          //var newActiveID = Object.assign({}, state.activeID;
+          for(let e of es) {
+            setActiveID(newActiveID, e);
+          }
+          newActiveC = action.c;
         }
+
         return Object.assign({}, state, {
-          activeC: action.c,
+          activeC: newActiveC,
           activeID: newActiveID,
         })
 
