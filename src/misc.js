@@ -81,6 +81,27 @@ export function getTextColor(color) {
     }
 }
 
+/*
+  http://www.sitepoint.com/javascript-generate-lighter-darker-color/
+*/
+export function colorLuminance(hex, lum) {
+  // Validate hex string
+  hex = String(hex).replace(/[^0-9a-f]/gi, "");
+  if (hex.length < 6) {
+    hex = hex.replace(/(.)/g, '$1$1');
+  }
+  lum = lum || 0;
+  // Convert to decimal and change luminosity
+  var rgb = "#",
+    c;
+  for (var i = 0; i < 3; ++i) {
+    c = parseInt(hex.substr(i * 2, 2), 16);
+    c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
+    rgb += ("00" + c).substr(c.length);
+  }
+  return rgb;
+}
+
 
 /*
   Diverse funktioner, borde flyttas till actions?
@@ -206,10 +227,10 @@ export function overlap(e1, e2) {
   const et2 = e2.starttime + e2.duration;
 
   if(e1.day === e2.day) {
-    if(st2 > st1 && st2 < et1) {
+    if(st2 < et1 && st2 > st1) {
       response = true;
     }
-    if(st1 > et2 && et2 < et1) {
+    if(st1 < et2 && st1 > st2) {
       response = true;
     }
   }
@@ -225,6 +246,10 @@ function sameEvent(e1,e2) {
   }
 }
 
+function pp(e) {
+  return (e.id+", "+e.starttime+";"+e.duration+"  "+e.class+":"+e.gren);
+}
+
 // Checks the whole schema for time clashes between events.
 export function healthCheckSchema(eventsData) {
   var response = true;
@@ -236,7 +261,7 @@ export function healthCheckSchema(eventsData) {
       if(!sameEvent(rowi,rowj)) {
         if(rowi.class === rowj.class) {
           if(overlap(rowi, rowj)) {
-            console.log("not ok: "+JSON.stringify(rowi)+" overlaps with "+JSON.stringify(rowj));
+            console.log("OVERLAP: ["+pp(rowi)+"] || ["+pp(rowj)+"]");
             abnormalEvents.push(rowi);
             response = false;
           }
