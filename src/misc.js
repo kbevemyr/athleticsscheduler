@@ -108,7 +108,7 @@ export function colorLuminance(hex, lum) {
 */
 
 export function getDayStarttime(comp, day) {
-  var startvalues = comp.events.filter(x => x.day === day).map(x => parseInt(x.starttime,10)).sort((a,b) => a-b);
+  var startvalues = comp.events.filter(x => x.day === day).map(x => parseInt(x.starttime,10)-parseInt(x.preptime,10)).sort((a,b) => a-b);
   return startvalues[0];
 }
 
@@ -221,10 +221,10 @@ export function getBoxSize(start, end) {
 
 export function overlap(e1, e2) {
   var response = false;
-  const st1 = e1.starttime;
-  const et1 = e1.starttime + e1.duration;
-  const st2 = e2.starttime;
-  const et2 = e2.starttime + e2.duration;
+  const st1 = parseInt(e1.starttime, 10);
+  const et1 = parseInt(e1.starttime,10) + parseInt(e1.duration, 10);
+  const st2 = parseInt(e2.starttime, 10);
+  const et2 = parseInt(e2.starttime, 10) + parseInt(e2.duration, 10);
 
   if(e1.day === e2.day) {
     if(st2 < et1 && st2 > st1) {
@@ -252,8 +252,8 @@ function pp(e) {
 
 // Checks the whole schema for time clashes between events.
 export function healthCheckSchema(eventsData) {
-  var response = true;
-  var abnormalEvents = [];
+  var out = true;
+  var abnormalEvents = {};
   for(var i=0; i < eventsData.length; i++) {
     var rowi = eventsData[i];
     for(var j=0; j < eventsData.length; j++) {
@@ -262,12 +262,14 @@ export function healthCheckSchema(eventsData) {
         if(rowi.class === rowj.class) {
           if(overlap(rowi, rowj)) {
             console.log("OVERLAP: ["+pp(rowi)+"] || ["+pp(rowj)+"]");
-            abnormalEvents.push(rowi);
-            response = false;
+            //abnormalEvents.push(rowi);
+            abnormalEvents[rowi.id] = true;
+            out = false;
           }
         }
       }
     }
   }
-  return response;
+  console.log("healthCheckSchema : "+out+" "+JSON.stringify(abnormalEvents));
+  return abnormalEvents;
 }

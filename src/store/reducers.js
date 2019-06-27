@@ -1,6 +1,6 @@
 import {
   FETCH_USERDATA, FETCH_COMPETITION, SET_NEWCOLOR, SAVE_COMPETITION,
-  UPDATE_EVENT, SET_ACTIVE_EVENT, SET_ACTIVE_CLASS
+  UPDATE_EVENT, SET_ACTIVE_EVENT, SET_ACTIVE_CLASS,
 } from './actions';
 
 import { COLORS, defaultColor } from '../misc';
@@ -17,8 +17,6 @@ const EmptyCompetition = {
             "days": [],
             "arenas": [],
             "events": [],
-            "dxa": [],
-            "axe": []
         };
         */
 
@@ -29,6 +27,7 @@ const initialstate = {
   painting: [], // Iden är att det ska vara en lista av klass/colorid.
   activeID: {},
   activeC: "",
+  overlap: {},
 }
 
 function rootReducer (state = initialstate, action) {
@@ -54,11 +53,12 @@ function rootReducer (state = initialstate, action) {
         })
 
       case FETCH_COMPETITION:
-        healthCheckSchema(action.data.events);
+        let os = healthCheckSchema(action.data.events);
         return Object.assign({}, state, {
           competition: action.data,
           colorCount: 0,
           painting: [],
+          overlap: os,
         })
 
       case SAVE_COMPETITION:
@@ -94,9 +94,8 @@ function rootReducer (state = initialstate, action) {
         var newActiveC = "";
         // if class is active then unset class else add active ids
         if (state.activeC !== action.c) {
-          //var newActiveID = Object.assign({}, state.activeID;
           for(let e of es) {
-            setActiveID(newActiveID, e);
+            setID(newActiveID, e);
           }
           newActiveC = action.c;
         }
@@ -112,7 +111,7 @@ function rootReducer (state = initialstate, action) {
 }
 
 // helpers
-function setActiveID(aid, id) {
+function setID(aid, id) {
   console.log("setActiveID");
   console.dir(aid);
   var status = aid[id];

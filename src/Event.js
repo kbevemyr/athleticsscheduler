@@ -19,14 +19,26 @@ function getBoxColor(paintSchema, newColor, eventClass) {
   return color;
 }
 
-function isActive(as, x) {
-  var res = as[x];
+function isActive(xs, x) {
+  var res = xs[x];
   if (res == null) {
     res = false;
   }
   //if (res) all is false -> no activeID then all schould be active ...
+  if (Object.keys(xs).length === 0) {
+    res = true;
+  }
 
   //console.log("isActive "+res);
+  return res;
+}
+
+function isOverlap(xs, x) {
+  var res = xs[x];
+  if (res == null) {
+    res = false;
+  }
+
   return res;
 }
 
@@ -38,6 +50,7 @@ class Event extends Component {
       event: getEvent(this.props.comp, this.props.id),
       starttime: parseInt(getEvent(this.props.comp, this.props.id).starttime, 10),
       duration: parseInt(getEvent(this.props.comp, this.props.id).duration, 10),
+      preptime: parseInt(getEvent(this.props.comp, this.props.id).preptime, 10),
       marked: false,
     };
     this.handleMarkEvent = this.handleMarkEvent.bind(this);
@@ -71,34 +84,63 @@ class Event extends Component {
 
   render() {
     let color = getBoxColor(this.props.paintschema, this.props.setNewColor, this.state.event.class);
-    if (isActive(this.props.activeIDs, this.props.id) || Object.keys(this.props.activeIDs).length === 0) {
+    if (isActive(this.props.activeIDs, this.props.id)) {
       //color = colorLuminance(color, 0.50);
     } else {
       color = defaultColor;
-     }
+    }
+
+    // Event Main Box
     let textColor = getTextColor(color);
     let heightE = MinutesToPX(this.state.duration);
     let topE = MinutesToPX(this.state.starttime-parseInt(getDayStarttime(this.props.comp, this.state.event.day), 10));
-    let divStyle = {height: heightE,
-                    top: topE,
-                    background: color,
-                    color: textColor,
-                  };
+    let divStyle = {
+      height: heightE,
+      background: color,
+      color: textColor,
+    };
+
+    // Event Prep Box
+    let prepColor = defaultColor;
+    let prepTextColor = getTextColor(prepColor);
+    let prepHeightE = MinutesToPX(this.state.preptime);
+    let prepTopE = topE - prepHeightE;
+    let prepDivStyle = {
+      height: prepHeightE,
+      background: prepColor,
+      color: prepTextColor,
+    };
+    let mainStyle = {
+      top: prepTopE,
+    };
 
     return (
-        <div id={this.props.id}
+      <div
+        className="event-main"
+        style={mainStyle}
+        >
+      {this.state.preptime >0 &&
+        <div
+          id={"prep"+this.props.id}
+          style={prepDivStyle}
+        >
+          {"ställtid: "+this.state.preptime+" min"}
+        </div>
+      }
+        <div
+          id={this.props.id}
           style={divStyle}
-          className="event-main"
           onDoubleClick={this.handleHighLightEvent}
           onClick={e => this.handleMarkEvent(e, topE)}
         >
           <Stack anchor="top">
             {this.state.event.class+" "+this.state.event.gren}
-            {isActive(this.props.activeIDs, this.props.id) &&
+            {isOverlap(this.props.overlaps, this.props.id) &&
               <HLIcon color="status-critical" />
             }
           </Stack>
         </div>
+      </div>
     );
   }
 }
@@ -109,6 +151,7 @@ const mapStateToProps = state => ({
   comp: state.competition,
   paintschema: state.painting,
   activeIDs: state.activeID,
+  overlaps: state.overlap,
 });
 
 const mapDispatchToProps = dispatch => {
