@@ -7,6 +7,8 @@ import CompDay from './CompDay';
 
 import { Tabs, Tab, Box, Text } from 'grommet';
 
+import { Document, Page } from 'react-pdf';
+
 class Competition extends Component {
   constructor(props) {
     super(props);
@@ -28,6 +30,9 @@ class Competition extends Component {
           {this.props.days.map(x =>
             (
               <Tab key={"T."+x.id} title={x.name}>
+                <Document>
+                  <Page />
+                </Document>
                 <CompDay
                   key={x.id}
                   id={x.id}

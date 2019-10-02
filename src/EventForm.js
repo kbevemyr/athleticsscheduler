@@ -9,16 +9,13 @@ import { timeStrToMinutes, presentTime, getEmptyEvent, getAllArenas, getAllClass
 class EventForm extends Component {
   constructor(props) {
     super(props);
-    var currentEvent = this.props.comp.events.find(x => x.id === this.props.id);
-    if (currentEvent === undefined) {
-      currentEvent = getEmptyEvent();
-    }
+    let currentEvent = getEmptyEvent();
     this.state = {
-      idValue: this.props.id,
       dayValue: currentEvent.day,
       arenaValue: currentEvent.arena,
       starttimeStr: presentTime(currentEvent.starttime),
       durationStr: presentTime(currentEvent.duration),
+      preptimeStr: presentTime(currentEvent.preptime),
       classValue: currentEvent.class,
       grenValue: currentEvent.gren,
     };
@@ -30,13 +27,15 @@ class EventForm extends Component {
   handleSubmit(event) {
     console.log("State: ",this.state);
     var update = {
-      id: this.state.idValue,
+      id: this.props.id,
       day: this.state.dayValue,
       arena: this.state.arenaValue,
       starttime: timeStrToMinutes(this.state.starttimeStr),
       duration: timeStrToMinutes(this.state.durationStr),
+      preptime: timeStrToMinutes(this.state.preptimeStr),
       class: this.state.classValue,
       gren: this.state.grenValue,
+      grentype: this.state.grentypeValue,
     };
     console.log("Submit: ", update);
     this.props.updateTheEvent(update);
@@ -48,10 +47,24 @@ class EventForm extends Component {
   }
 
   render() {
+    var theEvent = this.props.comp.events.find(x => x.id === this.props.id);
+    if (theEvent != null) {
+      this.setState({
+        dayValue: theEvent.day,
+        arenaValue: theEvent.arena,
+        starttimeStr: presentTime(theEvent.starttime),
+        durationStr: presentTime(theEvent.duration),
+        preptimeStr: presentTime(theEvent.preptime),
+        classValue: theEvent.class,
+        grenValue: theEvent.gren,
+      });
+    }
+
     let dOptions = this.props.comp.days.map(x => x.name);
     let cOptions = getAllClasses(this.props.comp.events);
     let aOptions = getAllArenas(this.props.comp.events);
     let gOptions = getAllGrens(this.props.comp.events);
+    let gtOptions = [ "run", "tech" ];
 
     // events
     return (
@@ -79,6 +92,7 @@ class EventForm extends Component {
           label="Starttid"
           component={MaskedInput}
           value={this.state.starttimeStr}
+          onChange={(e) => this.setState({starttimeStr: e.target.value})}
           mask={[
             {
               length: 2,
@@ -98,6 +112,27 @@ class EventForm extends Component {
             label="Duration"
             component={MaskedInput}
             value={this.state.durationStr}
+            onChange={(e) => this.setState({durationStr: e.target.value})}
+            mask={[
+              {
+                length: 1,
+                regexp: /^1[1-2]$|^[0-9]$/,
+                placeholder: 'h',
+              },
+              { fixed: ':' },
+              {
+                length: 2,
+                regexp: /^[0-5][0-9]$|^[0-9]$/,
+                placeholder: 'mm',
+              },
+            ]}
+          />
+          <FormField
+            name="preptime"
+            label="Ställtid"
+            component={MaskedInput}
+            value={this.state.preptimeStr}
+            onChange={(e) => this.setState({preptimeStr: e.target.value})}
             mask={[
               {
                 length: 1,
@@ -127,6 +162,14 @@ class EventForm extends Component {
             onChange = {(e) => this.setState({grenValue: e.value})}
             component={Select}
             options={gOptions}
+          />
+          <FormField
+            name="grentype"
+            label="Grentyp"
+            value = {this.state.grentypeValue}
+            onChange = {(e) => this.setState({grentypeValue: e.value})}
+            component={Select}
+            options={gtOptions}
           />
           <Button type="submit" primary label="Submit" />
         </Form>

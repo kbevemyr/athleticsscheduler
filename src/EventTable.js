@@ -62,6 +62,18 @@ class EventTable extends Component {
           ),
         },
         {
+          property: 'preptime',
+          header: <Text>Ställtid</Text>,
+          render: x => (
+            <Box>
+            <Clock type="digital"
+                   precision="minutes"
+                   time={"T"+presentTime(x.preptime)+":00"}
+            />
+            </Box>
+          ),
+        },
+        {
           property: 'class',
           header: <Text>Class</Text>,
         },
@@ -70,12 +82,16 @@ class EventTable extends Component {
           header: <Text>Gren</Text>,
         },
         {
+          property: 'grentype',
+          header: <Text>Grentyp</Text>,
+        },
+        {
           property: 'editEvent',
           render: x => (
             <Button
               icon={<Edit />}
               lable="Edit"
-              onClick={() => this.props.setTheActiveEvent(x.id)}
+              onClick={(e) => this.props.onEdit(e, x.id)}
             />
           ),
         },
@@ -86,17 +102,6 @@ class EventTable extends Component {
   )
   }
 }
-/*
-render: x => (
-  <Box>
-  <Clock type="digital"
-         precision="minutes"
-         time={"T"+presentTime(x.starttime)+":00"}
-  />
-  </Box>
-),
-
-*/
 
   // Store handling
 

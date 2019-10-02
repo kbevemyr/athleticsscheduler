@@ -29,10 +29,6 @@ class ArenaTable extends Component {
                 property: 'name',
                 header: <Text>Name</Text>,
               },
-              {
-                property: 'grentyp',
-                header: <Text>Grentyp</Text>,
-              },
             ]}
             data={this.props.arenas}
             />

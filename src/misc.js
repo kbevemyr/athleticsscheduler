@@ -175,7 +175,7 @@ export function getEvent(comp, eid) {
 
 export function getEmptyEvent() {
   var newId = 9999; //TODO
-  return {id: newId, day: "", arena: "", starttime: "", duration: "", class: "", gren: ""}
+  return {id: newId, day: "", arena: "", starttime: "", duration: "", preptime: "", class: "", gren: "", grentype: ""}
 }
 
 /**

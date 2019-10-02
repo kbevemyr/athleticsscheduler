@@ -58,6 +58,8 @@ function rootReducer (state = initialstate, action) {
           competition: action.data,
           colorCount: 0,
           painting: [],
+          activeID: {},
+          activeC: "",
           overlap: os,
         })
 
