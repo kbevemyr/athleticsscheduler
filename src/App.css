@@ -15,6 +15,14 @@
   color: white;
 }
 
+.App-header #butSchema {
+  background: url(/images/view_column-24px.svg) center center no-repeat;
+}
+
+.App-header #butTable {
+  background: url(/images/view_list-24px.svg) center center no-repeat;
+}
+
 :root {
   --event-width: 100px;
   --time-width: calc(var(--event-width) / 2);

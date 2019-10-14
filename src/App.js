@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import { Route, Switch, withRouter } from "react-router-dom";
+import { Route, Switch, Link, withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
 import './App.css';
@@ -9,8 +9,9 @@ import EventForm from './EventForm';
 import Settings from './Settings';
 import { getCompetitionData, saveCompetitionData } from './store/actions';
 
-import { Grommet, grommet, Box, Menu } from 'grommet';
+import { Grommet, grommet, Box, Anchor, Menu } from 'grommet';
 import { Menu as MenuIcon } from 'grommet-icons';
+import { Table, Columns } from 'grommet-icons';
 
 class App extends Component {
   constructor(props) {
@@ -40,14 +41,11 @@ class App extends Component {
           align='center'
           flex={false}
         >
-        <Menu
-          dropAlign={{ top: 'top', right: 'left' }}
-          items={[
-                  { label: 'tables', href: "#tables"},
-                  { label: 'schema', href: "#"},
-                 ]}
-          icon={<MenuIcon color='white' />}
-          />
+          <Box direction='row'>
+            <Anchor href="#tables" icon={<Table />} />
+            <Anchor href="#" icon={<Columns />} />
+          </Box>
+
           <strong>Athletics Scheduler</strong>
           <Menu
             dropAlign={{ top: 'top', right: 'right' }}
@@ -61,6 +59,7 @@ class App extends Component {
             icon={<MenuIcon color='white' />}
             />
         </Box>
+
         <Switch>
           <Route path="/" exact component={Competition} />
           <Route path="/tables" component={TableView} />
