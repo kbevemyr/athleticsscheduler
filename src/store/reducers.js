@@ -1,6 +1,6 @@
 import {
   FETCH_USERDATA, FETCH_COMPETITION, SET_NEWCOLOR, SAVE_COMPETITION,
-  UPDATE_EVENT, SET_ACTIVE_EVENT, SET_ACTIVE_CLASS,
+  UPDATE_EVENT, SET_ACTIVE_EVENT, SET_ACTIVE_CLASS, UPDATE_OVERLAP,
 } from './actions';
 
 import { COLORS, defaultColor } from '../misc';
@@ -53,14 +53,12 @@ function rootReducer (state = initialstate, action) {
         })
 
       case FETCH_COMPETITION:
-        let os = healthCheckSchema(action.data.events);
         return Object.assign({}, state, {
           competition: action.data,
           colorCount: 0,
           painting: [],
           activeID: {},
           activeC: "",
-          overlap: os,
         })
 
       case SAVE_COMPETITION:
@@ -68,6 +66,7 @@ function rootReducer (state = initialstate, action) {
           saved: action.timestamp,
         })
 
+      // TODO: redo the healthCheckSchema
       case UPDATE_EVENT:
         var updatedEvents = state.competition.events.map((x) => {if(x.id === action.event.id) {return action.event;} else {return x;}});
         return Object.assign({}, state, {
@@ -105,6 +104,11 @@ function rootReducer (state = initialstate, action) {
         return Object.assign({}, state, {
           activeC: newActiveC,
           activeID: newActiveID,
+        })
+
+      case UPDATE_OVERLAP:
+        return Object.assign({}, state, {
+          overlap: Object.assign({}, state.overlap, action.collision),
         })
 
     default:

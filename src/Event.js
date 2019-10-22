@@ -6,7 +6,7 @@ import { Stack } from 'grommet';
 import { Accessibility as HLIcon } from 'grommet-icons';
 
 import { setColor, setActiveEvent, setActiveClass } from './store/actions';
-import { defaultColor, getTextColor, MinutesToPX, getEvent, getDayStarttime } from './misc';
+import { defaultColor, getTextColor, MinutesToPX, getEvent, getDayStarttime, isOverlap } from './misc';
 
 function getBoxColor(paintSchema, newColor, eventClass) {
   var color = defaultColor;
@@ -30,15 +30,6 @@ function isActive(xs, x) {
   }
 
   //console.log("isActive "+res);
-  return res;
-}
-
-function isOverlap(xs, x) {
-  var res = xs[x];
-  if (res == null) {
-    res = false;
-  }
-
   return res;
 }
 

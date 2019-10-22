@@ -4,8 +4,9 @@ import { connect } from 'react-redux';
 
 import './App.css';
 import CompDay from './CompDay';
+import CollisionPanel from './CollisionPanel';
 
-import { Tabs, Tab, Box, Text } from 'grommet';
+import { Grid, Tabs, Tab, Box, Text } from 'grommet';
 
 import PrintButton from './PrintButton';
 import Page from './Page';
@@ -21,30 +22,44 @@ class Competition extends Component {
 
   render() {
     return (
-      <Box key="competitionschema" pad="small">
-        <Box>
+      <Grid key="competitionschema"
+        rows={['xsmall', 'auto']}
+        columns={['auto', '1/4']}
+        gap="small"
+        areas={[
+          { name: 'header', start: [0,0], end: [1,0] },
+          { name: 'main', start: [0,1], end: [0,1] },
+          { name: 'notes', start: [1,1], end: [1,1] },
+        ]}
+      >
+        <Box gridArea='header'>
           <Text>{this.props.name} ({this.props.compID})</Text>
           Schema Version: {this.props.version}
+          <PrintButton id={"pdfpage"} label={"Print PDF page"} />
         </Box>
 
-        <PrintButton id={"pdfpage"} label={"Print PDF page"} />
+        <Box gridArea='main' direction="row">
+          <Tabs justify="start">
+            {this.props.days.map(x =>
+              (
+                <Tab key={"T."+x.id} title={x.name}>
+                  <Page id='pdfpage'>
+                    <CompDay
+                      key={x.id}
+                      id={x.id}
+                      name={x.name}
+                    />
+                  </Page>
+                </Tab>
+              )
+            )}
+          </Tabs>
+        </Box>
 
-        <Tabs justify="start">
-          {this.props.days.map(x =>
-            (
-              <Tab key={"T."+x.id} title={x.name}>
-                <Page id='pdfpage'>
-                  <CompDay
-                    key={x.id}
-                    id={x.id}
-                    name={x.name}
-                  />
-                </Page>
-              </Tab>
-            )
-          )}
-        </Tabs>
-      </Box>
+        <Box gridArea='notes'>
+          <CollisionPanel />
+        </Box>
+      </Grid>
     );
   }
 }

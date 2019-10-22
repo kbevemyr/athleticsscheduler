@@ -174,7 +174,7 @@ export function getEvent(comp, eid) {
 }
 
 export function getEmptyEvent() {
-  var newId = 9999; //TODO
+  var newId = 9999; //TODO, krav att det är ett unikt id, id mängden behöver inte vara ordningsbara
   return {id: newId, day: "", arena: "", starttime: "", duration: "", preptime: "", class: "", gren: "", grentype: ""}
 }
 
@@ -262,8 +262,7 @@ export function healthCheckSchema(eventsData) {
         if(rowi.class === rowj.class) {
           if(overlap(rowi, rowj)) {
             console.log("OVERLAP: ["+pp(rowi)+"] || ["+pp(rowj)+"]");
-            //abnormalEvents.push(rowi);
-            abnormalEvents[rowi.id] = true;
+            abnormalEvents[rowi.id] = rowj.id;
             out = false;
           }
         }
@@ -272,4 +271,14 @@ export function healthCheckSchema(eventsData) {
   }
   console.log("healthCheckSchema : "+out+" "+JSON.stringify(abnormalEvents));
   return abnormalEvents;
+}
+
+// xs is the same format av returnvalue of healthCheckSchema, x is an ID
+export function isOverlap(xs, x) {
+  var res = xs[x];
+  if (res == null) {
+    res = false;
+  }
+
+  return res;
 }

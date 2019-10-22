@@ -16,10 +16,15 @@ class TableView extends Component {
       name: "Table View",
       editID: -1,
     };
-    this.handleEditEvent = this.handleEditEvent.bind(this);
+    this.handleOpenEditForm = this.handleOpenEditForm.bind(this);
+    this.handleCloseEditForm = this.handleCloseEditForm.bind(this);
   }
 
-  handleEditEvent (e, id) {
+  handleCloseEditForm () {
+    this.setState({editID: -1});
+  }
+
+  handleOpenEditForm (e, id) {
     console.log("I want to edit the event "+id);
     this.setState({editID: id});
   }
@@ -37,11 +42,11 @@ class TableView extends Component {
             <ArenaTable />
           </AccordionPanel>
           <AccordionPanel label="Events">
-            <EventTable onEdit={this.handleEditEvent} />
+            <EventTable onEdit={this.handleOpenEditForm} />
           </AccordionPanel>
         </Accordion>
-        {(this.props.id !== -1) &&
-          <EventForm id={this.state.editID}/>
+        {(this.state.editID !== -1) &&
+          <EventForm id={this.state.editID} onDone={this.handleCloseEditForm}/>
         }
       </Box>
   )

@@ -21,7 +21,8 @@ const range = (start, end) => {
     Convert the png into pdf
 */
 
-const PrintButton = ({id, label}) => (<div className="tc mb4 mt2">
+//const PrintButton = ({id, label}) => (<div className="tc mb4 mt2">
+const PrintButton = ({id, label}) => (<div>
   {/*
     Getting pixel height in milimeters:
     https://stackoverflow.com/questions/7650413/pixel-to-mm-equation/27111621#27111621

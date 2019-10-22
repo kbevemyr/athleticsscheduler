@@ -9,6 +9,7 @@ export const SAVE_COMPETITION = 'SAVE_COMPETITION';
 export const UPDATE_EVENT = 'UPDATE_EVENT';
 export const SET_ACTIVE_EVENT = 'SET_ACTIVE_EVENT';
 export const SET_ACTIVE_CLASS = 'SET_ACTIVE_CLASS';
+export const UPDATE_OVERLAP = 'UPDATE_OVERLAP';
 
 
 // Action Creators - Functions that create actions
@@ -61,6 +62,13 @@ export function setActiveClass(c) {
   return {
     type: SET_ACTIVE_CLASS,
     c,
+  }
+}
+
+export function setOverlap(collision) {
+  return {
+    type: UPDATE_OVERLAP,
+    collision,
   }
 }
 

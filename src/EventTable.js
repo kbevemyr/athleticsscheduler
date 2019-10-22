@@ -20,86 +20,87 @@ class EventTable extends Component {
     // events
     return (
       <Box background='light-1' >
-    <DataTable
-      alignSelf="start"
-      size='small'
-      columns={[
-        {
-          property: 'id',
-          header: <Text>Id</Text>,
-          primary: true,
-        },
-        {
-          property: 'day',
-          header: <Text>Day</Text>,
-        },
-        {
-          property: 'arena',
-          header: <Text>Arena</Text>,
-        },
-        {
-          property: 'starttime',
-          header: <Text>Start Time</Text>,
-          render: x => (
-            <Box>
-            <Clock type="digital"
-                   precision="minutes"
-                   time={"T"+presentTime(x.starttime)+":00"}
-            />
-            </Box>
-          ),
-        },
-        {
-          property: 'duration',
-          header: <Text>Duration</Text>,
-          render: x => (
-            <Box>
-            <Clock type="digital"
-                   precision="minutes"
-                   time={"T"+presentTime(x.duration)+":00"}
-            />
-            </Box>
-          ),
-        },
-        {
-          property: 'preptime',
-          header: <Text>Ställtid</Text>,
-          render: x => (
-            <Box>
-            <Clock type="digital"
-                   precision="minutes"
-                   time={"T"+presentTime(x.preptime)+":00"}
-            />
-            </Box>
-          ),
-        },
-        {
-          property: 'class',
-          header: <Text>Class</Text>,
-        },
-        {
-          property: 'gren',
-          header: <Text>Gren</Text>,
-        },
-        {
-          property: 'grentype',
-          header: <Text>Grentyp</Text>,
-        },
-        {
-          property: 'editEvent',
-          render: x => (
-            <Button
-              icon={<Edit />}
-              lable="Edit"
-              onClick={(e) => this.props.onEdit(e, x.id)}
-            />
-          ),
-        },
-      ]}
-      data={this.props.comp.events}
-    />
-    </Box>
-  )
+        <DataTable
+          alignSelf="start"
+          size='small'
+          sortable={true}
+          columns={[
+            {
+              property: 'id',
+              header: <Text>Id</Text>,
+              primary: true,
+            },
+            {
+              property: 'day',
+              header: <Text>Day</Text>,
+            },
+            {
+              property: 'arena',
+              header: <Text>Arena</Text>,
+            },
+            {
+              property: 'starttime',
+              header: <Text>Start Time</Text>,
+              render: x => (
+                <Box>
+                <Clock type="digital"
+                       precision="minutes"
+                       time={"T"+presentTime(x.starttime)+":00"}
+                />
+                </Box>
+              ),
+            },
+            {
+              property: 'duration',
+              header: <Text>Duration</Text>,
+              render: x => (
+                <Box>
+                <Clock type="digital"
+                       precision="minutes"
+                       time={"T"+presentTime(x.duration)+":00"}
+                />
+                </Box>
+              ),
+            },
+            {
+              property: 'preptime',
+              header: <Text>Ställtid</Text>,
+              render: x => (
+                <Box>
+                <Clock type="digital"
+                       precision="minutes"
+                       time={"T"+presentTime(x.preptime)+":00"}
+                />
+                </Box>
+              ),
+            },
+            {
+              property: 'class',
+              header: <Text>Class</Text>,
+            },
+            {
+              property: 'gren',
+              header: <Text>Gren</Text>,
+            },
+            {
+              property: 'grentype',
+              header: <Text>Grentyp</Text>,
+            },
+            {
+              property: 'editEvent',
+              render: x => (
+                <Button
+                  icon={<Edit />}
+                  label="Edit"
+                  onClick={(e) => this.props.onEdit(e, x.id)}
+                />
+              ),
+            },
+          ]}
+          data={this.props.comp.events}
+        />
+      </Box>
+    )
   }
 }
 

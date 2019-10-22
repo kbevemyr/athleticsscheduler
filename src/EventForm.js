@@ -9,6 +9,7 @@ import { timeStrToMinutes, presentTime, getEmptyEvent, getAllArenas, getAllClass
 class EventForm extends Component {
   constructor(props) {
     super(props);
+
     let currentEvent = getEmptyEvent();
     this.state = {
       dayValue: currentEvent.day,
@@ -19,6 +20,20 @@ class EventForm extends Component {
       classValue: currentEvent.class,
       grenValue: currentEvent.gren,
     };
+
+    var theEvent = this.props.comp.events.find(x => x.id === this.props.id);
+    if (theEvent != null) {
+      this.state = {
+        dayValue: theEvent.day,
+        arenaValue: theEvent.arena,
+        starttimeStr: presentTime(theEvent.starttime),
+        durationStr: presentTime(theEvent.duration),
+        preptimeStr: presentTime(theEvent.preptime),
+        classValue: theEvent.class,
+        grenValue: theEvent.gren,
+        grentypeValue: theEvent.grentype,
+      };
+    }
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -39,6 +54,8 @@ class EventForm extends Component {
     };
     console.log("Submit: ", update);
     this.props.updateTheEvent(update);
+    //TODO: close the edit box and go back to tableView
+    this.props.onDone();
   }
 
   handleChange(event) {
@@ -47,19 +64,6 @@ class EventForm extends Component {
   }
 
   render() {
-    var theEvent = this.props.comp.events.find(x => x.id === this.props.id);
-    if (theEvent != null) {
-      this.setState({
-        dayValue: theEvent.day,
-        arenaValue: theEvent.arena,
-        starttimeStr: presentTime(theEvent.starttime),
-        durationStr: presentTime(theEvent.duration),
-        preptimeStr: presentTime(theEvent.preptime),
-        classValue: theEvent.class,
-        grenValue: theEvent.gren,
-      });
-    }
-
     let dOptions = this.props.comp.days.map(x => x.name);
     let cOptions = getAllClasses(this.props.comp.events);
     let aOptions = getAllArenas(this.props.comp.events);
@@ -71,6 +75,30 @@ class EventForm extends Component {
       <Box pad="medium" background="light-3" width="50%">
         <Text weight="bold">Edit Event {this.props.id}</Text>
         <Form onSubmit={this.handleSubmit}>
+          <FormField
+            name="class"
+            label="Class"
+            value = {this.state.classValue}
+            onChange = {(e) => this.setState({classValue: e.value})}
+            component={Select}
+            options={cOptions}
+          />
+          <FormField
+            name="gren"
+            label="Gren"
+            value = {this.state.grenValue}
+            onChange = {(e) => this.setState({grenValue: e.value})}
+            component={Select}
+            options={gOptions}
+          />
+          <FormField
+            name="grentype"
+            label="Grentyp"
+            value = {this.state.grentypeValue}
+            onChange = {(e) => this.setState({grentypeValue: e.value})}
+            component={Select}
+            options={gtOptions}
+          />
           <FormField
             name="dayValue"
             label="Day"
@@ -146,30 +174,6 @@ class EventForm extends Component {
                 placeholder: 'mm',
               },
             ]}
-          />
-          <FormField
-            name="class"
-            label="Class"
-            value = {this.state.classValue}
-            onChange = {(e) => this.setState({classValue: e.value})}
-            component={Select}
-            options={cOptions}
-          />
-          <FormField
-            name="gren"
-            label="Gren"
-            value = {this.state.grenValue}
-            onChange = {(e) => this.setState({grenValue: e.value})}
-            component={Select}
-            options={gOptions}
-          />
-          <FormField
-            name="grentype"
-            label="Grentyp"
-            value = {this.state.grentypeValue}
-            onChange = {(e) => this.setState({grentypeValue: e.value})}
-            component={Select}
-            options={gtOptions}
           />
           <Button type="submit" primary label="Submit" />
         </Form>
