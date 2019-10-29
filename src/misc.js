@@ -173,8 +173,14 @@ export function getEvent(comp, eid) {
   return e;
 }
 
+export function newEventID() {
+  var eID = Date.now();
+  return eID+"";
+}
+
 export function getEmptyEvent() {
-  var newId = 9999; //TODO, krav att det är ett unikt id, id mängden behöver inte vara ordningsbara
+  var newId = 9999;
+  // Id sätts när man sparar ner det, 9999 får indikera att det är ett nytt id.
   return {id: newId, day: "", arena: "", starttime: "", duration: "", preptime: "", class: "", gren: "", grentype: ""}
 }
 

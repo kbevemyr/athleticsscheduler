@@ -2,8 +2,8 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { DataTable, Clock, Text, Box, Button } from 'grommet';
-import { Edit } from 'grommet-icons';
+import { DataTable, Clock, Text, Box } from 'grommet';
+//import { Edit } from 'grommet-icons';
 
 import { presentTime } from './misc';
 import { setActiveEvent } from './store/actions';
@@ -14,6 +14,12 @@ class EventTable extends Component {
     this.state = {
       name: "Table View of Events",
     };
+    //this.handleOnClickRow = this.handleOnClickRow.bind(this);
+  }
+
+  handleOnClickRow (e, fn) {
+    //console.log("handleOnClickRow "+JSON.stringify(e.datum));
+    fn(e.datum, e.datum.id);
   }
 
   render() {
@@ -24,12 +30,9 @@ class EventTable extends Component {
           alignSelf="start"
           size='small'
           sortable={true}
+          primaryKey="id"
+          onClickRow={(e) => this.handleOnClickRow(e, this.props.onEdit)}
           columns={[
-            {
-              property: 'id',
-              header: <Text>Id</Text>,
-              primary: true,
-            },
             {
               property: 'day',
               header: <Text>Day</Text>,
@@ -86,16 +89,6 @@ class EventTable extends Component {
               property: 'grentype',
               header: <Text>Grentyp</Text>,
             },
-            {
-              property: 'editEvent',
-              render: x => (
-                <Button
-                  icon={<Edit />}
-                  label="Edit"
-                  onClick={(e) => this.props.onEdit(e, x.id)}
-                />
-              ),
-            },
           ]}
           data={this.props.comp.events}
         />
@@ -103,6 +96,19 @@ class EventTable extends Component {
     )
   }
 }
+
+/*
+
+{
+  property: 'editEvent',
+  render: x => (
+    <Button
+      icon={<Edit />}
+      onClick={(e) => this.props.onEdit(e, x.id)}
+    />
+  ),
+},
+*/
 
   // Store handling
 

@@ -6,6 +6,7 @@ import {
 import { COLORS, defaultColor } from '../misc';
 import { healthCheckSchema } from '../misc';
 import { getClassEventsID } from '../misc';
+import { newEventID } from '../misc';
 
 import { localComps } from './MOCKdata';
 
@@ -69,6 +70,11 @@ function rootReducer (state = initialstate, action) {
       // TODO: redo the healthCheckSchema
       case UPDATE_EVENT:
         var updatedEvents = state.competition.events.map((x) => {if(x.id === action.event.id) {return action.event;} else {return x;}});
+        if(action.event.id === 9999) {
+          var newEvent = action.event;
+          newEvent.id = newEventID(action.event);
+          updatedEvents.push(action.event);
+        }
         return Object.assign({}, state, {
           competition: Object.assign({}, state.competition, {events: updatedEvents}),
         })

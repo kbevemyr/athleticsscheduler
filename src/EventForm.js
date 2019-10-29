@@ -36,7 +36,6 @@ class EventForm extends Component {
     }
 
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
 
   handleSubmit(event) {
@@ -54,13 +53,7 @@ class EventForm extends Component {
     };
     console.log("Submit: ", update);
     this.props.updateTheEvent(update);
-    //TODO: close the edit box and go back to tableView
     this.props.onDone();
-  }
-
-  handleChange(event) {
-    //console.log("Changed "+event+" to " + event.value);
-    //this.setState({key: event.target.value});
   }
 
   render() {

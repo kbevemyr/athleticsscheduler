@@ -2,12 +2,11 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-//import { setColor } from './store/actions';
-import DayTable from './DayTable';
-import ArenaTable from './ArenaTable';
 import EventTable from './EventTable';
 import EventForm from './EventForm';
-import { Accordion, AccordionPanel, Text, Box } from 'grommet';
+import { Accordion, AccordionPanel, Text, Box, Button } from 'grommet';
+import {ChipSet, Chip} from '@material/react-chips';
+import { Add } from 'grommet-icons';
 
 class TableView extends Component {
   constructor(props) {
@@ -17,6 +16,7 @@ class TableView extends Component {
       editID: -1,
     };
     this.handleOpenEditForm = this.handleOpenEditForm.bind(this);
+    this.handleOpenAddForm = this.handleOpenAddForm.bind(this);
     this.handleCloseEditForm = this.handleCloseEditForm.bind(this);
   }
 
@@ -24,8 +24,13 @@ class TableView extends Component {
     this.setState({editID: -1});
   }
 
+  handleOpenAddForm (e) {
+    console.log("handleOpenAddForm");
+    this.setState({editID: 9999});
+  }
+
   handleOpenEditForm (e, id) {
-    console.log("I want to edit the event "+id);
+    console.log("handleOpenEditForm "+id);
     this.setState({editID: id});
   }
 
@@ -33,18 +38,17 @@ class TableView extends Component {
     // competition
     return (
       <Box direction='column' pad='medium' background="light-1">
+        <Button id="butAddEvent"
+          icon={<Add />}
+          onClick={this.handleOpenAddForm}
+        />
+
         <Text weight="bold" >{this.state.name}</Text>
-        <Accordion>
-          <AccordionPanel label="Days">
-            <DayTable />
-          </AccordionPanel>
-          <AccordionPanel label="Arenas">
-            <ArenaTable />
-          </AccordionPanel>
-          <AccordionPanel label="Events">
-            <EventTable onEdit={this.handleOpenEditForm} />
-          </AccordionPanel>
-        </Accordion>
+        <ChipSet>
+        </ChipSet>
+
+        <EventTable key="eventstable" onEdit={this.handleOpenEditForm} />
+
         {(this.state.editID !== -1) &&
           <EventForm id={this.state.editID} onDone={this.handleCloseEditForm}/>
         }

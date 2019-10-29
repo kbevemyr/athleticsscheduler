@@ -3,10 +3,12 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "grommet": "^2.6.6",
+    "@material/react-chips": "^0.15.0",
+    "grommet": "^2.7.11",
     "grommet-icons": "^4.2.0",
     "grommet-styles": "^0.2.0",
     "html2canvas": "^1.0.0-rc.5",
+    "https-proxy-agent": "^2.2.3",
     "jspdf": "^1.5.3",
     "npm": "^6.9.0",
     "react": "^16.8.6",

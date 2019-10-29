@@ -2,7 +2,10 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { Form, FormField, Button } from 'grommet';
+import DayTable from './DayTable';
+import ArenaTable from './ArenaTable';
+
+import { Form, FormField, Button, Box } from 'grommet';
 
 //import { getEvent } from './misc';
 
@@ -16,7 +19,7 @@ class Settings extends Component {
 
   render() {
     return (
-
+<Box>
     <Form>
   <FormField name="name" label="Name" />
   <Button type="submit" primary label="Submit" />
@@ -27,6 +30,10 @@ class Settings extends Component {
         <FormField name="globalid" label="Global Id" />
         <Button type="submit" primary label="Submit" />
 </Form>
+
+<DayTable />
+<ArenaTable />
+</Box>
 );
   }
 }
