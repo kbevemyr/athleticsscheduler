@@ -42,7 +42,6 @@ class Event extends Component {
       starttime: parseInt(getEvent(this.props.comp, this.props.id).starttime, 10),
       duration: parseInt(getEvent(this.props.comp, this.props.id).duration, 10),
       preptime: parseInt(getEvent(this.props.comp, this.props.id).preptime, 10),
-      marked: false,
     };
     this.handleMarkEvent = this.handleMarkEvent.bind(this);
     this.handleUnMarkEvent = this.handleUnMarkEvent.bind(this);
@@ -53,7 +52,6 @@ class Event extends Component {
     if (e.shiftKey) {
       this.handleHighLightEvent(e);
     } else {
-      this.setState({marked: true});
       console.log("handleMarkEvent "+y);
       this.props.onMarked(y, this.handleUnMarkEvent);
     }
@@ -63,7 +61,6 @@ class Event extends Component {
     if (e.shiftKey) {
       this.handleHighLightEvent(e);
     } else {
-      this.setState({marked: false});
       console.log("handleUnMarkEvent ");
     }
   }

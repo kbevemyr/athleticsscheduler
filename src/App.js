@@ -7,17 +7,18 @@ import Competition from './Competition';
 import TableView from './TableView';
 import EventForm from './EventForm';
 import Settings from './Settings';
-import { getCompetitionData, saveCompetitionData } from './store/actions';
+import { getCompetitionData, saveCompetitionData, newCompetitionData } from './store/actions';
 
 import { Grommet, grommet, Box, Anchor, Menu } from 'grommet';
 import { Menu as MenuIcon } from 'grommet-icons';
-import { Table, Columns } from 'grommet-icons';
+import { Table, Columns, SettingsOption } from 'grommet-icons';
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.handleSetCompDataEvent = this.handleSetCompDataEvent.bind(this);
     this.handleSaveCompDataEvent = this.handleSaveCompDataEvent.bind(this);
+    this.handleNewCompDataEvent = this.handleNewCompDataEvent.bind(this);
   }
 
   handleSetCompDataEvent(key) {
@@ -26,6 +27,10 @@ class App extends Component {
 
   handleSaveCompDataEvent(key) {
     this.props.saveTheCompetitionData(key, this.props.comp);
+  }
+
+  handleNewCompDataEvent(key) {
+    this.props.saveANewCompetitionData();
   }
 
   render() {
@@ -47,17 +52,22 @@ class App extends Component {
           </Box>
 
           <strong>Athletics Scheduler</strong>
-          <Menu
-            dropAlign={{ top: 'top', right: 'right' }}
-            items={[
-                    { label: '2017', onClick: () => { this.handleSetCompDataEvent('2017') }},
-                    { label: '2018', onClick: () => { this.handleSetCompDataEvent('2018') }},
-                    { label: '2019', onClick: () => { this.handleSetCompDataEvent('2019') }},
-                    { label: 'test', onClick: () => { this.handleSetCompDataEvent('test') }},
-                    { label: 'save', onClick: () => { this.handleSaveCompDataEvent('test') }},
-                   ]}
-            icon={<MenuIcon color='white' />}
-            />
+
+          <Box direction='row'>
+            <Anchor href="#settings" icon={<SettingsOption />} />
+            <Menu
+              dropAlign={{ top: 'top', right: 'right' }}
+              items={[
+                      { label: '2017', onClick: () => { this.handleSetCompDataEvent('2017') }},
+                      { label: '2018', onClick: () => { this.handleSetCompDataEvent('2018') }},
+                      { label: '2019', onClick: () => { this.handleSetCompDataEvent('2019') }},
+                      { label: 'test', onClick: () => { this.handleSetCompDataEvent('test') }},
+                      { label: 'save', onClick: () => { this.handleSaveCompDataEvent('test') }},
+                      { label: 'new', onClick: () => { this.handleNewCompDataEvent() }},
+                     ]}
+              icon={<MenuIcon color='white' />}
+              />
+          </Box>
         </Box>
 
         <Switch>
@@ -97,6 +107,9 @@ const mapDispatchToProps = dispatch => ({
     },
     saveTheCompetitionData: (key, comp) => {
       dispatch(saveCompetitionData(key, comp))
+    },
+    saveANewCompetitionData: () => {
+      dispatch(newCompetitionData())
     },
 });
 

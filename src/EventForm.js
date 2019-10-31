@@ -36,6 +36,7 @@ class EventForm extends Component {
     }
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
   }
 
   handleSubmit(event) {
@@ -56,6 +57,10 @@ class EventForm extends Component {
     this.props.onDone();
   }
 
+  handleCancel(event) {
+    this.props.onDone();
+  }
+
   render() {
     let dOptions = this.props.comp.days.map(x => x.name);
     let cOptions = getAllClasses(this.props.comp.events);
@@ -67,7 +72,7 @@ class EventForm extends Component {
     return (
       <Box pad="medium" background="light-3" width="50%">
         <Text weight="bold">Edit Event {this.props.id}</Text>
-        <Form onSubmit={this.handleSubmit}>
+        <Form onSubmit={this.handleSubmit} onReset={this.handleCancel}>
           <FormField
             name="class"
             label="Class"
@@ -168,6 +173,7 @@ class EventForm extends Component {
               },
             ]}
           />
+        <Button type="reset" primary label="Cancel" />
           <Button type="submit" primary label="Submit" />
         </Form>
       </Box>

@@ -86,6 +86,14 @@ function getClassColor(id) {
 
 */
 
+export function newCompetitionData () {
+  console.log("TBD: set up a new empty competition!!");
+
+  return () => {
+    console.log("new data in progress, not done yet")
+  }
+}
+
 export function saveCompetitionData (key, comp){
   console.log("saveCompetitionData. with key "+key);
 

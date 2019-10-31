@@ -3,7 +3,6 @@ import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
 import { DataTable, Clock, Text, Box } from 'grommet';
-//import { Edit } from 'grommet-icons';
 
 import { presentTime } from './misc';
 import { setActiveEvent } from './store/actions';
@@ -17,9 +16,9 @@ class EventTable extends Component {
     //this.handleOnClickRow = this.handleOnClickRow.bind(this);
   }
 
-  handleOnClickRow (e, fn) {
+  handleOnClickRow (e, cb) {
     //console.log("handleOnClickRow "+JSON.stringify(e.datum));
-    fn(e.datum, e.datum.id);
+    cb(e.datum, e.datum.id);
   }
 
   render() {
@@ -28,7 +27,7 @@ class EventTable extends Component {
       <Box background='light-1' >
         <DataTable
           alignSelf="start"
-          size='small'
+          size='medium'
           sortable={true}
           primaryKey="id"
           onClickRow={(e) => this.handleOnClickRow(e, this.props.onEdit)}
@@ -89,6 +88,13 @@ class EventTable extends Component {
               property: 'grentype',
               header: <Text>Grentyp</Text>,
             },
+            {
+              property: 'note',
+              header: <Text>Not</Text>,
+              render: x => (
+                <Text>{"//"+this.props.overlap[x.id]}</Text>
+              )
+            },
           ]}
           data={this.props.comp.events}
         />
@@ -97,18 +103,6 @@ class EventTable extends Component {
   }
 }
 
-/*
-
-{
-  property: 'editEvent',
-  render: x => (
-    <Button
-      icon={<Edit />}
-      onClick={(e) => this.props.onEdit(e, x.id)}
-    />
-  ),
-},
-*/
 
   // Store handling
 
@@ -116,6 +110,7 @@ class EventTable extends Component {
     comp: state.competition,
     events: state.competition.events,
     active: state.activeID,
+    overlap: state.overlap,
   });
 
   const mapDispatchToProps = dispatch => ({

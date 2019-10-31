@@ -24,15 +24,15 @@ const EmptyCompetition = {
 // state for auth
 const initialstate = {
   competition: localComps[2], //EmptyCompetition, //comptest,
-  colorCount: 0, //Antal färger som är använda.
+  colorCount: 0, //Antal färger som är använda för att identifera en klass.
   painting: [], // Iden är att det ska vara en lista av klass/colorid.
   activeID: {},
   activeC: "",
-  overlap: {},
+  overlap: {}, // Visar vilka kollisioner man vill se i översikten.
 }
 
 function rootReducer (state = initialstate, action) {
-  console.log("call to rootReducer "+state.competition.key);
+  //console.log("call to rootReducer "+state.competition.key);
 
   switch (action.type) {
     case FETCH_USERDATA:
@@ -60,6 +60,7 @@ function rootReducer (state = initialstate, action) {
           painting: [],
           activeID: {},
           activeC: "",
+          overlap: {},
         })
 
       case SAVE_COMPETITION:
@@ -113,8 +114,18 @@ function rootReducer (state = initialstate, action) {
         })
 
       case UPDATE_OVERLAP:
+        var updatedOverlap = {};
+        var cObj = state.overlap[action.collision.key];
+        if (cObj == null) {
+          // id is not in overlap
+          status = true;
+        } else {
+          status = !cObj.p;
+        }
+        updatedOverlap = Object.assign({}, state.overlap);
+        updatedOverlap[action.collision.key] = {p: status, o: action.collision.value};
         return Object.assign({}, state, {
-          overlap: Object.assign({}, state.overlap, action.collision),
+          overlap: updatedOverlap,
         })
 
     default:

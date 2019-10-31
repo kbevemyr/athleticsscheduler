@@ -267,7 +267,7 @@ export function healthCheckSchema(eventsData) {
       if(!sameEvent(rowi,rowj)) {
         if(rowi.class === rowj.class) {
           if(overlap(rowi, rowj)) {
-            console.log("OVERLAP: ["+pp(rowi)+"] || ["+pp(rowj)+"]");
+            //console.log("OVERLAP: ["+pp(rowi)+"] || ["+pp(rowj)+"]");
             abnormalEvents[rowi.id] = rowj.id;
             out = false;
           }
@@ -279,11 +279,22 @@ export function healthCheckSchema(eventsData) {
   return abnormalEvents;
 }
 
-// xs is the same format av returnvalue of healthCheckSchema, x is an ID
-export function isOverlap(xs, x) {
-  var res = xs[x];
-  if (res == null) {
+/*
+  A membership in the list represents that the object is active
+
+  xs - key:value list, where value is (p: bool, o: id) p represents if the key should be visual in overview
+  x - is an ID
+
+  returnvalue - if x is visualied in overview, default is false
+*/
+
+export function isOverlap(xs, id) {
+  var obj = xs[id];
+  var res = false;
+  if (obj == null) {
     res = false;
+  } else {
+    res = obj.p;
   }
 
   return res;

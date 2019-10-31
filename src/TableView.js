@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import EventTable from './EventTable';
 import EventForm from './EventForm';
-import { Accordion, AccordionPanel, Text, Box, Button } from 'grommet';
+import { Text, Box, Button } from 'grommet';
 import {ChipSet, Chip} from '@material/react-chips';
 import { Add } from 'grommet-icons';
 

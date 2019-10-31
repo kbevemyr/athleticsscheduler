@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { Box, CheckBox } from 'grommet';
+import { Box, CheckBox, Text } from 'grommet';
 
 import { healthCheckSchema, isOverlap } from './misc';
 
@@ -14,28 +14,33 @@ class CollisionPanel extends Component {
     this.handleViewEvent = this.handleViewEvent.bind(this);
     this.state = {
       name: "Collision of Peers Events",
-      eventcollisions: healthCheckSchema(this.props.events)
+      //eventcollisions: healthCheckSchema(this.props.events)
     };
   }
 
-  handleViewEvent (e, id) {
+  handleViewEvent (e, id, cId) {
     var cObj = {};
-    cObj[id] = this.state.eventcollisions[id];
-    console.log("I want to view the collision "+JSON.stringify(cObj));
-    this.props.setTheOverlap(cObj);
+    cObj[id] = cId;
+    //console.log("I want to view the collision "+JSON.stringify(id));
+    this.props.setTheOverlap({key: id, value: cId});
   }
 
   render() {
+    console.log("just to call healthCheckSchema");
+    var eventcollisions = healthCheckSchema(this.props.events);
+
     return (
       <Box background='light-1' >
-        {Object.keys(this.state.eventcollisions).map(x => (
-          <CheckBox
-            key={"collisionbox"+x}
-            checked={isOverlap(this.props.overlap,x)}
-            label={x+" || "+this.state.eventcollisions[x]}
-            onChange={(e) => this.handleViewEvent(e, x)}
-          />
-        ))}
+        <Text weight="bold" >{this.state.name}</Text>
+        {Object.keys(eventcollisions).map(x => {
+          return (
+            <CheckBox
+              key={"collisionbox"+x}
+              checked={isOverlap(this.props.overlap,x)}
+              label={x+" || " + eventcollisions[x]}
+              onChange={(e) => this.handleViewEvent(e, x, eventcollisions[x])}
+            />
+        )})}
       </Box>
     );
   }
