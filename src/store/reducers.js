@@ -1,16 +1,17 @@
 import {
   FETCH_USERDATA, FETCH_COMPETITION, SET_NEWCOLOR, SAVE_COMPETITION,
   UPDATE_EVENT, SET_ACTIVE_EVENT, SET_ACTIVE_CLASS, UPDATE_OVERLAP,
+  ADD_DAY, ADD_ARENA
 } from './actions';
 
 import { COLORS, defaultColor } from '../misc';
 import { healthCheckSchema } from '../misc';
 import { getClassEventsID } from '../misc';
-import { newEventID } from '../misc';
+import { newID } from '../misc';
 
 import { localComps } from './MOCKdata';
 
-/*
+
 const EmptyCompetition = {
             "key": "empty key",
             "name": "empty name",
@@ -19,11 +20,10 @@ const EmptyCompetition = {
             "arenas": [],
             "events": [],
         };
-        */
 
 // state for auth
 const initialstate = {
-  competition: localComps[2], //EmptyCompetition, //comptest,
+  competition: EmptyCompetition, //comptest, //localComps[2],
   colorCount: 0, //Antal färger som är använda för att identifera en klass.
   painting: [], // Iden är att det ska vara en lista av klass/colorid.
   activeID: {},
@@ -68,12 +68,26 @@ function rootReducer (state = initialstate, action) {
           saved: action.timestamp,
         })
 
+      case ADD_DAY:
+        let day = [{id: newID(), name: action.name}];
+        let updatedDays = state.competition.days.concat(day);
+        return Object.assign({}, state, {
+          competition: Object.assign({}, state.competition, {days: updatedDays}),
+        })
+
+      case ADD_ARENA:
+        let arena = [{id: newID(), name: action.name}];
+        let updatedArenas = state.competition.arenas.concat(arena);
+        return Object.assign({}, state, {
+          competition: Object.assign({}, state.competition, {arenas: updatedArenas}),
+        })
+
       // TODO: redo the healthCheckSchema
       case UPDATE_EVENT:
         var updatedEvents = state.competition.events.map((x) => {if(x.id === action.event.id) {return action.event;} else {return x;}});
         if(action.event.id === 9999) {
           var newEvent = action.event;
-          newEvent.id = newEventID(action.event);
+          newEvent.id = newID(action.event);
           updatedEvents.push(action.event);
         }
         return Object.assign({}, state, {

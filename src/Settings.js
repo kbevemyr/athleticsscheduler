@@ -2,12 +2,9 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { Text, Form, FormField, Button, Box } from 'grommet';
+import { Heading, Text, Form, FormField, Button, Box } from 'grommet';
 
-import DayTable from './DayTable';
-import ArenaTable from './ArenaTable';
-
-//import { getEvent } from './misc';
+import NameTable from './NameTable';
 
 class Settings extends Component {
   constructor(props) {
@@ -20,47 +17,75 @@ class Settings extends Component {
   render() {
     return (
       <Box>
-        <Text>{this.state.name}</Text>
-        <Form>
-          <FormField name="name" label="Name" />
-          <Button type="submit" primary label="Submit" />
-          <FormField name="key" label="Key" />
-          <Button type="submit" primary label="Submit" />
-          <FormField name="version" label="Version" />
-          <Button type="submit" primary label="Submit" />
-        </Form>
+        <Heading level={1}>{this.state.name}</Heading>
+        <Box
+          tag='settingsarea'
+          pad='medium'
+          gap='medium'
+          justify='between'
+          direction='row-responsive'
+          align='start'
+          flex={false}
+          >
 
-        <DayTable />
-        <ArenaTable />
+          <Form>
+            <FormField name="name" label="Name">
+              <Text>{this.props.name}</Text>
+            </FormField>
+
+            <FormField name="compID" label="CompID">
+              <Text>{this.props.compID}</Text>
+            </FormField>
+
+            <FormField name="version" label="Version">
+              <Text>{this.props.version}</Text>
+            </FormField>
+
+            <Button type="submit" primary label="Submit" />
+          </Form>
+
+          <Box
+            pad='medium'
+            gap='medium'
+            justify='between'
+            direction='row-responsive'
+            align='start'
+            basis='3/4'
+            >
+            <NameTable key='daytable' type='day' />
+            <NameTable key='arenatable' type='arena' />
+          </Box>
+        </Box>
       </Box>
 );
   }
 }
 
 /*
-<Form>
-  <FormField name="name" label="Name" />
-  <Button type="submit" primary label="Submit" />
-  <FormField name="key" label="Key" />
-  <Button type="submit" primary label="Submit" />
-  <FormField name="version" label="Version" />
-  <Button type="submit" primary label="Submit" />
-  <FormField name="globalid" label="Global Id" />
-  <Button type="submit" primary label="Submit" />
-</Form>
-
+<Grid
+  rows={['small','small']}
+  columns={['medium', 'small','medium']}
+  gap='small'
+  areas={[
+    {name: 'misc',          start: [0, 0], end:[0, 1]},
+    {name: 'days',          start: [1, 1], end:[1, 1]},
+    {name: 'arenas',        start: [2, 1], end:[2, 1]},
+  ]}
+>
 */
 
 
   // Store handling
 
   const mapStateToProps = state => ({
-    comp: state.competition,
+    name: state.competition.name,
+    compID: state.competition.key,
+    version: state.competition.version,
   });
 
   const mapDispatchToProps = dispatch => ({
-      setXXXColor: (c) => {
-        //dispatch(setXXX(c));
+      addTheDay: (d) => {
+        dispatch();
     },
   });
 

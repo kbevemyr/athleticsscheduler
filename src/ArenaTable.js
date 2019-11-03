@@ -18,7 +18,7 @@ class ArenaTable extends Component {
       <Box background='light-1' >
           <DataTable
             alignContent='start'
-            size='small'
+            size='medium'
             columns={[
               {
                 property: 'id',

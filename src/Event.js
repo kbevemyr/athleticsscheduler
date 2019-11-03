@@ -89,7 +89,7 @@ class Event extends Component {
     };
 
     // Event Prep Box
-    let prepColor = defaultColor;
+    let prepColor = "#F2F2F2";
     let prepTextColor = getTextColor(prepColor);
     let prepHeightE = MinutesToPX(this.state.preptime);
     let prepTopE = topE - prepHeightE;
@@ -124,7 +124,7 @@ class Event extends Component {
           <Stack anchor="top">
             {this.state.event.class+" "+this.state.event.gren}
             {isOverlap(this.props.overlaps, this.props.id) &&
-              <HLIcon color="status-critical" />
+              <HLIcon color="accent-1" />
             }
           </Stack>
         </div>

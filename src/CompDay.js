@@ -48,51 +48,55 @@ class CompDay extends Component {
     let lineStyle = {stroke: "#333333", "strokeWidth": 2};
 
     return (
-      <Box className="compday-main">
+      <Box className="compday-main" gap='small'>
         <Box className="compday-header">
           {this.props.name}
         </Box>
         <Box
           direction="row-responsive"
           pad={{horizontal:"small", vertical:"xxsmall"}}>
-          <Stack>
-            <Box
-              direction="row"
-              margin={{horizontal:"small", vertical:"xxsmall"}}
-              className="compday-areanaarea">
-              <Timeline key={key} id={key} height={arenaheight} day={this.props.id} grentyp="run"/>
-              {this.state.runarenas.map(x =>
-                    (<Arena key={x} id={x} day={this.props.id} height={arenaheight} onMarkedEvent={this.handleMarked}/>)
-                  )
-              }
-            </Box>
-            {this.state.marked &&
-              <Box margin={{horizontal:"small", vertical:"xxsmall"}} onClick={this.handleUnMarked}>
-                <svg height={arenaheight} width={wRun}>
-                  <line x1={0} y1={this.state.markedPosY+hOffset} x2={wRun} y2={this.state.markedPosY+hOffset} style={lineStyle} />
-                </svg>
+          {this.state.runarenas.length > 0 &&
+            <Stack>
+              <Box
+                direction="row"
+                margin={{horizontal:"small", vertical:"xxsmall"}}
+                className="compday-areanaarea">
+                <Timeline key={key} id={key} height={arenaheight} day={this.props.id} grentyp="run"/>
+                {this.state.runarenas.map(x =>
+                      (<Arena key={x} id={x} day={this.props.id} height={arenaheight} onMarkedEvent={this.handleMarked}/>)
+                    )
+                }
               </Box>
-            }
-          </Stack>
-          <Stack>
-            <Box
-              direction="row"
-              margin={{horizontal:"small", vertical:"xxsmall"}}
-              className="compday-areanaarea">
-              <Timeline key={key} id={key} height={arenaheight} day={this.props.id} grentyp="tech"/>
-              {this.state.techarenas.map(x =>
-                    (<Arena key={x} id={x} day={this.props.id} height={arenaheight} onMarkedEvent={this.handleMarked}/>)
-                  )
+              {this.state.marked &&
+                <Box margin={{horizontal:"small", vertical:"xxsmall"}} onClick={this.handleUnMarked}>
+                  <svg height={arenaheight} width={wRun}>
+                    <line x1={0} y1={this.state.markedPosY+hOffset} x2={wRun} y2={this.state.markedPosY+hOffset} style={lineStyle} />
+                  </svg>
+                </Box>
               }
-            </Box>
-            {this.state.marked &&
-              <Box margin={{horizontal:"small", vertical:"xxsmall"}} onClick={this.handleUnMarked}>
-                <svg height={arenaheight} width={wTech}>
-                  <line x1={0} y1={this.state.markedPosY+hOffset} x2={wTech} y2={this.state.markedPosY+hOffset} style={lineStyle} />
-                </svg>
+            </Stack>
+          }
+          {this.state.techarenas.length > 0 &&
+            <Stack>
+              <Box
+                direction="row"
+                margin={{horizontal:"small", vertical:"xxsmall"}}
+                className="compday-areanaarea">
+                <Timeline key={key} id={key} height={arenaheight} day={this.props.id} grentyp="tech"/>
+                {this.state.techarenas.map(x =>
+                      (<Arena key={x} id={x} day={this.props.id} height={arenaheight} onMarkedEvent={this.handleMarked}/>)
+                    )
+                }
               </Box>
-            }
-          </Stack>
+              {this.state.marked &&
+                <Box margin={{horizontal:"small", vertical:"xxsmall"}} onClick={this.handleUnMarked}>
+                  <svg height={arenaheight} width={wTech}>
+                    <line x1={0} y1={this.state.markedPosY+hOffset} x2={wTech} y2={this.state.markedPosY+hOffset} style={lineStyle} />
+                  </svg>
+                </Box>
+              }
+            </Stack>
+          }
         </Box>
       </Box>
     );

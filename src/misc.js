@@ -24,7 +24,7 @@ http://phrogz.net/css/distinct-colors.html
 export const COLORS = [
 '#73005c', '#40a6ff', '#00ff88', '#f2da79', '#e56739', '#bf3043', '#f240ff', '#0000cc', '#1d4b73', '#a3d9a3', '#ffaa00', '#664d4d', '#d9a3b8', '#877ca6', '#66c5cc', '#a1f200', '#8c5b23', '#ff40a6', '#0000ff', '#004cbf', '#1d7356', '#778c23', '#b39886',
 ];
-export const defaultColor = '#D3D3D3'; //'lightgray'
+export const defaultColor = '#DADADA'; //'lightgray'
 
 /*
 https://ux.stackexchange.com/questions/114952/determine-the-best-text-color-for-a-given-background-color
@@ -173,7 +173,7 @@ export function getEvent(comp, eid) {
   return e;
 }
 
-export function newEventID() {
+export function newID() {
   var eID = Date.now();
   return eID+"";
 }

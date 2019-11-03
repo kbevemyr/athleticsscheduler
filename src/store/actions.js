@@ -11,6 +11,9 @@ export const SET_ACTIVE_EVENT = 'SET_ACTIVE_EVENT';
 export const SET_ACTIVE_CLASS = 'SET_ACTIVE_CLASS';
 export const UPDATE_OVERLAP = 'UPDATE_OVERLAP';
 
+export const ADD_DAY = 'ADD_DAY';
+export const ADD_ARENA = 'ADD_ARENA';
+
 
 // Action Creators - Functions that create actions
 
@@ -69,6 +72,20 @@ export function setOverlap(collision) {
   return {
     type: UPDATE_OVERLAP,
     collision,
+  }
+}
+
+export function addDay(name) {
+  return {
+    type: ADD_DAY,
+    name,
+  }
+}
+
+export function addArena(name) {
+  return {
+    type: ADD_ARENA,
+    name,
   }
 }
 

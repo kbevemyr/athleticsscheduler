@@ -63,8 +63,9 @@ class EventForm extends Component {
 
   render() {
     let dOptions = this.props.comp.days.map(x => x.name);
+    let aOptions = this.props.comp.arenas.map(x => x.name);
+    //let aOptions = getAllArenas(this.props.comp.events);
     let cOptions = getAllClasses(this.props.comp.events);
-    let aOptions = getAllArenas(this.props.comp.events);
     let gOptions = getAllGrens(this.props.comp.events);
     let gtOptions = [ "run", "tech" ];
 

@@ -83,6 +83,7 @@ class App extends Component {
              pad='medium'
              border={{side: 'top'}}
              flex={false}
+             justify='start'
         >
           <i>GT16 App Collection</i>
         </Box>
