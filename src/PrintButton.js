@@ -1,19 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
-const pxToMm = (px) => {
-  return Math.floor(px/document.getElementById('myMm').offsetHeight);
-};
-
-const mmToPx = (mm) => {
-  return document.getElementById('myMm').offsetHeight*mm;
-};
-
-const range = (start, end) => {
-    return Array(end-start).join(0).split(0).map(function(val, id) {return id+start});
-};
 
 /*
   Basic algoritm

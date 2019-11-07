@@ -83,11 +83,10 @@ class App extends Component {
 
         <Box tag='footer'
              direction='row'
-             justify='end'
+             justify='start'
              pad='medium'
              border={{side: 'top'}}
              flex={false}
-             justify='start'
         >
           <i>GT16 App Collection</i>
         </Box>

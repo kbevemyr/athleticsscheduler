@@ -4,12 +4,10 @@ import { connect } from 'react-redux';
 
 import { Box, Form, FormField, Select, MaskedInput, Button, Text } from 'grommet';
 import { updateEvent } from './store/actions';
-import { timeStrToMinutes, presentTime, getEmptyEvent, getAllDays, getAllArenas, getAllClasses, getAllGrens } from './misc';
+import { timeStrToMinutes, presentTime, getEmptyEvent, getAllClasses, getAllGrens } from './misc';
 
 function updateDay(val, opt) {
-  var newOpt = opt.push(val);
   return ({dayValue: val});
-  //return ({dayValue: val, dOption: newOpt});
 }
 
 class EventForm extends Component {

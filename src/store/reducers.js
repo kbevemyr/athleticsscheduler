@@ -5,11 +5,11 @@ import {
 } from './actions';
 
 import { COLORS, defaultColor } from '../misc';
-import { healthCheckSchema } from '../misc';
+//import { healthCheckSchema } from '../misc';
 import { getClassEventsID } from '../misc';
 import { newID } from '../misc';
 
-import { localComps } from './MOCKdata';
+//import { localComps } from './MOCKdata';
 
 
 const EmptyCompetition = {

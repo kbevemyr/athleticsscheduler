@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import EventTable from './EventTable';
 import { Text, Box, Button } from 'grommet';
-import {ChipSet, Chip} from '@material/react-chips';
+//import {ChipSet, Chip} from '@material/react-chips';
 import { Add } from 'grommet-icons';
 
 class TableView extends Component {
@@ -30,9 +30,6 @@ class TableView extends Component {
         />
 
         <Text weight="bold" >{this.state.name}</Text>
-
-        <ChipSet>
-        </ChipSet>
 
         <EventTable key="eventstable" onEdit={this.handleOpenEditForm} />
 

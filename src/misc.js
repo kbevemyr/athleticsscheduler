@@ -252,9 +252,11 @@ function sameEvent(e1,e2) {
   }
 }
 
+/*
 function pp(e) {
   return (e.id+", "+e.starttime+";"+e.duration+"  "+e.class+":"+e.gren);
 }
+*/
 
 // Checks the whole schema for time clashes between events.
 export function healthCheckSchema(eventsData) {
