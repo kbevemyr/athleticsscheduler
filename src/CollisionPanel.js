@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { Box, CheckBox, Text } from 'grommet';
 
-import { healthCheckSchema, isOverlap } from './misc';
+import { healthCheckSchema, isOverlap, getEvent } from './misc';
 
 import { setOverlap } from './store/actions';
 
@@ -33,12 +33,14 @@ class CollisionPanel extends Component {
       <Box background='light-1' >
         <Text weight="bold" >{this.state.name}</Text>
         {Object.keys(eventcollisions).map(x => {
+          var event1 = getEvent(this.props.comp, x);
+          var event2 = getEvent(this.props.comp, eventcollisions[x]);
           return (
             <CheckBox
-              key={"collisionbox"+x}
-              checked={isOverlap(this.props.overlap,x)}
-              label={x+" || " + eventcollisions[x]}
-              onChange={(e) => this.handleViewEvent(e, x, eventcollisions[x])}
+              key={"collisionbox"+event1.id+event2.id}
+              checked={isOverlap(this.props.overlap,event1.id)}
+              label={event1.class+" "+event1.gren+" || " + event2.class+" "+ event2.gren}
+              onChange={(e) => this.handleViewEvent(e, event1.id, event2.id)}
             />
         )})}
       </Box>
@@ -49,6 +51,7 @@ class CollisionPanel extends Component {
   // Store handling
 
   const mapStateToProps = state => ({
+    comp: state.competition,
     events: state.competition.events,
     overlap: state.overlap,
   });

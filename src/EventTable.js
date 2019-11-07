@@ -7,22 +7,32 @@ import { DataTable, Clock, Text, Box } from 'grommet';
 import { presentTime } from './misc';
 import { setActiveEvent } from './store/actions';
 
+function presentEvents(comp) {
+  var ds = {};
+  comp.days.forEach((x) => ds[x.id] = x.name);
+  var as = {};
+  comp.arenas.forEach((x) => as[x.id] = x.name);
+  return (comp.events.map(event => {
+    return({id: event.id, day: ds[event.day], arena: as[event.arena], starttime: event.starttime, duration: event.duration, preptime: event.preptime, class: event.class, gren: event.gren, grentype: event.grentype});
+  }));
+}
+
 class EventTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
       name: "Table View of Events",
     };
-    //this.handleOnClickRow = this.handleOnClickRow.bind(this);
   }
 
-  handleOnClickRow (e, cb) {
-    //console.log("handleOnClickRow "+JSON.stringify(e.datum));
-    cb(e.datum, e.datum.id);
+  handleOnClickRow (e) {
+    console.log("handleOnClickRow "+JSON.stringify(e.datum));
+    this.props.history.push("/form/"+e.datum.id);
   }
 
   render() {
-    // events
+    let DATA = presentEvents(this.props.comp);
+
     return (
       <Box background='light-1' >
         <DataTable
@@ -30,7 +40,7 @@ class EventTable extends Component {
           size='medium'
           sortable={true}
           primaryKey="id"
-          onClickRow={(e) => this.handleOnClickRow(e, this.props.onEdit)}
+          onClickRow={(e) => this.handleOnClickRow(e)}
           columns={[
             {
               property: 'day',
@@ -39,6 +49,18 @@ class EventTable extends Component {
             {
               property: 'arena',
               header: <Text>Arena</Text>,
+            },
+            {
+              property: 'preptime',
+              header: <Text>Ställtid</Text>,
+              render: x => (
+                <Box>
+                <Clock type="digital"
+                       precision="minutes"
+                       time={"T"+presentTime(x.preptime)+":00"}
+                />
+                </Box>
+              ),
             },
             {
               property: 'starttime',
@@ -65,18 +87,6 @@ class EventTable extends Component {
               ),
             },
             {
-              property: 'preptime',
-              header: <Text>Ställtid</Text>,
-              render: x => (
-                <Box>
-                <Clock type="digital"
-                       precision="minutes"
-                       time={"T"+presentTime(x.preptime)+":00"}
-                />
-                </Box>
-              ),
-            },
-            {
               property: 'class',
               header: <Text>Class</Text>,
             },
@@ -96,7 +106,7 @@ class EventTable extends Component {
               )
             },
           ]}
-          data={this.props.comp.events}
+          data={DATA}
         />
       </Box>
     )
@@ -108,7 +118,6 @@ class EventTable extends Component {
 
   const mapStateToProps = state => ({
     comp: state.competition,
-    events: state.competition.events,
     active: state.activeID,
     overlap: state.overlap,
   });

@@ -181,7 +181,7 @@ export function newID() {
 export function getEmptyEvent() {
   var newId = 9999;
   // Id sätts när man sparar ner det, 9999 får indikera att det är ett nytt id.
-  return {id: newId, day: "", arena: "", starttime: "", duration: "", preptime: "", class: "", gren: "", grentype: ""}
+  return {id: newId, day: "", arena: "", starttime: "540", duration: "60", preptime: "20", class: "", gren: "", grentype: ""}
 }
 
 /**

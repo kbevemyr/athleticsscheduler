@@ -4,14 +4,22 @@ import { connect } from 'react-redux';
 
 import { Box, Form, FormField, Select, MaskedInput, Button, Text } from 'grommet';
 import { updateEvent } from './store/actions';
-import { timeStrToMinutes, presentTime, getEmptyEvent, getAllArenas, getAllClasses, getAllGrens } from './misc';
+import { timeStrToMinutes, presentTime, getEmptyEvent, getAllDays, getAllArenas, getAllClasses, getAllGrens } from './misc';
+
+function updateDay(val, opt) {
+  var newOpt = opt.push(val);
+  return ({dayValue: val});
+  //return ({dayValue: val, dOption: newOpt});
+}
 
 class EventForm extends Component {
+
   constructor(props) {
     super(props);
 
     let currentEvent = getEmptyEvent();
     this.state = {
+      editId: 9999,
       dayValue: currentEvent.day,
       arenaValue: currentEvent.arena,
       starttimeStr: presentTime(currentEvent.starttime),
@@ -19,11 +27,26 @@ class EventForm extends Component {
       preptimeStr: presentTime(currentEvent.preptime),
       classValue: currentEvent.class,
       grenValue: currentEvent.gren,
+
+      dOptions: this.props.comp.days.map(x => x.name),
+      //dOptions: getAllDays(this.props.comp.events),
+      aOptions: this.props.comp.arenas.map(x => x.name),
+      //aOptions = getAllArenas(this.props.comp.events),
+      cOptions: getAllClasses(this.props.comp.events),
+      gOptions: getAllGrens(this.props.comp.events),
+      gtOptions: [ "run", "tech" ],
     };
 
-    var theEvent = this.props.comp.events.find(x => x.id === this.props.id);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
+
+    var theEvent = this.props.comp.events.find(
+      x => x.id === this.props.match.params.id
+    );
+
     if (theEvent != null) {
       this.state = {
+        editId: this.props.match.params.id,
         dayValue: theEvent.day,
         arenaValue: theEvent.arena,
         starttimeStr: presentTime(theEvent.starttime),
@@ -32,17 +55,46 @@ class EventForm extends Component {
         classValue: theEvent.class,
         grenValue: theEvent.gren,
         grentypeValue: theEvent.grentype,
+
+        dOptions: this.props.comp.days.map(x => x.name),
+        //dOptions: getAllDays(this.props.comp.events),
+        aOptions: this.props.comp.arenas.map(x => x.name),
+        //aOptions = getAllArenas(this.props.comp.events),
+        cOptions: getAllClasses(this.props.comp.events),
+        gOptions: getAllGrens(this.props.comp.events),
+        gtOptions: [ "run", "tech" ],
       };
     }
+  };
 
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleCancel = this.handleCancel.bind(this);
+/* funkar inte formuläret uppdateras inte VARFÖR?
+  componentDidMount() {
+    console.log("EventForm lookup data for id "+this.props.match.params.id);
+    var theEvent = this.props.comp.events.find(
+      x => x.id === this.props.match.params.id
+    );
+
+    console.log("EventForm eventdata "+JSON.stringify(theEvent));
+
+    if (theEvent != null) {
+      this.setState({
+        dayValue: theEvent.day,
+        arenaValue: theEvent.arena,
+        starttimeStr: presentTime(theEvent.starttime),
+        durationStr: presentTime(theEvent.duration),
+        preptimeStr: presentTime(theEvent.preptime),
+        classValue: theEvent.class,
+        grenValue: theEvent.gren,
+        grentypeValue: theEvent.grentype,
+      });
+    }
   }
+  */
 
   handleSubmit(event) {
     console.log("State: ",this.state);
     var update = {
-      id: this.props.id,
+      id: this.state.editId,
       day: this.state.dayValue,
       arena: this.state.arenaValue,
       starttime: timeStrToMinutes(this.state.starttimeStr),
@@ -52,27 +104,20 @@ class EventForm extends Component {
       gren: this.state.grenValue,
       grentype: this.state.grentypeValue,
     };
-    console.log("Submit: ", update);
+    console.log("Submit in EventForm: ", update);
     this.props.updateTheEvent(update);
-    this.props.onDone();
+    this.props.history.goBack();
   }
 
   handleCancel(event) {
-    this.props.onDone();
+    this.props.history.goBack();
   }
 
   render() {
-    let dOptions = this.props.comp.days.map(x => x.name);
-    let aOptions = this.props.comp.arenas.map(x => x.name);
-    //let aOptions = getAllArenas(this.props.comp.events);
-    let cOptions = getAllClasses(this.props.comp.events);
-    let gOptions = getAllGrens(this.props.comp.events);
-    let gtOptions = [ "run", "tech" ];
 
-    // events
     return (
       <Box pad="medium" background="light-3" width="50%">
-        <Text weight="bold">Edit Event {this.props.id}</Text>
+        <Text weight="bold">Edit Event {this.state.editId}</Text>
         <Form onSubmit={this.handleSubmit} onReset={this.handleCancel}>
           <FormField
             name="class"
@@ -80,7 +125,8 @@ class EventForm extends Component {
             value = {this.state.classValue}
             onChange = {(e) => this.setState({classValue: e.value})}
             component={Select}
-            options={cOptions}
+            options={this.state.cOptions}
+            required={true}
           />
           <FormField
             name="gren"
@@ -88,7 +134,8 @@ class EventForm extends Component {
             value = {this.state.grenValue}
             onChange = {(e) => this.setState({grenValue: e.value})}
             component={Select}
-            options={gOptions}
+            options={this.state.gOptions}
+            required={true}
           />
           <FormField
             name="grentype"
@@ -96,23 +143,61 @@ class EventForm extends Component {
             value = {this.state.grentypeValue}
             onChange = {(e) => this.setState({grentypeValue: e.value})}
             component={Select}
-            options={gtOptions}
+            options={this.state.gtOptions}
+            required={true}
           />
           <FormField
             name="dayValue"
             label="Day"
-            value = {this.state.dayValue}
-            onChange = {(e) => this.setState({dayValue: e.value})}
-            component={Select}
-            options={dOptions}
-          />
+            required={false}
+            >
+            <Select
+              value = {this.state.dayValue}
+              onSearch = {(searchText) => {
+                const regexp = new RegExp(searchText, 'i');
+                var x = this.state.dOptions.filter(o => o.match(regexp));
+                console.log("x is "+JSON.stringify(x));
+                if(x.length < 1) {
+                  x.push(searchText);
+                  this.setState({dayValue: searchText, dOptions: x});
+                } else {
+                  this.setState({dOptions: x})
+                }
+              }}
+              onChange = {(e) => this.setState((state, props) => updateDay(e.value, state.dOptions))}
+              options={this.state.dOptions}
+              >
+            </Select>
+          </FormField>
           <FormField
             name="arenaValue"
             label="Arena"
             value = {this.state.arenaValue}
             onChange = {(e) => this.setState({arenaValue: e.value})}
             component={Select}
-            options={aOptions}
+            options={this.state.aOptions}
+            required={true}
+          />
+          <FormField
+            name="preptime"
+            label="Ställtid"
+            component={MaskedInput}
+            value={this.state.preptimeStr}
+            onChange={(e) => this.setState({preptimeStr: e.target.value})}
+            required={true}
+            mask={[
+              {
+                length: 1,
+                regexp: /^1[1-2]$|^[0-9]$/,
+                placeholder: 'h',
+              },
+              { fixed: ':' },
+              {
+                length: 2,
+                regexp: /^[0-5][0-9]$|^[0-9]$/,
+                placeholder: 'mm',
+              },
+            ]}
           />
         <FormField
           name="starttime"
@@ -120,16 +205,17 @@ class EventForm extends Component {
           component={MaskedInput}
           value={this.state.starttimeStr}
           onChange={(e) => this.setState({starttimeStr: e.target.value})}
+          required={true}
           mask={[
             {
               length: 2,
-              regexp: /^1[1-2]$|^[0-9]$/,
+              regexp: /^[0-1]*[0-9]$|^2[0-4]$/,
               placeholder: 'hh',
             },
             { fixed: ':' },
             {
               length: 2,
-              regexp: /^[0-5][0-9]$|^[0-9]$/,
+              regexp: /^[0-5]*[0-9]$/,
               placeholder: 'mm',
             },
           ]}
@@ -140,10 +226,11 @@ class EventForm extends Component {
             component={MaskedInput}
             value={this.state.durationStr}
             onChange={(e) => this.setState({durationStr: e.target.value})}
+            required={true}
             mask={[
               {
                 length: 1,
-                regexp: /^1[1-2]$|^[0-9]$/,
+                regexp: /^1[0-2]$|^[0-9]$/,
                 placeholder: 'h',
               },
               { fixed: ':' },
@@ -154,27 +241,7 @@ class EventForm extends Component {
               },
             ]}
           />
-          <FormField
-            name="preptime"
-            label="Ställtid"
-            component={MaskedInput}
-            value={this.state.preptimeStr}
-            onChange={(e) => this.setState({preptimeStr: e.target.value})}
-            mask={[
-              {
-                length: 1,
-                regexp: /^1[1-2]$|^[0-9]$/,
-                placeholder: 'h',
-              },
-              { fixed: ':' },
-              {
-                length: 2,
-                regexp: /^[0-5][0-9]$|^[0-9]$/,
-                placeholder: 'mm',
-              },
-            ]}
-          />
-        <Button type="reset" primary label="Cancel" />
+          <Button type="reset" primary label="Cancel" />
           <Button type="submit" primary label="Submit" />
         </Form>
       </Box>

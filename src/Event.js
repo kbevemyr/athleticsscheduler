@@ -156,5 +156,3 @@ const EventContainer = connect(
 )(Event);
 
 export default withRouter(EventContainer);
-
-//export default Event;

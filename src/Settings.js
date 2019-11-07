@@ -25,7 +25,7 @@ class Settings extends Component {
           justify='between'
           direction='row-responsive'
           align='start'
-          flex={false}
+          flex={true}
           >
 
           <Form>

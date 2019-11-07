@@ -393,8 +393,7 @@ const comp2018eventsTest = [
 var SERVERcontestTest2017 = {
     "name": "SAYO Indoor 2017",
     "key": "test",
-    "version": "1.0",
-    "GLOBALID": 1000,
+    "version": "2.0",
     "days": SERVERdaysTest,
     "arenas": SERVERarenasTest,
     "events": SERVEReventsTest,
@@ -406,8 +405,7 @@ var SERVERcontestTest2017 = {
 const comp2018 = {
   "name": "SAYO Indoor 2018",
   "key": "test",
-  "version": "1.0",
-  "GLOBALID": 2000,
+  "version": "2.0",
   "days": comp2018daysTest,
   "arenas": comp2018arenasTest,
   "events": comp2018eventsTest,
@@ -419,7 +417,7 @@ const comp2018 = {
 const comp2019 = {
   "name": "SAYO Outdoor 2019",
   "key": "test",
-  "version": "1.0",
+  "version": "2.0",
   "days": comp2019daysTest,
   "arenas": comp2019arenasTest,
   "events": comp2019eventsTest,
