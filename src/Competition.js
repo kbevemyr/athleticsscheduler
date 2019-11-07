@@ -8,8 +8,26 @@ import CollisionPanel from './CollisionPanel';
 
 import { Grid, Tabs, Tab, Box, Text } from 'grommet';
 
+// First atempt to render pdf of a CompDay
 import PrintButton from './PrintButton';
-import Page from './Page';
+import Page1 from './Page';
+/*
+<Page1 id='pdfpage'>
+  <CompDay ... />
+</Page1>
+*/
+
+// Second try, you have to re render the whole thing with special blocks
+/*
+import ReactPDF, {
+  PDFViewer,
+  Document,
+  Page,
+  View,
+  Text,
+  StyleSheet,
+} from '@react-pdf/renderer';
+*/
 
 class Competition extends Component {
   constructor(props) {
@@ -43,13 +61,13 @@ class Competition extends Component {
             {this.props.days.map(x =>
               (
                 <Tab key={"T."+x.id} title={x.name}>
-                  <Page id='pdfpage'>
+                  <Page1 id='pdfpage' >
                     <CompDay
                       key={x.id}
                       id={x.id}
                       name={x.name}
                     />
-                  </Page>
+                </Page1>
                 </Tab>
               )
             )}

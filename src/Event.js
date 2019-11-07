@@ -82,7 +82,7 @@ class Event extends Component {
     let textColor = getTextColor(color);
     let heightE = MinutesToPX(this.state.duration);
     let topE = MinutesToPX(this.state.starttime-parseInt(getDayStarttime(this.props.comp, this.state.event.day), 10));
-    let divStyle = {
+    let markerStyle = {
       height: heightE,
       background: color,
       color: textColor,
@@ -104,20 +104,21 @@ class Event extends Component {
 
     return (
       <div
+        id={"event-main"+this.props.id}
         className="event-main"
         style={mainStyle}
         >
-      {this.state.preptime >0 &&
+        {this.state.preptime >0 &&
         <div
           id={"prep"+this.props.id}
           style={prepDivStyle}
         >
           {"ställtid: "+this.state.preptime+" min"}
         </div>
-      }
+        }
         <div
-          id={this.props.id}
-          style={divStyle}
+          id={"marker"+this.props.id}
+          style={markerStyle}
           onDoubleClick={this.handleHighLightEvent}
           onClick={e => this.handleMarkEvent(e, topE)}
         >

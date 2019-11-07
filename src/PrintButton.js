@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
@@ -34,59 +35,40 @@ const PrintButton = ({id, label}) => (<div>
     className="pa2 ba bw1 b--black bg-yellow black-90 br2 dib pointer dim shadow-1"
     onClick={() => {
       const input = document.getElementById(id);
-      const inputHeightMm = pxToMm(input.offsetHeight);
-      const a4WidthMm = 210;
-      const a4HeightMm = 297;
-      const a4HeightPx = mmToPx(a4HeightMm);
-      const numPages = inputHeightMm <= a4HeightMm ? 1 : Math.floor(inputHeightMm/a4HeightMm) + 1;
-      console.log({
-        input, inputHeightMm, a4HeightMm, a4HeightPx, numPages, range: range(0, numPages),
-        comp: inputHeightMm <= a4HeightMm, inputHeightPx: input.offsetHeight
-      });
-
 
       html2canvas(input)
         .then((canvas) => {
-          const imgData = canvas.toDataURL('image/png');
-          var pdf;
 
-          // Document of a4WidthMm wide and inputHeightMm high
-          if (inputHeightMm > a4HeightMm) {
-            // elongated a4 (system print dialog will handle page breaks)
-            pdf = new jsPDF('p', 'mm', [inputHeightMm+16, a4WidthMm]);
-          } else {
-            // standard a4
-            pdf = new jsPDF();
+          var imgData = canvas.toDataURL('image/png');
+          var imgWidth = 210;
+          var pageHeight = 295;
+          var landscape = false;
+          var imgHeight = canvas.height * imgWidth / canvas.width;
+          var heightLeft = imgHeight;
+
+          var r = 0.25;
+          // do we have to switch to landscape mode?
+          console.log({canvas, imgWidth, pageHeight, landscape, imgHeight, heightLeft});
+          if (Math.floor(canvas.width*r) >= imgWidth) {
+            console.log("switch to landscape mode");
           }
 
-          pdf.addImage(imgData, 'PNG', 0, 0);
+          var pdf = new jsPDF((landscape ? 'l' : 'p'), 'mm');
+          var position = 10; // give some top padding to first page
+
+          pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+          heightLeft -= pageHeight;
+
+          while (heightLeft >= 0) {
+            position += heightLeft - imgHeight; // top padding for other pages
+            pdf.addPage();
+            pdf.addImage(imgData, 'PNG', 0, position, imgWidth, imgHeight);
+            heightLeft -= pageHeight;
+          }
+
           pdf.save(`${id}.pdf`);
         });
       ;
-
-      ////////////////////////////////////////////////////////
-      // System to manually handle page breaks
-      // Wasn't able to get it working !
-      // The idea is to break html2canvas screenshots into multiple chunks and stich them together as a pdf
-      // If you get this working, please email me a khuranashivek@outlook.com and I'll update the article
-      ////////////////////////////////////////////////////////
-      // range(0, numPages).forEach((page) => {
-      //   console.log(`Rendering page ${page}. Capturing height: ${a4HeightPx} at yOffset: ${page*a4HeightPx}`);
-      //   html2canvas(input, {height: a4HeightPx, y: page*a4HeightPx})
-      //     .then((canvas) => {
-      //       const imgData = canvas.toDataURL('image/png');
-      //       console.log(imgData)
-      //       if (page > 0) {
-      //         pdf.addPage();
-      //       }
-      //       pdf.addImage(imgData, 'PNG', 0, 0);
-      //     });
-      //   ;
-      // });
-
-      // setTimeout(() => {
-      //   pdf.save(`${id}.pdf`);
-      // }, 5000);
 
 
     }}

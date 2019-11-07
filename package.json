@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@material/react-chips": "^0.15.0",
+    "@react-pdf/renderer": "^1.6.7",
     "grommet": "^2.7.11",
     "grommet-icons": "^4.2.0",
     "grommet-styles": "^0.2.0",

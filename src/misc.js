@@ -113,7 +113,6 @@ export function getDayStarttime(comp, day) {
 }
 
 export function getDayEndtime(comp, day) {
-  //return comp.days.find(x => x.id === day).endtime;
   var startvalues = comp.events.filter(x => x.day === day).map(x => parseInt(x.starttime,10)+parseInt(x.duration,10)).sort((a,b) => b-a);
   return startvalues[0];
 }
@@ -217,6 +216,7 @@ export function presentTime(timeunits) {
 }
 
 export function getBoxSize(start, end) {
+  console.log("getBoxSize "+(end-start)*MINUTE_PX);
   return (end-start)*MINUTE_PX;
 }
 
