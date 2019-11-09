@@ -119,7 +119,7 @@ class EventForm extends Component {
         <Form onSubmit={this.handleSubmit} onReset={this.handleCancel}>
           <FormField
             name="class"
-            label="Class"
+            label="Klass"
             value = {this.state.classValue}
             onChange = {(e) => this.setState({classValue: e.value})}
             component={Select}
@@ -146,7 +146,7 @@ class EventForm extends Component {
           />
           <FormField
             name="dayValue"
-            label="Day"
+            label="Dag"
             required={false}
             >
             <Select
@@ -239,8 +239,8 @@ class EventForm extends Component {
               },
             ]}
           />
-          <Button type="reset" primary label="Cancel" />
-          <Button type="submit" primary label="Submit" />
+        <Button type="reset" primary label="Ångra" />
+          <Button type="submit" primary label="Ändra" />
         </Form>
       </Box>
   )

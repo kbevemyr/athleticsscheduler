@@ -2,9 +2,9 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { Box, CheckBox, Text } from 'grommet';
+import { Box, CheckBox, Text, Markdown } from 'grommet';
 
-import { healthCheckSchema, isOverlap, getEvent } from './misc';
+import { healthCheckSchema2, isOverlap, getEvent } from './misc';
 
 import { setOverlap } from './store/actions';
 
@@ -13,8 +13,7 @@ class CollisionPanel extends Component {
     super(props);
     this.handleViewEvent = this.handleViewEvent.bind(this);
     this.state = {
-      name: "Collision of Peers Events",
-      //eventcollisions: healthCheckSchema(this.props.events)
+      name: "Collision of Peers Events ",
     };
   }
 
@@ -26,20 +25,20 @@ class CollisionPanel extends Component {
   }
 
   render() {
-    console.log("just to call healthCheckSchema");
-    var eventcollisions = healthCheckSchema(this.props.events);
+    console.log("just to call healthCheckSchema2");
+    var eventcollisions = healthCheckSchema2(this.props.events, this.props.day);
 
     return (
       <Box background='light-1' >
-        <Text weight="bold" >{this.state.name}</Text>
-        {Object.keys(eventcollisions).map(x => {
-          var event1 = getEvent(this.props.comp, x);
-          var event2 = getEvent(this.props.comp, eventcollisions[x]);
+        <Text>{this.state.name}</Text>
+        {eventcollisions.map(x => {
+          var event1 = getEvent(this.props.comp, x.key);
+          var event2 = getEvent(this.props.comp, x.value);
           return (
             <CheckBox
-              key={"collisionbox"+event1.id+event2.id}
+              key={"collisionbox"+event1.id+event2.id+this.props.day}
               checked={isOverlap(this.props.overlap,event1.id)}
-              label={event1.class+" "+event1.gren+" || " + event2.class+" "+ event2.gren}
+              label={<Markdown>{"**"+event1.class+" "+event1.gren+"** || " + event2.class+" "+ event2.gren}</Markdown>}
               onChange={(e) => this.handleViewEvent(e, event1.id, event2.id)}
             />
         )})}

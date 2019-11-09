@@ -31,7 +31,7 @@ class TableView extends Component {
 
         <Text weight="bold" >{this.state.name}</Text>
 
-        <EventTable key="eventstable" onEdit={this.handleOpenEditForm} />
+        <EventTable key="eventstable" />
 
       </Box>
   )

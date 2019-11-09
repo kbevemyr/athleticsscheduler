@@ -10,24 +10,7 @@ import { Grid, Tabs, Tab, Box, Text } from 'grommet';
 
 // First atempt to render pdf of a CompDay
 import PrintButton from './PrintButton';
-import Page1 from './Page';
-/*
-<Page1 id='pdfpage'>
-  <CompDay ... />
-</Page1>
-*/
-
-// Second try, you have to re render the whole thing with special blocks
-/*
-import ReactPDF, {
-  PDFViewer,
-  Document,
-  Page,
-  View,
-  Text,
-  StyleSheet,
-} from '@react-pdf/renderer';
-*/
+import Page from './Page';
 
 class Competition extends Component {
   constructor(props) {
@@ -40,44 +23,53 @@ class Competition extends Component {
 
   render() {
     return (
-      <Grid key="competitionschema"
-        rows={['xsmall', 'auto']}
-        columns={['auto', '1/4']}
-        gap="small"
-        areas={[
-          { name: 'header', start: [0,0], end: [1,0] },
-          { name: 'main', start: [0,1], end: [0,1] },
-          { name: 'notes', start: [1,1], end: [1,1] },
-        ]}
-      >
-        <Box gridArea='header'>
-          <Text>{this.props.name} ({this.props.compID})</Text>
-          Schema Version: {this.props.version}
-          <PrintButton id={"pdfpage"} label={"Print PDF page"} />
-        </Box>
+      <Box>
+        <Text>{this.props.name} ({this.props.compID})</Text>
+        <Text>Schema Version: {this.props.version}</Text>
 
-        <Box gridArea='main' direction="row">
-          <Tabs justify="start">
-            {this.props.days.map(x =>
-              (
-                <Tab key={"T."+x.id} title={x.name}>
-                  <Page1 id='pdfpage' >
+        <Tabs justify="start">
+          {this.props.days.map(x =>
+            (
+            <Tab key={"T."+x.id} title={x.name}>
+
+              <Grid key="competitionschema"
+                rows={['xsmall', 'auto']}
+                columns={['auto', '1/4']}
+                gap="small"
+                areas={[
+                  { name: 'header', start: [0,0], end: [1,0] },
+                  { name: 'main', start: [0,1], end: [0,1] },
+                  { name: 'notes', start: [1,1], end: [1,1] },
+                ]}
+              >
+
+                <Box gridArea='header'>
+                  <PrintButton id={"pdfpage"} label={"Print PDF page"} />
+                </Box>
+
+                <Box gridArea='main' direction="row">
+                  <Page id='pdfpage' >
                     <CompDay
-                      key={x.id}
-                      id={x.id}
-                      name={x.name}
+                        key={x.id}
+                        id={x.id}
+                        name={x.name}
                     />
-                </Page1>
-                </Tab>
-              )
-            )}
-          </Tabs>
-        </Box>
+                  </Page>
+                </Box>
 
-        <Box gridArea='notes'>
-          <CollisionPanel />
-        </Box>
-      </Grid>
+                <Box gridArea='notes'>
+                  <CollisionPanel
+                      key={"CP"+x.id}
+                      id={"CP"+x.id}
+                      day={x.id}
+                  />
+                </Box>
+
+              </Grid>
+            </Tab>
+          ))}
+        </Tabs>
+      </Box>
     );
   }
 }

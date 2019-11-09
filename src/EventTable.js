@@ -3,17 +3,30 @@ import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
 import { DataTable, Clock, Text, Box } from 'grommet';
+import { Accessibility as HLIcon } from 'grommet-icons';
 
-import { presentTime } from './misc';
+import { presentTime, getOverlaps, healthCheckSchema } from './misc';
 import { setActiveEvent } from './store/actions';
 
-function presentEvents(comp) {
+function presentEvents(comp, overlaps) {
   var ds = {};
   comp.days.forEach((x) => ds[x.id] = x.name);
   var as = {};
   comp.arenas.forEach((x) => as[x.id] = x.name);
   return (comp.events.map(event => {
-    return({id: event.id, day: ds[event.day], arena: as[event.arena], starttime: event.starttime, duration: event.duration, preptime: event.preptime, class: event.class, gren: event.gren, grentype: event.grentype});
+    var os = getOverlaps(overlaps, event.id);
+    return({
+      id: event.id,
+      day: ds[event.day],
+      arena: as[event.arena],
+      starttime: event.starttime,
+      duration: event.duration,
+      preptime: event.preptime,
+      class: event.class,
+      gren: event.gren,
+      grentype: event.grentype,
+      overlap: (os.length > 0 ? os[0].value+" ...":"-"),
+    });
   }));
 }
 
@@ -31,7 +44,9 @@ class EventTable extends Component {
   }
 
   render() {
-    let DATA = presentEvents(this.props.comp);
+    console.log("just to call healthCheckSchema");
+    var eventcollisions = healthCheckSchema(this.props.comp.events);
+    let DATA = presentEvents(this.props.comp, eventcollisions);
 
     return (
       <Box background='light-1' >
@@ -44,7 +59,7 @@ class EventTable extends Component {
           columns={[
             {
               property: 'day',
-              header: <Text>Day</Text>,
+              header: <Text>Dag</Text>,
             },
             {
               property: 'arena',
@@ -64,7 +79,7 @@ class EventTable extends Component {
             },
             {
               property: 'starttime',
-              header: <Text>Start Time</Text>,
+              header: <Text>Starttid</Text>,
               render: x => (
                 <Box>
                 <Clock type="digital"
@@ -88,7 +103,7 @@ class EventTable extends Component {
             },
             {
               property: 'class',
-              header: <Text>Class</Text>,
+              header: <Text>Klass</Text>,
             },
             {
               property: 'gren',
@@ -99,11 +114,12 @@ class EventTable extends Component {
               header: <Text>Grentyp</Text>,
             },
             {
-              property: 'note',
-              header: <Text>Not</Text>,
+              property: 'overlap',
+              header: <Text>Kolliderar med</Text>,
               render: x => (
-                <Text>{"//"+this.props.overlap[x.id]}</Text>
-              )
+                <Text>{x.overlap}</Text>
+
+              ),
             },
           ]}
           data={DATA}
@@ -112,6 +128,11 @@ class EventTable extends Component {
     )
   }
 }
+/*
+<Box>{x.overlap &&
+  <HLIcon color="accent-1" />}
+  </Box>
+*/
 
 
   // Store handling
@@ -119,7 +140,7 @@ class EventTable extends Component {
   const mapStateToProps = state => ({
     comp: state.competition,
     active: state.activeID,
-    overlap: state.overlap,
+    overlaps: state.overlap,
   });
 
   const mapDispatchToProps = dispatch => ({
