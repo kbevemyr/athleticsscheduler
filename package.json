@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.6.0",
     "@material/react-chips": "^0.15.0",
     "@react-pdf/renderer": "^1.6.7",
     "grommet": "^2.7.11",
@@ -11,6 +12,7 @@
     "html2canvas": "^1.0.0-rc.5",
     "https-proxy-agent": "^2.2.4",
     "jspdf": "^1.5.3",
+    "material-table": "^1.54.1",
     "npm": "^6.13.0",
     "react": "^16.11.0",
     "react-dom": "^16.11.0",

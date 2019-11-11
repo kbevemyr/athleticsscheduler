@@ -2,16 +2,20 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { DataTable, Clock, Text, Box } from 'grommet';
+import { Clock, Text, Box } from 'grommet';
+
+import { Table, TableHeader, TableBody, TableRow, TableCell} from 'grommet';
 
 import { presentTime, getOverlaps, healthCheckSchema } from './misc';
 import { setActiveEvent } from './store/actions';
+
 
 function presentEvents(comp, overlaps) {
   var ds = {};
   comp.days.forEach((x) => ds[x.id] = x.name);
   var as = {};
   comp.arenas.forEach((x) => as[x.id] = x.name);
+
   return (comp.events.map(event => {
     var os = getOverlaps(overlaps, event.id);
     return({
@@ -29,6 +33,10 @@ function presentEvents(comp, overlaps) {
   }));
 }
 
+function genTimePresentation(x) {
+ return x;
+}
+
 class EventTable extends Component {
   constructor(props) {
     super(props);
@@ -37,97 +45,148 @@ class EventTable extends Component {
     };
   }
 
-  handleOnClickRow (e) {
-    console.log("handleOnClickRow "+JSON.stringify(e.datum));
-    this.props.history.push("/form/"+e.datum.id);
+  handleOnRowClick (e, data) {
+    //console.log("handleOnRowClick "+JSON.stringify(data));
+    this.props.history.push("/form/"+data.id);
   }
 
   render() {
-    console.log("just to call healthCheckSchema");
-    //var eventcollisions = healthCheckSchema(this.props.comp.events);
     let DATA = presentEvents(this.props.comp, this.props.eventcollisions);
 
-    return (
-      <Box background='light-1' >
-        <DataTable
-          alignSelf="start"
-          size='medium'
-          sortable={true}
-          primaryKey="id"
-          onClickRow={(e) => this.handleOnClickRow(e)}
-          columns={[
-            {
-              property: 'day',
-              header: <Text>Dag</Text>,
-            },
-            {
-              property: 'arena',
-              header: <Text>Arena</Text>,
-            },
-            {
-              property: 'preptime',
-              header: <Text>Ställtid</Text>,
-              render: x => (
-                <Box>
-                <Clock type="digital"
-                       precision="minutes"
-                       time={"T"+presentTime(x.preptime)+":00"}
-                />
-                </Box>
-              ),
-            },
-            {
-              property: 'starttime',
-              header: <Text>Starttid</Text>,
-              render: x => (
-                <Box>
-                <Clock type="digital"
-                       precision="minutes"
-                       time={"T"+presentTime(x.starttime)+":00"}
-                />
-                </Box>
-              ),
-            },
-            {
-              property: 'duration',
-              header: <Text>Duration</Text>,
-              render: x => (
-                <Box>
-                <Clock type="digital"
-                       precision="minutes"
-                       time={"T"+presentTime(x.duration)+":00"}
-                />
-                </Box>
-              ),
-            },
-            {
-              property: 'class',
-              header: <Text>Klass</Text>,
-            },
-            {
-              property: 'gren',
-              header: <Text>Gren</Text>,
-            },
-            {
-              property: 'grentype',
-              header: <Text>Grentyp</Text>,
-            },
-            {
-              property: 'overlap',
-              header: <Text>Kolliderar med</Text>,
-              render: x => (
-                <Text>{x.overlap}</Text>
+    let columns = [
+      {
+        field: 'day',
+        title: <Text>Dag</Text>,
+        render: (x) => x.day,
+      },
+      {
+        field: 'arena',
+        title: <Text>Arena</Text>,
+        render: (x) => x.arena,
+      },
+      {
+        field: 'preptime',
+        title: <Text>Ställtid</Text>,
+        render: x => genTimePresentation(x.preptime),
+      },
+      {
+        field: 'starttime',
+        title: <Text>Starttid</Text>,
+        render: x => x.starttime,
+      },
+      {
+        field: 'duration',
+        title: <Text>Duration</Text>,
+        render: x => x.duration,
+      },
+      {
+        field: 'class',
+        title: <Text>Klass</Text>,
+        render: (x) => x.class,
+      },
+      {
+        field: 'gren',
+        title: <Text>Gren</Text>,
+        render: (x) => x.gren,
+      },
+      {
+        field: 'grentype',
+        title: <Text>Grentyp</Text>,
+        render: (x) => x.grentype,
+      },
+      {
+        field: 'overlap',
+        title: <Text>Kolliderar med</Text>,
+        render: x => (
+          <Text>{x.overlap}</Text>
+        ),
+      },
+    ];
 
-              ),
-            },
-          ]}
-          data={DATA}
-        />
-      </Box>
-    )
+    return (
+        <Table>
+          <TableHeader>
+            <TableRow>
+              {columns.map(x =>
+                <TableCell key={"th"+x.field} scope="col">
+                  {x.title}
+                </TableCell>
+              )}
+            </TableRow>
+          </TableHeader>
+
+          <TableBody>
+            {DATA.map(x =>
+              <TableRow key={"tr"+x.id}>
+                <TableCell scope="row">
+                  {x.day}
+                </TableCell>
+                <TableCell scope="row">
+                  {x.arena}
+                </TableCell>
+                <TableCell scope="row">
+                  <Box>
+                  <Clock type="digital"
+                         precision="minutes"
+                         time={"T"+presentTime(x.preptime)+":00"}
+                  />
+                  </Box>
+                </TableCell>
+                <TableCell scope="row">
+                  <Box>
+                  <Clock type="digital"
+                         precision="minutes"
+                         time={"T"+presentTime(x.starttime)+":00"}
+                  />
+                  </Box>
+                </TableCell>
+                <TableCell scope="row">
+                  <Box>
+                  <Clock type="digital"
+                         precision="minutes"
+                         time={"T"+presentTime(x.duration)+":00"}
+                  />
+                  </Box>
+                </TableCell>
+                <TableCell scope="row">
+                  {x.class}
+                </TableCell>
+                <TableCell scope="row">
+                  {x.gren}
+                </TableCell>
+                <TableCell scope="row">
+                  {x.grentype}
+                </TableCell>
+                <TableCell scope="row">
+                  {x.overlap}
+                </TableCell>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+
+    );
   }
 }
+
 /*
+
+    {
+      property: 'arena',
+      title: <Text>Arena</Text>,
+    },
+    {
+      property: 'preptime',
+      title: <Text>Ställtid</Text>,
+      render: x => (
+        <Box>
+        <Clock type="digital"
+               precision="minutes"
+               time={"T"+presentTime(x.preptime)+":00"}
+        />
+        </Box>
+      ),
+    },
 
 */
 
