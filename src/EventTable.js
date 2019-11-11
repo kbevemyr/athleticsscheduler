@@ -44,8 +44,8 @@ class EventTable extends Component {
 
   render() {
     console.log("just to call healthCheckSchema");
-    var eventcollisions = healthCheckSchema(this.props.comp.events);
-    let DATA = presentEvents(this.props.comp, eventcollisions);
+    //var eventcollisions = healthCheckSchema(this.props.comp.events);
+    let DATA = presentEvents(this.props.comp, this.props.eventcollisions);
 
     return (
       <Box background='light-1' >
@@ -128,9 +128,7 @@ class EventTable extends Component {
   }
 }
 /*
-<Box>{x.overlap &&
-  <HLIcon color="accent-1" />}
-  </Box>
+
 */
 
 
@@ -138,8 +136,7 @@ class EventTable extends Component {
 
   const mapStateToProps = state => ({
     comp: state.competition,
-    active: state.activeID,
-    overlaps: state.overlap,
+    eventcollisions: healthCheckSchema(state.competition.events),
   });
 
   const mapDispatchToProps = dispatch => ({

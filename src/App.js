@@ -95,10 +95,6 @@ class App extends Component {
 
 const mapStateToProps = state => ({
   compID: state.competition.key,
-  name: state.competition.name,
-  version: state.competition.version,
-  days: state.competition.days,
-  comp: state.competition,
 });
 
 const mapDispatchToProps = dispatch => ({
