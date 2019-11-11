@@ -2,8 +2,8 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { Stack } from 'grommet';
-import { Accessibility as HLIcon } from 'grommet-icons';
+import { Stack, Box, Anchor } from 'grommet';
+import { Accessibility as HLIcon, FormEdit } from 'grommet-icons';
 
 import { setColor, setActiveEvent, setActiveClass } from './store/actions';
 import { defaultColor, getTextColor, MinutesToPX, getEvent, getDayStarttime, isOverlap } from './misc';
@@ -122,11 +122,18 @@ class Event extends Component {
           onDoubleClick={this.handleHighLightEvent}
           onClick={e => this.handleMarkEvent(e, topE)}
         >
-          <Stack anchor="top">
+          <Stack anchor="top-right">
             {this.state.event.class+" "+this.state.event.gren}
-            {isOverlap(this.props.overlaps, this.props.id) &&
-              <HLIcon color="accent-1" />
-            }
+            <Box direction="row">
+              {isOverlap(this.props.overlaps, this.props.id) &&
+                <Box background="white" round>
+                  <HLIcon color="accent-1" size='small' />
+                </Box>
+              }
+              <Box background="white" round>
+                <Anchor href={"#form/"+this.props.id} size="small" icon={<FormEdit size='small' />} />
+              </Box>
+            </Box>
           </Stack>
         </div>
       </div>

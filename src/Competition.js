@@ -6,7 +6,7 @@ import './App.css';
 import CompDay from './CompDay';
 import CollisionPanel from './CollisionPanel';
 
-import { Grid, Tabs, Tab, Box, Text } from 'grommet';
+import { Heading, Grid, Tabs, Tab, Box, Text } from 'grommet';
 
 // First atempt to render pdf of a CompDay
 import PrintButton from './PrintButton';
@@ -24,8 +24,8 @@ class Competition extends Component {
   render() {
     return (
       <Box>
-        <Text>{this.props.name} ({this.props.compID})</Text>
-        <Text>Schema Version: {this.props.version}</Text>
+        <Heading level={2}>{this.props.name} ({this.props.compID})</Heading>
+        <Heading level={4}>Schema Version: {this.props.version}</Heading>
 
         <Tabs justify="start">
           {this.props.days.map(x =>

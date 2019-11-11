@@ -239,8 +239,8 @@ class EventForm extends Component {
               },
             ]}
           />
-        <Button type="reset" primary label="Ångra" />
-          <Button type="submit" primary label="Ändra" />
+        <Button type="reset" primary label="Cancel" />
+          <Button type="submit" primary label="Submit" />
         </Form>
       </Box>
   )

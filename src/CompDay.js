@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
+import { Heading } from 'grommet';
 import { getTypeArenas, getDayStarttime, getDayEndtime, getBoxSize } from './misc';
 
 import Arena from './Arena';
@@ -49,9 +50,9 @@ class CompDay extends Component {
 
     return (
       <Box className="compday-main" gap='small'>
-        <Box className="compday-header">
+        <Heading level={3}>
           {this.props.name}
-        </Box>
+        </Heading>
         <Box
           direction="row-responsive"
           pad={{horizontal:"small", vertical:"xxsmall"}}>

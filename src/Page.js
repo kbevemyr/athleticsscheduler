@@ -6,7 +6,7 @@ import React from 'react';
 //bg-white är background-color: white
 
 const Page = ({children, id}) => (<div
-  id={id} className="bg-white shadow-1"
+  id={id} className="bg-white"
 >
   {children}
 </div>);

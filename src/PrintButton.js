@@ -2,6 +2,8 @@ import React from 'react';
 import html2canvas from 'html2canvas';
 import jsPDF from 'jspdf';
 
+import {DocumentPdf} from 'grommet-icons';
+
 
 /*
   Basic algoritm
@@ -61,7 +63,7 @@ const PrintButton = ({id, label}) => (<div>
 
     }}
   >
-    {label}
+    <DocumentPdf />
   </div>
 </div>);
 

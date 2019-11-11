@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { Box, CheckBox, Text, Markdown } from 'grommet';
+import { Heading, Box, CheckBox, Text, Markdown } from 'grommet';
 
 import { healthCheckSchema2, isOverlap, getEvent } from './misc';
 
@@ -13,7 +13,7 @@ class CollisionPanel extends Component {
     super(props);
     this.handleViewEvent = this.handleViewEvent.bind(this);
     this.state = {
-      name: "Collision of Peers Events ",
+      name: "Collision of Events ",
     };
   }
 
@@ -29,8 +29,8 @@ class CollisionPanel extends Component {
     var eventcollisions = healthCheckSchema2(this.props.events, this.props.day);
 
     return (
-      <Box background='light-1' >
-        <Text>{this.state.name}</Text>
+      <Box>
+        <Heading level= {3}>{this.state.name}</Heading>
         {eventcollisions.map(x => {
           var event1 = getEvent(this.props.comp, x.key);
           var event2 = getEvent(this.props.comp, x.value);
