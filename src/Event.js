@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { Stack, Box, Anchor } from 'grommet';
+import { Stack, Box } from 'grommet';
 import { Accessibility as HLIcon, FormEdit } from 'grommet-icons';
 
 import { setColor, setActiveEvent, setActiveClass } from './store/actions';
@@ -131,7 +131,9 @@ class Event extends Component {
                 </Box>
               }
               <Box background="white" round>
-                <Anchor href={"#form/"+this.props.id} size="small" icon={<FormEdit size='small' />} />
+                <a href={"#form/"+this.props.id}>
+                  <FormEdit size='small' />
+                </a>
               </Box>
             </Box>
           </Stack>

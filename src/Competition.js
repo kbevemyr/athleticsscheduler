@@ -6,7 +6,7 @@ import './App.css';
 import CompDay from './CompDay';
 import CollisionPanel from './CollisionPanel';
 
-import { Heading, Grid, Tabs, Tab, Box, Text } from 'grommet';
+import { Heading, Grid, Tabs, Tab, Box } from 'grommet';
 
 // First atempt to render pdf of a CompDay
 import PrintButton from './PrintButton';

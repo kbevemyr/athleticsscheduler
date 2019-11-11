@@ -7,12 +7,11 @@ import Competition from './Competition';
 import TableView from './TableView';
 import EventForm from './EventForm';
 import Settings from './Settings';
-import PrintView from './PrintView';
 import { getCompetitionData, saveCompetitionData, newCompetitionData } from './store/actions';
 
 import { Grommet, grommet, Box, Anchor, Menu } from 'grommet';
 import { Menu as MenuIcon } from 'grommet-icons';
-import { Table, Columns, SettingsOption, Inspect } from 'grommet-icons';
+import { Table, Columns, SettingsOption } from 'grommet-icons';
 
 class App extends Component {
   constructor(props) {
@@ -50,7 +49,6 @@ class App extends Component {
           <Box direction='row'>
             <Anchor href="#tables" icon={<Table />} />
             <Anchor href="#" icon={<Columns />} />
-            <Anchor href="#print" icon={<Inspect />} />
           </Box>
 
           <strong>Athletics Scheduler</strong>
@@ -78,8 +76,6 @@ class App extends Component {
           <Route path="/form/:id" component={EventForm} />
           <Route path="/settings" component={Settings} />
         </Switch>
-
-        <Route path="/print" component={PrintView} />
 
         <Box tag='footer'
              direction='row'

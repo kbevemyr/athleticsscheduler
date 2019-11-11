@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { Heading, Box, CheckBox, Text, Markdown } from 'grommet';
+import { Heading, Box, CheckBox, Markdown } from 'grommet';
 
 import { healthCheckSchema2, isOverlap, getEvent } from './misc';
 

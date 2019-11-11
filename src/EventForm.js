@@ -6,9 +6,6 @@ import { Box, Form, FormField, Select, MaskedInput, Button, Text } from 'grommet
 import { updateEvent } from './store/actions';
 import { timeStrToMinutes, presentTime, getEmptyEvent, getAllClasses, getAllGrens } from './misc';
 
-function updateDay(val, opt) {
-  return ({dayValue: val});
-}
 
 class EventForm extends Component {
 
@@ -147,26 +144,12 @@ class EventForm extends Component {
           <FormField
             name="dayValue"
             label="Dag"
-            required={false}
-            >
-            <Select
-              value = {this.state.dayValue}
-              onSearch = {(searchText) => {
-                const regexp = new RegExp(searchText, 'i');
-                var x = this.state.dOptions.filter(o => o.match(regexp));
-                console.log("x is "+JSON.stringify(x));
-                if(x.length < 1) {
-                  x.push(searchText);
-                  this.setState({dayValue: searchText, dOptions: x});
-                } else {
-                  this.setState({dOptions: x})
-                }
-              }}
-              onChange = {(e) => this.setState((state, props) => updateDay(e.value, state.dOptions))}
-              options={this.state.dOptions}
-              >
-            </Select>
-          </FormField>
+            value = {this.state.dayValue}
+            onChange = {(e) => this.setState({dayValue: e.value})}
+            component={Select}
+            options={this.state.dOptions}
+            required={true}
+          />
           <FormField
             name="arenaValue"
             label="Arena"

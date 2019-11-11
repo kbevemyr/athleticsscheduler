@@ -3,7 +3,6 @@ import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
 import { DataTable, Clock, Text, Box } from 'grommet';
-import { Accessibility as HLIcon } from 'grommet-icons';
 
 import { presentTime, getOverlaps, healthCheckSchema } from './misc';
 import { setActiveEvent } from './store/actions';

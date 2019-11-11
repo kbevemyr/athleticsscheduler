@@ -19,7 +19,7 @@ class Settings extends Component {
       <Box>
         <Heading level={1}>{this.state.name}</Heading>
         <Box
-          tag='settingsarea'
+          key='settingsarea'
           pad='medium'
           gap='medium'
           justify='between'
@@ -52,8 +52,10 @@ class Settings extends Component {
             align='start'
             basis='3/4'
             >
-            <NameTable key='daytable' type='day' />
-            <NameTable key='arenatable' type='arena' />
+            <NameTable key='daytable' type='day' label="Dag"/>
+            <NameTable key='arenatable' type='arena' label="Arenor"/>
+            <NameTable key='classtable' type='class' label="Klasser"/>
+            <NameTable key='grentable' type='gren' label="Grenar"/>
           </Box>
         </Box>
       </Box>

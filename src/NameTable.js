@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { addDay, addArena } from './store/actions';
 
-import { DataTable, Text, TextInput, Button, Box } from 'grommet';
+import { Heading, DataTable, Text, TextInput, Button, Box } from 'grommet';
 import { Add } from 'grommet-icons';
 
 function setData(type, days, arenas) {
@@ -21,7 +21,6 @@ class NameTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "Table View of Names",
       newName: "",
     };
 
@@ -40,17 +39,22 @@ class NameTable extends Component {
 
   render() {
     return (
-      <Box gap='small'>
-        <Box background='light-1' >
+      <Box gap='small' pad='small'>
+        <Heading level={4}>{this.props.label}</Heading>
+        <Box>
+          <Box direction='row'>
+              <TextInput
+                placeholder="add a new name"
+                onChange={(e) => this.setState({newName: e.target.value})}
+              />
+              <Button icon={<Add />} onClick={() => this.handleAddNewName(this.state.newName)}/>
+          </Box>
           <DataTable
             alignSelf="start"
             size='medium'
+            sortable={true}
+            primaryKey="id"
             columns={[
-              {
-                property: 'id',
-                header: <Text>Id</Text>,
-                primary: true,
-              },
               {
                 property: 'name',
                 header: <Text>Name</Text>,
@@ -58,13 +62,6 @@ class NameTable extends Component {
             ]}
             data={setData(this.props.type, this.props.days, this.props.arenas)}
             />
-        </Box>
-        <Box direction='row'>
-            <TextInput
-              placeholder="add a new name"
-              onChange={(e) => this.setState({newName: e.target.value})}
-            />
-            <Button icon={<Add />} onClick={() => this.handleAddNewName(this.state.newName)}/>
         </Box>
       </Box>
     )
