@@ -233,10 +233,10 @@ export function overlap(e1, e2) {
   const et2 = parseInt(e2.starttime, 10) + parseInt(e2.duration, 10);
 
   if(e1.day === e2.day) {
-    if(st2 < et1 && st2 > st1) {
+    if(st2 <= et1 && st2 >= st1) {
       response = true;
     }
-    if(st1 < et2 && st1 > st2) {
+    if(st1 <= et2 && st1 >= st2) {
       response = true;
     }
   }
