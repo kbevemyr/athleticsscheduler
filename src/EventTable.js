@@ -2,9 +2,9 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { Text } from 'grommet';
+import { Text, Anchor } from 'grommet';
+import { FormEdit } from 'grommet-icons';
 
-//import { Table, TableHeader, TableBody, TableRow, TableCell} from 'grommet';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -12,18 +12,23 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 
-import { presentTime, getOverlaps, healthCheckSchema } from './misc';
+import { getEvent, presentTime, getOverlaps, healthCheckSchema } from './misc';
 import { setActiveEvent } from './store/actions';
 
 
 function presentEvents(comp, overlaps) {
   var ds = {};
-  comp.days.forEach((x) => ds[x.id] = x.name);
+  comp.days.forEach(x => ds[x.id] = x.name);
   var as = {};
-  comp.arenas.forEach((x) => as[x.id] = x.name);
+  comp.arenas.forEach(x => as[x.id] = x.name);
 
   return (comp.events.map(event => {
     var os = getOverlaps(overlaps, event.id);
+
+    var os2 = [];
+    overlaps.forEach(x => os2.push(getEvent(comp, x.value)));
+    // TODO: Only shows the first overlap for now.
+
     return({
       id: event.id,
       day: ds[event.day],
@@ -34,7 +39,7 @@ function presentEvents(comp, overlaps) {
       class: event.class,
       gren: event.gren,
       grentype: event.grentype,
-      overlap: (os.length > 0 ? os[0].value+" ...":"-"),
+      overlap: (os.length > 0 ? os2[0].class+" "+os2[0].gren : "-"),
     });
   }));
 }
@@ -141,6 +146,9 @@ class EventTable extends Component {
         <Table stickyHeader size="small">
           <TableHead>
             <TableRow>
+              <TableCell key='thactions'>
+
+              </TableCell>
               {columns.map(x =>
                 <TableCell
                   key={"th"+x.key}
@@ -163,7 +171,10 @@ class EventTable extends Component {
               <TableRow
                 key={"tr"+x.id}
               >
-                <TableCell compoent="th" scope="row">
+                <TableRow>
+                  <Anchor href={"#form/"+x.id} icon={<FormEdit />} />
+                </TableRow>
+                <TableCell component="th" scope="row">
                   {x.day}
                 </TableCell>
                 <TableCell scope="row">

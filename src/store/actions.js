@@ -1,8 +1,9 @@
 import { serverGet, serverPost } from './support.js';
 import { localComps } from './MOCKdata';
+import { EmptyCompetition } from '../misc';
 
 export const FETCH_USERDATA = 'FETCH_USERDATA';
-export const FETCH_COMPETITION = 'FETCH_COMPETITION';
+export const SET_COMPETITION = 'SET_COMPETITION';
 export const SET_NEWCOLOR = 'SET_NEWCOLOR';
 export const SAVE_COMPETITION = 'SAVE_COMPETITION';
 
@@ -11,8 +12,10 @@ export const SET_ACTIVE_EVENT = 'SET_ACTIVE_EVENT';
 export const SET_ACTIVE_CLASS = 'SET_ACTIVE_CLASS';
 export const UPDATE_OVERLAP = 'UPDATE_OVERLAP';
 
-export const ADD_DAY = 'ADD_DAY';
-export const ADD_ARENA = 'ADD_ARENA';
+export const UPDATE_SETTINGS = 'UPDATE_SETTINGS';
+export const ADD_NAME = 'ADD_NAME';
+export const DELETE_NAME = 'DELETE_NAME';
+export const CHANGE_NAME = 'CHANGE_NAME';
 
 
 // Action Creators - Functions that create actions
@@ -28,7 +31,7 @@ function gotUserdata(data) {
 
 function gotCompetition(data) {
   return {
-    type: FETCH_COMPETITION,
+    type: SET_COMPETITION,
     data
   }
 }
@@ -75,19 +78,38 @@ export function setOverlap(collision) {
   }
 }
 
-export function addDay(name) {
+export function addName(name, nametype) {
   return {
-    type: ADD_DAY,
+    type: ADD_NAME,
     name,
+    nametype,
   }
 }
 
-export function addArena(name) {
+export function deleteName(id, nametype) {
   return {
-    type: ADD_ARENA,
-    name,
+    type: DELETE_NAME,
+    id,
+    nametype,
   }
 }
+
+export function changeName(id, name, nametype) {
+  return {
+    type: CHANGE_NAME,
+    id,
+    name,
+    nametype,
+  }
+}
+
+export function updateSettings(setting) {
+  return {
+    type: UPDATE_SETTINGS,
+    setting,
+  }
+}
+
 
 
 // Backend functions calls
@@ -104,10 +126,9 @@ function getClassColor(id) {
 */
 
 export function newCompetitionData () {
-  console.log("TBD: set up a new empty competition!!");
-
-  return () => {
-    console.log("new data in progress, not done yet")
+  return dispatch => {
+    console.log("newCompetitionData");
+    dispatch(gotCompetition(EmptyCompetition));
   }
 }
 

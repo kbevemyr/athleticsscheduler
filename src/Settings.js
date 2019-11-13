@@ -2,7 +2,9 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { Heading, Text, Form, FormField, Button, Box } from 'grommet';
+import { updateSettings } from './store/actions';
+
+import { Heading, Form, FormField, TextInput, Button, Box } from 'grommet';
 
 import NameTable from './NameTable';
 
@@ -10,14 +12,33 @@ class Settings extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: "Competition Settings",
+      title: "Competition Settings",
+      nameVal: this.props.name,
+      keyVal: this.props.key,
+      versionVal: this.props.version,
     };
+  }
+
+  handleSubmit(event) {
+    console.log("handleUpdateSettings");
+    var update = {
+      name: this.state.nameVal,
+      key: this.state.keyVal,
+      version: this.state.versionVal,
+    };
+    console.log("Submit in SettingsForm: ", update);
+    this.props.updateTheSettings(update);
+    //this.props.history.goBack();
+  }
+
+  handleCancel(event) {
+    //this.props.history.goBack();
   }
 
   render() {
     return (
       <Box>
-        <Heading level={1}>{this.state.name}</Heading>
+        <Heading level={1}>{this.state.title}</Heading>
         <Box
           key='settingsarea'
           pad='medium'
@@ -28,19 +49,33 @@ class Settings extends Component {
           flex={true}
           >
 
-          <Form>
+          <Form onSubmit={this.handleUpdateSettings} onReset={this.handleCancel}>
             <FormField name="name" label="Name">
-              <Text>{this.props.name}</Text>
+              <TextInput
+                value = {this.state.nameVal}
+                placeholder = {this.props.name}
+                onChange = {(e) => this.setState({nameVal: e.value})}
+                >
+              </TextInput>
             </FormField>
 
-            <FormField name="compID" label="CompID">
-              <Text>{this.props.compID}</Text>
+            <FormField name="key" label="Key">
+              <TextInput
+                value = {this.state.keyVal}
+                onChange = {(e) => this.setState({keyVal: e.value})}
+                >
+              </TextInput>
             </FormField>
 
             <FormField name="version" label="Version">
-              <Text>{this.props.version}</Text>
+              <TextInput
+                value = {this.state.versionVal}
+                onChange = {(e) => this.setState({versionVal: e.value})}
+                >
+              </TextInput>
             </FormField>
 
+            <Button type="reset" primary label="Cancel" />
             <Button type="submit" primary label="Submit" />
           </Form>
 
@@ -52,10 +87,10 @@ class Settings extends Component {
             align='start'
             basis='3/4'
             >
-            <NameTable key='daytable' type='day' label="Dag"/>
-            <NameTable key='arenatable' type='arena' label="Arenor"/>
-            <NameTable key='classtable' type='class' label="Klasser"/>
-            <NameTable key='grentable' type='gren' label="Grenar"/>
+            <NameTable key='daytable' type='days' label="Dag"/>
+            <NameTable key='arenatable' type='arenas' label="Arenor"/>
+            <NameTable key='classtable' type='classes' label="Klasser"/>
+            <NameTable key='grentable' type='grenar' label="Grenar"/>
           </Box>
         </Box>
       </Box>
@@ -81,13 +116,13 @@ class Settings extends Component {
 
   const mapStateToProps = state => ({
     name: state.competition.name,
-    compID: state.competition.key,
+    key: state.competition.key,
     version: state.competition.version,
   });
 
   const mapDispatchToProps = dispatch => ({
-      addTheDay: (d) => {
-        dispatch();
+      updateTheSettings: (d) => {
+        dispatch(updateSettings(d));
     },
   });
 

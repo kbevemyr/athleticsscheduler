@@ -3,7 +3,20 @@
   Äldre representation av data som ger en bättre helhet tror jag.
 */
 
-var SERVERdaysTest = [
+
+const SERVERclassesTest = [{"id":"P06","name":"P06"},{"id":"F04","name":"F04"},{"id":"P04","name":"P04"},{"id":"F03","name":"F03"},{"id":"P03","name":"P03"},{"id":"F06","name":"F06"},{"id":"P07 ","name":"P07 "},{"id":"F05","name":"F05"},{"id":"P05","name":"P05"},{"id":"F07","name":"F07"},{"id":"P07","name":"P07"},{"id":"F08","name":"F08"},{"id":"P08","name":"P08"}];
+
+const SERVERgrenarTest = [{"id":"60","name":"60"},{"id":"60m ","name":"60m "},{"id":"600","name":"600"},{"id":"400","name":"400"},{"id":"Längd","name":"Längd"},{"id":"Höjd","name":"Höjd"},{"id":"Kula","name":"Kula"}];
+
+const comp2018classesTest = [{"id":"P11","name":"P11"},{"id":"F11","name":"F11"},{"id":"F12","name":"F12"},{"id":"F13","name":"F13"},{"id":"F9","name":"F9"},{"id":"P9","name":"P9"},{"id":"F15","name":"F15"},{"id":"P15","name":"P15"},{"id":"P13","name":"P13"},{"id":"P8","name":"P8"},{"id":"P12","name":"P12"},{"id":"F8","name":"F8"},{"id":"P10","name":"P10"},{"id":"F10","name":"F10"}];
+
+const comp2018grenarTest = [{"id":"60","name":"60"},{"id":"höjd","name":"höjd"},{"id":"kula","name":"kula"},{"id":"längd","name":"längd"},{"id":"60m ","name":"60m "},{"id":"vikt","name":"vikt"},{"id":"400","name":"400"},{"id":"600","name":"600"},{"id":"stav","name":"stav"},{"id":"40","name":"40"},{"id":"40mH ","name":"40mH "},{"id":"60mH ","name":"60mH "},{"id":"800","name":"800"}];
+
+const comp2019classesTest = [{"id":"KS","name":"KS"}, {"id":"MS","name":"MS"}, {"id":"P19","name":"P19"}, {"id":"P17","name":"P17"},{"id":"F19","name":"F19"},{"id":"F17","name":"F17"},{"id":"P11","name":"P11"},{"id":"P14","name":"P14"},{"id":"F15","name":"F15"},{"id":"P12","name":"P12"},{"id":"P13","name":"P13"},{"id":"P15","name":"P15"},{"id":"F10","name":"F10"},{"id":"P10","name":"P10"},{"id":"F11","name":"F11"},{"id":"F13","name":"F13"},{"id":"F14","name":"F14"},{"id":"F12","name":"F12"},{"id":"F19/P19","name":"F19/P19"},{"id":"F11 heat1","name":"F11 heat1"},{"id":"F11 heat2","name":"F11 heat2"},{"id":"F12 heat1","name":"F12 heat1"},{"id":"F12 heat2","name":"F12 heat2"},{"id":"F13 heat1","name":"F13 heat1"},{"id":"P14/P15","name":"P14/P15"},{"id":"F13 heat2","name":"F13 heat2"}];
+
+const comp2019grenarTest = [{"id":"höjd","name":"höjd"},{"id":"slägga","name":"slägga"},{"id":"tresteg","name":"tresteg"},{"id":"kula","name":"kula"},{"id":"110mH","name":"110mH"},{"id":"stav","name":"stav"},{"id":"110","name":"110"},{"id":"100","name":"100"},{"id":"3000m","name":"3000m"},{"id":"diskus","name":"diskus"},{"id":"3000","name":"3000"},{"id":"400","name":"400"},{"id":"100m Final","name":"100m Final"},{"id":"100m ","name":"100m "},{"id":"60","name":"60"},{"id":"längd","name":"längd"},{"id":"spjut","name":"spjut"},{"id":"80","name":"80"},{"id":"60m ","name":"60m "},{"id":"80m ","name":"80m "},{"id":"100m Försök ","name":"100m Försök "},{"id":"600","name":"600"},{"id":"800","name":"800"},{"id":"300","name":"300"},{"id":"80mH Försök ","name":"80mH Försök "},{"id":"80mH ","name":"80mH "},{"id":"60mH ","name":"60mH "},{"id":"1500","name":"1500"},{"id":"200","name":"200"}];
+
+const SERVERdaysTest = [
     {"id": "801", "name": "lördag"},
   ];
 
@@ -18,7 +31,7 @@ const comp2019daysTest = [
     {"id": "söndag", "name": "söndag"},
 ];
 
-var SERVERarenasTest = [
+const SERVERarenasTest = [
     {"id": "911", "name": "Löpning"},
     {"id": "912", "name": "LängdA"},
     {"id": "913", "name": "LängdB"},
@@ -51,7 +64,7 @@ const comp2019arenasTest = [
     {"id": "Diskus", "name": "Diskus"},
 ];
 
-var comp2019eventsTest = [
+const comp2019eventsTest = [
 {id: "KShöjd", day: "fredag", arena: "Höjd", starttime: "1020", duration: "90", class: "KS", gren: "höjd", grentype: "tech", preptime: "20"},
 {id: "KSslägga", day: "fredag", arena: "Slägga", starttime: "1020", duration: "45", class: "KS", gren: "slägga", grentype: "tech", preptime: "20"},
 {id: "KStresteg", day: "fredag", arena: "Tresteg", starttime: "1035", duration: "60", class: "KS", gren: "tresteg", grentype: "tech", preptime: "20"},
@@ -231,7 +244,7 @@ var comp2019eventsTest = [
 ];
 
 
-var SERVEReventsTest = [
+const SERVEReventsTest = [
      {"id": "13", "day": "801","arena": "911", "starttime": "510", "duration": "25", "class": "P06", "gren": "60", grentype: "run", preptime: "0"},
      {"id": "25", "day": "801","arena": "911", "starttime": "535", "duration": "25", "class": "F04", "gren": "60", grentype: "run", preptime: "0"},
      {"id": "5", "day": "801","arena": "911", "starttime": "560", "duration": "15", "class": "P04", "gren": "60", grentype: "run", preptime: "0"},
@@ -390,13 +403,15 @@ const comp2018eventsTest = [
 /*
   Testdata for athleticsscheduler, SAYO Indoor 2017
 */
-var SERVERcontestTest2017 = {
+const SERVERcontestTest2017 = {
     "name": "SAYO Indoor 2017",
     "key": "test",
     "version": "2.0",
     "days": SERVERdaysTest,
     "arenas": SERVERarenasTest,
     "events": SERVEReventsTest,
+    "classes": SERVERclassesTest,
+    "grenar": SERVERgrenarTest,
 };
 
 /*
@@ -409,6 +424,8 @@ const comp2018 = {
   "days": comp2018daysTest,
   "arenas": comp2018arenasTest,
   "events": comp2018eventsTest,
+  "classes": comp2018classesTest,
+  "grenar": comp2018grenarTest,
 }
 
 /*
@@ -421,6 +438,8 @@ const comp2019 = {
   "days": comp2019daysTest,
   "arenas": comp2019arenasTest,
   "events": comp2019eventsTest,
+  "classes": comp2019classesTest,
+  "grenar": comp2019grenarTest,
 }
 
 //export const comptest = SERVERcontestTest2017;

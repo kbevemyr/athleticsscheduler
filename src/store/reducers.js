@@ -1,25 +1,14 @@
 import {
-  FETCH_USERDATA, FETCH_COMPETITION, SET_NEWCOLOR, SAVE_COMPETITION,
+  FETCH_USERDATA, SET_COMPETITION, SET_NEWCOLOR, SAVE_COMPETITION,
   UPDATE_EVENT, SET_ACTIVE_EVENT, SET_ACTIVE_CLASS, UPDATE_OVERLAP,
-  ADD_DAY, ADD_ARENA
+  UPDATE_SETTINGS, ADD_NAME, DELETE_NAME, CHANGE_NAME,
 } from './actions';
 
 import { COLORS, defaultColor } from '../misc';
-//import { healthCheckSchema } from '../misc';
 import { getClassEventsID } from '../misc';
 import { newID } from '../misc';
+import { EmptyCompetition } from '../misc';
 
-//import { localComps } from './MOCKdata';
-
-
-const EmptyCompetition = {
-            "key": "empty key",
-            "name": "empty name",
-            "version": "1.0",
-            "days": [],
-            "arenas": [],
-            "events": [],
-        };
 
 // state for auth
 const initialstate = {
@@ -29,6 +18,7 @@ const initialstate = {
   activeID: {},
   activeC: "",
   overlap: {}, // Visar vilka kollisioner man vill se i översikten.
+  //parking: [],
 }
 
 function rootReducer (state = initialstate, action) {
@@ -53,7 +43,7 @@ function rootReducer (state = initialstate, action) {
           colorCount: state.colorCount+1, // peka ut nästa lediga färg
         })
 
-      case FETCH_COMPETITION:
+      case SET_COMPETITION:
         return Object.assign({}, state, {
           competition: action.data,
           colorCount: 0,
@@ -68,21 +58,35 @@ function rootReducer (state = initialstate, action) {
           saved: action.timestamp,
         })
 
-      case ADD_DAY:
-        let day = [{id: newID(), name: action.name}];
-        let updatedDays = state.competition.days.concat(day);
+      case UPDATE_SETTINGS:
         return Object.assign({}, state, {
-          competition: Object.assign({}, state.competition, {days: updatedDays}),
+          competition: Object.assign({}, state.competition, action.settings),
         })
 
-      case ADD_ARENA:
-        let arena = [{id: newID(), name: action.name}];
-        let updatedArenas = state.competition.arenas.concat(arena);
+      case ADD_NAME:
+        let newName = [{id: newID(), name: action.name}];
+        let updatedNamesValue = state.competition[action.nametype].concat(newName);
+        let updatedNamesObj = {[action.nametype]: updatedNamesValue};
         return Object.assign({}, state, {
-          competition: Object.assign({}, state.competition, {arenas: updatedArenas}),
-        })
+          competition: Object.assign({}, state.competition, updatedNamesObj),
+        });
 
-      // TODO: redo the healthCheckSchema
+      case DELETE_NAME:
+        let names = state.competition[action.nametype];
+        let redNamesValue = names.filter(x => x.id !== action.id);
+        let redNamesObj = {[action.nametype]: redNamesValue};
+        return Object.assign({}, state, {
+          competition: Object.assign({}, state.competition, redNamesObj),
+        });
+
+      case CHANGE_NAME:
+        let names2 = state.competition[action.nametype];
+        let redNames2Value = names2.map(x => x.id !== action.id ? x : {id: x.id, name: action.name});
+        let redNames2Obj = {[action.nametype]: redNames2Value};
+        return Object.assign({}, state, {
+          competition: Object.assign({}, state.competition, redNames2Obj),
+        });
+
       case UPDATE_EVENT:
         var updatedEvents = state.competition.events.map((x) => {if(x.id === action.event.id) {return action.event;} else {return x;}});
         if(action.event.id === 9999) {

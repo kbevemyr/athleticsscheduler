@@ -229,12 +229,7 @@ class EventForm extends Component {
   )
   }
 }
-/*
-onSearch={(txt) => {
-  const regexp = new RegExp(txt, 'i');
-  this.setState({ classOptions: cOPTIONS.filter(o => o.match(regexp))});
-}}
-*/
+
 
   // Store handling
 

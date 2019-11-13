@@ -107,6 +107,17 @@ export function colorLuminance(hex, lum) {
   Diverse funktioner, borde flyttas till actions?
 */
 
+export const EmptyCompetition = {
+            "key": "",
+            "name": "",
+            "version": "",
+            "days": [],
+            "arenas": [],
+            "classes": [],
+            "grenar": [],
+            "events": [],
+        };
+
 export function getDayStarttime(comp, day) {
   var startvalues = comp.events.filter(x => x.day === day).map(x => parseInt(x.starttime,10)-parseInt(x.preptime,10)).sort((a,b) => a-b);
   return startvalues[0];
@@ -331,5 +342,6 @@ export function isOverlap(xs, id) {
 
 export function getOverlaps(xs, id) {
   var os = xs.filter(x => x.key === id);
+
   return os;
 }
