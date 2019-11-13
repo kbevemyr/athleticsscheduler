@@ -39,7 +39,8 @@ function presentEvents(comp, overlaps) {
       class: event.class,
       gren: event.gren,
       grentype: event.grentype,
-      overlap: (os.length > 0 ? os2[0].class+" "+os2[0].gren : "-"),
+      overlap: (os.length > 0 ? os2[0].class+" "+os2[0].gren : "")+
+                (os.length > 1 ? "..." : ""),
     });
   }));
 }
@@ -171,9 +172,9 @@ class EventTable extends Component {
               <TableRow
                 key={"tr"+x.id}
               >
-                <TableRow>
+                <TableCell>
                   <Anchor href={"#form/"+x.id} icon={<FormEdit />} />
-                </TableRow>
+                </TableCell>
                 <TableCell component="th" scope="row">
                   {x.day}
                 </TableCell>
