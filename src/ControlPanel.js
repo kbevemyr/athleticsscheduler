@@ -7,9 +7,9 @@ import { setActiveDay } from './store/actions';
 import { Box, Heading, Text, Select, Menu } from 'grommet';
 
 import CollisionPanel from './CollisionPanel';
-import PrintButton from './PrintButton';
+
 import { exportPdf } from './PrintExport';
-import { PrintExport } from './PrintExport';
+
 
 class ControlPanel extends Component {
   constructor(props) {
@@ -56,6 +56,7 @@ class ControlPanel extends Component {
           options={this.props.days}
           value={this.state.selectedDay.name}
           onChange={({ option }) => this.handleSelectDay(option)}
+          emptySearchMessage="inga dagar tillgängliga"
       >
         {option => option.name}
       </Select>
