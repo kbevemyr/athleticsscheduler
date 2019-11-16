@@ -28,7 +28,7 @@ class CollisionPanel extends Component {
     var eventcollisions = healthCheckSchema2(this.props.events, this.props.day);
 
     let ret = <Text>There are no event collisions.</Text>;
-    if (eventcollisions.lenght > 0) {
+    if (eventcollisions.length > 0) {
       ret =
       <Box>
         <Heading level= {3}>{this.state.name}</Heading>

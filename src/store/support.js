@@ -75,7 +75,7 @@ export function serverGet(key, params) {
 }
 
 
-export function serverPost(key, params) {
+export function serverPost(key, body) {
   console.log("serverPost: "+key);
 
   var opts =
@@ -84,8 +84,8 @@ export function serverPost(key, params) {
            contentType: "application/json",
           };
 
-  if (params) {
-    opts["params"] = JSON.stringify(params);
+  if (body) {
+    opts["body"] = JSON.stringify(body);
   }
 
   console.log("serverPost.opts: "+JSON.stringify(opts));
