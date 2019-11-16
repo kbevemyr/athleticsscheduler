@@ -190,7 +190,7 @@ export function getCompetitionData (key) {
           }
           else {
             console.log("getCompetitionData. OK "+JSON.stringify(res));
-            dispatch(gotCompetition(res));
+            dispatch(gotCompetition(res.value));
           }
         }
       )
