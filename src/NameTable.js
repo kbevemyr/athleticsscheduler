@@ -85,7 +85,7 @@ class NameTable extends Component {
               />
             <Button icon={<Add />} onClick={() => this.handleAddNewName(this.state.newName)}/>
           </Box>
-          <Table>
+          <Table stickyHeader size="small">
             <TableHead>
               <TableRow>
                 <TableCell>
@@ -106,10 +106,10 @@ class NameTable extends Component {
                     <Box direction='row' pad='none'>
                       <Button
                         fill={false}
-                        icon={<FormEdit />} onClick={() => this.handleChangeName(row.id, row.name)}/>
+                        icon={<FormEdit size='small' />} onClick={() => this.handleChangeName(row.id, row.name)}/>
                       <Button
                         fill={false}
-                        icon={<FormTrash />} onClick={(e) => this.handleDelName(row.id)}/>
+                        icon={<FormTrash size='small' />} onClick={(e) => this.handleDelName(row.id)}/>
                     </Box>
                   </TableCell>
                 </TableRow>

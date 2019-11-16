@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { updateSettings } from './store/actions';
 
-import { Heading, Form, FormField, TextInput, Button, Box } from 'grommet';
+import { Heading, Text, Form, FormField, TextInput, Button, Box } from 'grommet';
 
 import NameTable from './NameTable';
 
@@ -14,7 +14,6 @@ class Settings extends Component {
     this.state = {
       title: "Competition Settings",
       nameVal: this.props.name,
-      keyVal: this.props.key,
       versionVal: this.props.version,
     };
   }
@@ -23,7 +22,6 @@ class Settings extends Component {
     console.log("handleUpdateSettings");
     var update = {
       name: this.state.nameVal,
-      key: this.state.keyVal,
       version: this.state.versionVal,
     };
     console.log("Submit in SettingsForm: ", update);
@@ -38,7 +36,7 @@ class Settings extends Component {
   render() {
     return (
       <Box>
-        <Heading level={1}>{this.state.title}</Heading>
+        <Heading level={1}>{this.props.name}</Heading>
         <Box
           key='settingsarea'
           pad='medium'
@@ -59,13 +57,7 @@ class Settings extends Component {
               </TextInput>
             </FormField>
 
-            <FormField name="key" label="Key">
-              <TextInput
-                value = {this.state.keyVal}
-                onChange = {(e) => this.setState({keyVal: e.value})}
-                >
-              </TextInput>
-            </FormField>
+            <Text>{this.props.key}</Text>
 
             <FormField name="version" label="Version">
               <TextInput

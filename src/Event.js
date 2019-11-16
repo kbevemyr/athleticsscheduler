@@ -3,10 +3,11 @@ import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
 import { Stack, Box } from 'grommet';
-import { Accessibility as HLIcon, FormEdit } from 'grommet-icons';
+import { Alert, FormEdit } from 'grommet-icons';
 
 import { setColor, setActiveEvent, setActiveClass } from './store/actions';
 import { defaultColor, getTextColor, MinutesToPX, getEvent, getDayStarttime, isOverlap } from './misc';
+
 
 function getBoxColor(paintSchema, newColor, eventClass) {
   var color = defaultColor;
@@ -38,10 +39,7 @@ class Event extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      event: getEvent(this.props.comp, this.props.id),
-      starttime: parseInt(getEvent(this.props.comp, this.props.id).starttime, 10),
-      duration: parseInt(getEvent(this.props.comp, this.props.id).duration, 10),
-      preptime: parseInt(getEvent(this.props.comp, this.props.id).preptime, 10),
+      dummy: "dummadu",
     };
     this.handleMarkEvent = this.handleMarkEvent.bind(this);
     this.handleUnMarkEvent = this.handleUnMarkEvent.bind(this);
@@ -71,7 +69,12 @@ class Event extends Component {
   }
 
   render() {
-    let color = getBoxColor(this.props.paintschema, this.props.setNewColor, this.state.event.class);
+    let event = getEvent(this.props.comp, this.props.id);
+    let starttime = parseInt(getEvent(this.props.comp, this.props.id).starttime, 10);
+    let duration = parseInt(getEvent(this.props.comp, this.props.id).duration, 10);
+    let preptime = parseInt(getEvent(this.props.comp, this.props.id).preptime, 10);
+
+    let color = getBoxColor(this.props.paintschema, this.props.setNewColor, event.class);
     if (isActive(this.props.activeIDs, this.props.id)) {
       //color = colorLuminance(color, 0.50);
     } else {
@@ -80,8 +83,8 @@ class Event extends Component {
 
     // Event Main Box
     let textColor = getTextColor(color);
-    let heightE = MinutesToPX(this.state.duration);
-    let topE = MinutesToPX(this.state.starttime-parseInt(getDayStarttime(this.props.comp, this.state.event.day), 10));
+    let heightE = MinutesToPX(duration);
+    let topE = MinutesToPX(starttime-parseInt(getDayStarttime(this.props.comp, event.day), 10));
     let markerStyle = {
       height: heightE,
       background: color,
@@ -91,7 +94,7 @@ class Event extends Component {
     // Event Prep Box
     let prepColor = "#F2F2F2";
     let prepTextColor = getTextColor(prepColor);
-    let prepHeightE = MinutesToPX(this.state.preptime);
+    let prepHeightE = MinutesToPX(preptime);
     let prepTopE = topE - prepHeightE;
     let prepDivStyle = {
       height: prepHeightE,
@@ -108,12 +111,12 @@ class Event extends Component {
         className="event-main"
         style={mainStyle}
         >
-        {this.state.preptime >0 &&
+        {preptime >0 &&
         <div
           id={"prep"+this.props.id}
           style={prepDivStyle}
         >
-          {"ställtid: "+this.state.preptime+" min"}
+          {"ställtid: "+preptime+" min"}
         </div>
         }
         <div
@@ -123,19 +126,19 @@ class Event extends Component {
           onClick={e => this.handleMarkEvent(e, topE)}
         >
           <Stack anchor="top-right">
-            {this.state.event.class+" "+this.state.event.gren}
+            {event.class+" "+event.gren}
             <Box direction="row">
-              {isOverlap(this.props.overlaps, this.props.id) &&
-                <Box background="white" round>
-                  <HLIcon color="accent-1" size='small' />
-                </Box>
-              }
               <Box background="white" round>
                 <a href={"#form/"+this.props.id}>
                   <FormEdit size='small' />
                 </a>
               </Box>
             </Box>
+            {isOverlap(this.props.overlaps, this.props.id) &&
+              <Box background="white">
+                <Alert color="status-warning" size='medium' />
+              </Box>
+            }
           </Stack>
         </div>
       </div>

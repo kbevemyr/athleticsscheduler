@@ -81,8 +81,8 @@ class App extends Component {
              direction='row'
              justify='start'
              pad='medium'
-             border={{side: 'top'}}
              flex={false}
+             background={{color: "brand", dark: true}}
         >
           <i>GT16 App Collection</i>
         </Box>

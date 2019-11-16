@@ -11,13 +11,14 @@ class Arena extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      name: getArena(this.props.comp, this.props.id).name,
-      es: getEventsID(this.props.comp, this.props.id, this.props.day),
       background: 'navojowhite',
     }
   }
 
   render() {
+    let name = getArena(this.props.comp, this.props.id).name;
+    let es = getEventsID(this.props.comp, this.props.id, this.props.day);
+
     //console.log("EVENTDATA "+this.eventstest[0].duration);
     //var divStyle = {height: getArenaSize()};
     //var es = getEventsID(comptest, this.props.id);
@@ -25,9 +26,9 @@ class Arena extends Component {
 
     return (
       <div className="arena-main">
-        <div className="arena-header">{this.state.name}</div>
+        <div className="arena-header">{name}</div>
         <div className="arena-eventarea" style={divStyle}>
-        {this.state.es.map(x =>
+        {es.map(x =>
            (
             <Event key={x} id={x} onMarked={this.props.onMarkedEvent}/>
            ))

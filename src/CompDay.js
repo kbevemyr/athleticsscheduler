@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { Heading } from 'grommet';
 import { getTypeArenas, getDayStarttime, getDayEndtime, getBoxSize } from './misc';
 
 import Arena from './Arena';
@@ -13,11 +12,6 @@ class CompDay extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      starttime: getDayStarttime(this.props.comp, this.props.id),
-      endtime: getDayEndtime(this.props.comp, this.props.id),
-      runarenas: getTypeArenas(this.props.comp, this.props.id, "run"),
-      techarenas: getTypeArenas(this.props.comp, this.props.id, "tech"),
-
       marked: false,
       markedPosY: 0,
       unset: "",
@@ -39,10 +33,15 @@ class CompDay extends Component {
   }
 
   render() {
+    let starttime = getDayStarttime(this.props.comp, this.props.id);
+    let endtime = getDayEndtime(this.props.comp, this.props.id);
+    let runarenas = getTypeArenas(this.props.comp, this.props.id, "run");
+    let techarenas = getTypeArenas(this.props.comp, this.props.id, "tech");
+
     let key = new Date().valueOf();
-    var arenaheight = getBoxSize(this.state.starttime, this.state.endtime);
-    var wRun = (this.state.runarenas.length + 0.5)*100;
-    var wTech = (this.state.techarenas.length + 0.5)*100;
+    var arenaheight = getBoxSize(starttime, endtime);
+    var wRun = (runarenas.length + 0.5)*100;
+    var wTech = (techarenas.length + 0.5)*100;
     let hOffset = 27;
 
     // Line present when Event is marked.
@@ -50,20 +49,17 @@ class CompDay extends Component {
 
     return (
       <Box className="compday-main" gap='small'>
-        <Heading level={3}>
-          {this.props.name}
-        </Heading>
         <Box
           direction="row-responsive"
           pad={{horizontal:"small", vertical:"xxsmall"}}>
-          {this.state.runarenas.length > 0 &&
+          {runarenas.length > 0 &&
             <Stack>
               <Box
                 direction="row"
                 margin={{horizontal:"small", vertical:"xxsmall"}}
                 className="compday-areanaarea">
                 <Timeline key={key} id={key} height={arenaheight} day={this.props.id} grentyp="run"/>
-                {this.state.runarenas.map(x =>
+                {runarenas.map(x =>
                       (<Arena key={x} id={x} day={this.props.id} height={arenaheight} onMarkedEvent={this.handleMarked}/>)
                     )
                 }
@@ -77,14 +73,14 @@ class CompDay extends Component {
               }
             </Stack>
           }
-          {this.state.techarenas.length > 0 &&
+          {techarenas.length > 0 &&
             <Stack>
               <Box
                 direction="row"
                 margin={{horizontal:"small", vertical:"xxsmall"}}
                 className="compday-areanaarea">
                 <Timeline key={key} id={key} height={arenaheight} day={this.props.id} grentyp="tech"/>
-                {this.state.techarenas.map(x =>
+                {techarenas.map(x =>
                       (<Arena key={x} id={x} day={this.props.id} height={arenaheight} onMarkedEvent={this.handleMarked}/>)
                     )
                 }
@@ -107,6 +103,7 @@ class CompDay extends Component {
 // Store handling
 
 const mapStateToProps = state => ({
+  id: state.activeD,
   comp: state.competition,
 });
 

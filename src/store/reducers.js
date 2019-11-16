@@ -1,6 +1,6 @@
 import {
   FETCH_USERDATA, SET_COMPETITION, SET_NEWCOLOR, SAVE_COMPETITION,
-  UPDATE_EVENT, SET_ACTIVE_EVENT, SET_ACTIVE_CLASS, UPDATE_OVERLAP,
+  UPDATE_EVENT, SET_ACTIVE_DAY, SET_ACTIVE_EVENT, SET_ACTIVE_CLASS, UPDATE_OVERLAP,
   UPDATE_SETTINGS, ADD_NAME, DELETE_NAME, CHANGE_NAME,
 } from './actions';
 
@@ -15,6 +15,7 @@ const initialstate = {
   competition: EmptyCompetition, //comptest, //localComps[2],
   colorCount: 0, //Antal färger som är använda för att identifera en klass.
   painting: [], // Iden är att det ska vara en lista av klass/colorid.
+  activeD: undefined,
   activeID: {},
   activeC: "",
   overlap: {}, // Visar vilka kollisioner man vill se i översikten.
@@ -48,6 +49,7 @@ function rootReducer (state = initialstate, action) {
           competition: action.data,
           colorCount: 0,
           painting: [],
+          activeD: action.data.days.length > 0 ? action.data.days[0].id : undefined,
           activeID: {},
           activeC: "",
           overlap: {},
@@ -97,6 +99,9 @@ function rootReducer (state = initialstate, action) {
         return Object.assign({}, state, {
           competition: Object.assign({}, state.competition, {events: updatedEvents}),
         })
+
+      case SET_ACTIVE_DAY:
+        return Object.assign({}, state, {activeD: action.id})
 
       case SET_ACTIVE_EVENT:
         var status = state.activeID[action.id];

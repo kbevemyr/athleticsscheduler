@@ -8,6 +8,7 @@ export const SET_NEWCOLOR = 'SET_NEWCOLOR';
 export const SAVE_COMPETITION = 'SAVE_COMPETITION';
 
 export const UPDATE_EVENT = 'UPDATE_EVENT';
+export const SET_ACTIVE_DAY = 'SET_ACTIVE_DAY';
 export const SET_ACTIVE_EVENT = 'SET_ACTIVE_EVENT';
 export const SET_ACTIVE_CLASS = 'SET_ACTIVE_CLASS';
 export const UPDATE_OVERLAP = 'UPDATE_OVERLAP';
@@ -54,6 +55,13 @@ export function updateEvent(event) {
   return {
     type: UPDATE_EVENT,
     event,
+  }
+}
+
+export function setActiveDay(id) {
+  return {
+    type: SET_ACTIVE_DAY,
+    id,
   }
 }
 

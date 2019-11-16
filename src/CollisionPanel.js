@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { Heading, Box, CheckBox, Markdown } from 'grommet';
+import { Heading, Text, Box, CheckBox, Markdown } from 'grommet';
 
 import { healthCheckSchema2, isOverlap, getEvent } from './misc';
 
@@ -20,15 +20,16 @@ class CollisionPanel extends Component {
   handleViewEvent (e, id, cId) {
     var cObj = {};
     cObj[id] = cId;
-    //console.log("I want to view the collision "+JSON.stringify(id));
     this.props.setTheOverlap({key: id, value: cId});
   }
 
   render() {
-    console.log("just to call healthCheckSchema2");
+    console.log("just to call healthCheckSchema2 for day "+this.props.day);
     var eventcollisions = healthCheckSchema2(this.props.events, this.props.day);
 
-    return (
+    let ret = <Text>There are no event collisions.</Text>;
+    if (eventcollisions.lenght > 0) {
+      ret =
       <Box>
         <Heading level= {3}>{this.state.name}</Heading>
         {eventcollisions.map(x => {
@@ -42,14 +43,17 @@ class CollisionPanel extends Component {
               onChange={(e) => this.handleViewEvent(e, event1.id, event2.id)}
             />
         )})}
-      </Box>
-    );
+      </Box>;
+    }
+
+    return (ret);
   }
 }
 
   // Store handling
 
   const mapStateToProps = state => ({
+    day: state.activeD,
     comp: state.competition,
     events: state.competition.events,
     overlap: state.overlap,

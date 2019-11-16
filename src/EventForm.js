@@ -24,11 +24,9 @@ class EventForm extends Component {
       grenValue: currentEvent.gren,
 
       dOptions: this.props.comp.days.map(x => x.name),
-      //dOptions: getAllDays(this.props.comp.events),
       aOptions: this.props.comp.arenas.map(x => x.name),
-      //aOptions = getAllArenas(this.props.comp.events),
-      cOptions: getAllClasses(this.props.comp.events),
-      gOptions: getAllGrens(this.props.comp.events),
+      cOptions: this.props.comp.classes.map(x => x.name),
+      gOptions: this.props.comp.grenar.map(x => x.name),
       gtOptions: [ "run", "tech" ],
     };
 
@@ -111,7 +109,7 @@ class EventForm extends Component {
   render() {
 
     return (
-      <Box pad="medium" background="light-3" width="50%">
+      <Box pad="medium" background="light-3" width="30%">
         <Text weight="bold">Edit Event {this.state.editId}</Text>
         <Form onSubmit={this.handleSubmit} onReset={this.handleCancel}>
           <FormField
@@ -142,14 +140,16 @@ class EventForm extends Component {
             required={true}
           />
           <FormField
-            name="dayValue"
+            name="day"
             label="Dag"
-            value = {this.state.dayValue}
-            onChange = {(e) => this.setState({dayValue: e.value})}
-            component={Select}
-            options={this.state.dOptions}
-            required={true}
-          />
+          >
+            <Select
+              options = {this.props.comp.days}
+              onChange = {({option}) => this.setState({ dayValue: option })}
+              >
+              {option => option.name}
+            </Select>
+          </FormField>
           <FormField
             name="arenaValue"
             label="Arena"
