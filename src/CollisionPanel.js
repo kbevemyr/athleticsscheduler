@@ -4,9 +4,9 @@ import { connect } from 'react-redux';
 
 import { Heading, Text, Box, CheckBox, Markdown } from 'grommet';
 
-import { healthCheckSchema2, isOverlap, getEvent } from './misc';
+import { healthCheckSchema2, isCollision, getEvent } from './misc';
 
-import { setOverlap } from './store/actions';
+import { setCollision } from './store/actions';
 
 class CollisionPanel extends Component {
   constructor(props) {
@@ -20,7 +20,7 @@ class CollisionPanel extends Component {
   handleViewEvent (e, id, cId) {
     var cObj = {};
     cObj[id] = cId;
-    this.props.setTheOverlap({key: id, value: cId});
+    this.props.setTheCollision({key: id, value: cId});
   }
 
   render() {
@@ -38,7 +38,7 @@ class CollisionPanel extends Component {
           return (
             <CheckBox
               key={"collisionbox"+event1.id+event2.id+this.props.day}
-              checked={isOverlap(this.props.overlap,event1.id)}
+              checked={isCollision(this.props.collisions,event1.id)}
               label={<Markdown>{"**"+event1.class+" "+event1.gren+"** || " + event2.class+" "+ event2.gren}</Markdown>}
               onChange={(e) => this.handleViewEvent(e, event1.id, event2.id)}
             />
@@ -56,12 +56,12 @@ class CollisionPanel extends Component {
     day: state.activeD,
     comp: state.competition,
     events: state.competition.events,
-    overlap: state.overlap,
+    collisions: state.collisions,
   });
 
   const mapDispatchToProps = dispatch => ({
-      setTheOverlap: (x) => {
-        dispatch(setOverlap(x));
+      setTheCollision: (x) => {
+        dispatch(setCollision(x));
       },
   });
 

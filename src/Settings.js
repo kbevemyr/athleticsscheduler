@@ -72,7 +72,7 @@ class Settings extends Component {
           </Form>
 
           <Box
-            pad='medium'
+            pad='none'
             gap='medium'
             justify='between'
             direction='row-responsive'

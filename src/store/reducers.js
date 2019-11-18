@@ -1,6 +1,6 @@
 import {
   FETCH_USERDATA, SET_COMPETITION, SET_NEWCOLOR, SAVE_COMPETITION,
-  UPDATE_EVENT, SET_ACTIVE_DAY, SET_ACTIVE_EVENT, SET_ACTIVE_CLASS, UPDATE_OVERLAP,
+  UPDATE_EVENT, SET_ACTIVE_DAY, SET_ACTIVE_EVENT, SET_ACTIVE_CLASS, UPDATE_COLLISION,
   UPDATE_SETTINGS, ADD_NAME, DELETE_NAME, CHANGE_NAME,
 } from './actions';
 
@@ -18,7 +18,7 @@ const initialstate = {
   activeD: undefined,
   activeID: {},
   activeC: "",
-  overlap: {}, // Visar vilka kollisioner man vill se i översikten.
+  collisions: {}, // Visar vilka kollisioner man vill se i översikten.
   //parking: [],
 }
 
@@ -52,7 +52,7 @@ function rootReducer (state = initialstate, action) {
           activeD: action.data.days.length > 0 ? action.data.days[0].id : undefined,
           activeID: {},
           activeC: "",
-          overlap: {},
+          collisions: {},
         })
 
       case SAVE_COMPETITION:
@@ -136,19 +136,19 @@ function rootReducer (state = initialstate, action) {
           activeID: newActiveID,
         })
 
-      case UPDATE_OVERLAP:
-        var updatedOverlap = {};
-        var cObj = state.overlap[action.collision.key];
+      case UPDATE_COLLISION:
+        var updatedCollision = {};
+        var cObj = state.collisions[action.collision.key];
         if (cObj == null) {
-          // id is not in overlap
+          // id is not in collision
           status = true;
         } else {
           status = !cObj.p;
         }
-        updatedOverlap = Object.assign({}, state.overlap);
-        updatedOverlap[action.collision.key] = {p: status, o: action.collision.value};
+        updatedCollision = Object.assign({}, state.collisions);
+        updatedCollision[action.collision.key] = {p: status, o: action.collision.value};
         return Object.assign({}, state, {
-          overlap: updatedOverlap,
+          collisions: updatedCollision,
         })
 
     default:

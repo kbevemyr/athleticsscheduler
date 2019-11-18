@@ -6,7 +6,8 @@ import { Stack, Box } from 'grommet';
 import { Alert, FormEdit } from 'grommet-icons';
 
 import { setColor, setActiveEvent, setActiveClass } from './store/actions';
-import { defaultColor, getTextColor, MinutesToPX, getEvent, getDayStarttime, isOverlap } from './misc';
+import { defaultColor, getTextColor, MinutesToPX, getEvent, getDayStarttime } from './misc';
+import { isCollision } from './misc';
 
 
 function getBoxColor(paintSchema, newColor, eventClass) {
@@ -134,7 +135,7 @@ class Event extends Component {
                 </a>
               </Box>
             </Box>
-            {isOverlap(this.props.overlaps, this.props.id) &&
+            {isCollision(this.props.collisions, this.props.id) &&
               <Box background="white">
                 <Alert color="status-warning" size='medium' />
               </Box>
@@ -152,7 +153,7 @@ const mapStateToProps = state => ({
   comp: state.competition,
   paintschema: state.painting,
   activeIDs: state.activeID,
-  overlaps: state.overlap,
+  collisions: state.collisions,
 });
 
 const mapDispatchToProps = dispatch => {

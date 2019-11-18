@@ -12,22 +12,22 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 
-import { getEvent, presentTime, getOverlaps, healthCheckSchema } from './misc';
+import { getEvent, presentTime, getCollisions, healthCheckSchema } from './misc';
 import { setActiveEvent } from './store/actions';
 
 
-function presentEvents(comp, overlaps) {
+function presentEvents(comp, collisions) {
   var ds = {};
   comp.days.forEach(x => ds[x.id] = x.name);
   var as = {};
   comp.arenas.forEach(x => as[x.id] = x.name);
 
   return (comp.events.map(event => {
-    var os = getOverlaps(overlaps, event.id);
+    var os = getCollisions(collisions, event.id);
 
     var os2 = [];
-    overlaps.forEach(x => os2.push(getEvent(comp, x.value)));
-    // TODO: Only shows the first overlap for now.
+    collisions.forEach(x => os2.push(getEvent(comp, x.value)));
+    // TODO: Only shows the first collision for now.
 
     return({
       id: event.id,
@@ -39,7 +39,7 @@ function presentEvents(comp, overlaps) {
       class: event.class,
       gren: event.gren,
       grentype: event.grentype,
-      overlap: (os.length > 0 ? os2[0].class+" "+os2[0].gren : "")+
+      collisions: (os.length > 0 ? os2[0].class+" "+os2[0].gren : "")+
                 (os.length > 1 ? "..." : ""),
     });
   }));
@@ -138,7 +138,7 @@ class EventTable extends Component {
         label: "Grentyp",
       },
       {
-        key: 'overlap',
+        key: 'collisions',
         label: "Kolliderar med",
       },
     ];
@@ -200,7 +200,7 @@ class EventTable extends Component {
                   {x.grentype}
                 </TableCell>
                 <TableCell scope="row">
-                  {x.overlap}
+                  {x.collisions}
                 </TableCell>
               </TableRow>
             )}

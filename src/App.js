@@ -31,6 +31,7 @@ class App extends Component {
 
   handleNewCompDataEvent(key) {
     this.props.saveANewCompetitionData();
+    this.props.history.push("/");
   }
 
   render() {
@@ -82,7 +83,7 @@ class App extends Component {
              justify='start'
              pad='medium'
              flex={false}
-             background={{color: "brand", dark: true}}
+             background={{color: "#513F82", dark: true}}
         >
           <i>GT16 App Collection</i>
         </Box>

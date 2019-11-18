@@ -30,13 +30,13 @@ class ControlPanel extends Component {
     return (
       <Box
           background = {{
-            color: "brand",
+            color: "#D1C1FF",
             dark: false,
             opacity: "medium",
           }}
           animation="slideLeft"
           border={{
-            color: "brand",
+            color: "#7553D3",
             size: "medium",
             side: "all",
           }}

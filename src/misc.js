@@ -328,7 +328,7 @@ export function healthCheckSchema2(events, day) {
   returnvalue - if x is visualied in overview, default is false
 */
 
-export function isOverlap(xs, id) {
+export function isCollision(xs, id) {
   var obj = xs[id];
   var res = false;
   if (obj == null) {
@@ -340,7 +340,7 @@ export function isOverlap(xs, id) {
   return res;
 }
 
-export function getOverlaps(xs, id) {
+export function getCollisions(xs, id) {
   var os = xs.filter(x => x.key === id);
 
   return os;

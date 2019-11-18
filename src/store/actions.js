@@ -11,7 +11,7 @@ export const UPDATE_EVENT = 'UPDATE_EVENT';
 export const SET_ACTIVE_DAY = 'SET_ACTIVE_DAY';
 export const SET_ACTIVE_EVENT = 'SET_ACTIVE_EVENT';
 export const SET_ACTIVE_CLASS = 'SET_ACTIVE_CLASS';
-export const UPDATE_OVERLAP = 'UPDATE_OVERLAP';
+export const UPDATE_COLLISION = 'UPDATE_COLLISION';
 
 export const UPDATE_SETTINGS = 'UPDATE_SETTINGS';
 export const ADD_NAME = 'ADD_NAME';
@@ -79,9 +79,9 @@ export function setActiveClass(c) {
   }
 }
 
-export function setOverlap(collision) {
+export function setCollision(collision) {
   return {
-    type: UPDATE_OVERLAP,
+    type: UPDATE_COLLISION,
     collision,
   }
 }
@@ -121,17 +121,6 @@ export function updateSettings(setting) {
 
 
 // Backend functions calls
-
-/*
-
-function getClassColor(id) {
-  if (state.painting == null) {
-    this.props.getColor(id);
-  }
-  return state.painting[id];
-}
-
-*/
 
 export function newCompetitionData () {
   return dispatch => {
