@@ -4,9 +4,11 @@ import { connect } from 'react-redux';
 
 import { setActiveDay } from './store/actions';
 
-import { Box, Heading, Text, Select, Menu } from 'grommet';
+import { Box, Heading, Text, Menu } from 'grommet';
 
 import CollisionPanel from './CollisionPanel';
+
+import { getName } from './misc';
 
 import { exportPdf } from './PrintExport';
 
@@ -16,16 +18,20 @@ class ControlPanel extends Component {
     super(props);
     this.state = {
       title: "ControlPanel",
-      selectedDay: {id: undefined, name: ""},
     };
   }
 
   handleSelectDay = (option) => {
     this.props.setTheActiveDay(option.id);
-    this.setState({selectedDay: option});
   }
 
   render() {
+    let dayItems = this.props.comp.days.map(x => (
+      {
+        label: x.name,
+        onClick: () => this.handleSelectDay(x),
+      })
+    );
 
     return (
       <Box
@@ -50,16 +56,12 @@ class ControlPanel extends Component {
           gap="xsmall"
         >
         <Heading level={3}>{this.props.name}</Heading>
+        <Text size='small'>{getName(this.props.day, this.props.comp, 'days')} är vald.</Text>
         <Text alignSelf='end' size="small">Schema Version: {this.props.version}</Text>
 
-      <Select
-          options={this.props.days}
-          value={this.state.selectedDay.name}
-          onChange={({ option }) => this.handleSelectDay(option)}
-          emptySearchMessage="inga dagar tillgängliga"
-      >
-        {option => option.name}
-      </Select>
+      <Menu label="Välj dag"
+        items={dayItems}
+      />
       <Menu label="Export"
           items={[
             { label: "PDF", onClick: () => {exportPdf("pdfpage")} },
@@ -78,7 +80,7 @@ class ControlPanel extends Component {
   const mapStateToProps = state => ({
     name: state.competition.name,
     version: state.competition.version,
-    days: state.competition.days,
+    comp: state.competition,
     day: state.activeD,
   });
 

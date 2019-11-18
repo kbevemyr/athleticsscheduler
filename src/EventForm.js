@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { Box, Form, FormField, Select, MaskedInput, Button, Text } from 'grommet';
 import { updateEvent } from './store/actions';
-import { timeStrToMinutes, presentTime, getEmptyEvent, getAllClasses, getAllGrens } from './misc';
+import { getEvent, timeStrToMinutes, presentTime, getEmptyEvent } from './misc';
 
 
 class EventForm extends Component {
@@ -22,6 +22,7 @@ class EventForm extends Component {
       preptimeStr: presentTime(currentEvent.preptime),
       classValue: currentEvent.class,
       grenValue: currentEvent.gren,
+      grentypeValue: currentEvent.grentype,
 
       dOptions: this.props.comp.days.map(x => x.name),
       aOptions: this.props.comp.arenas.map(x => x.name),
@@ -50,27 +51,28 @@ class EventForm extends Component {
         grentypeValue: theEvent.grentype,
 
         dOptions: this.props.comp.days.map(x => x.name),
-        //dOptions: getAllDays(this.props.comp.events),
         aOptions: this.props.comp.arenas.map(x => x.name),
-        //aOptions = getAllArenas(this.props.comp.events),
-        cOptions: getAllClasses(this.props.comp.events),
-        gOptions: getAllGrens(this.props.comp.events),
+        cOptions: this.props.comp.classes.map(x => x.name),
+        gOptions: this.props.comp.grenar.map(x => x.name),
         gtOptions: [ "run", "tech" ],
       };
     }
   };
 
-/* funkar inte formuläret uppdateras inte VARFÖR?
-  componentDidMount() {
-    console.log("EventForm lookup data for id "+this.props.match.params.id);
-    var theEvent = this.props.comp.events.find(
-      x => x.id === this.props.match.params.id
-    );
 
-    console.log("EventForm eventdata "+JSON.stringify(theEvent));
+  componentDidMount() {
+    var theEvent = undefined;
+    if (this.props.id !== undefined) {
+      theEvent = getEvent(this.props.comp, this.props.id);
+    } else if (this.props.match.params.id !== undefined) {
+      theEvent = getEvent(this.props.comp, this.props.match.params.id);
+    }
+
+    console.log("EventData eventdata "+JSON.stringify(theEvent));
 
     if (theEvent != null) {
       this.setState({
+        editId: theEvent.id,
         dayValue: theEvent.day,
         arenaValue: theEvent.arena,
         starttimeStr: presentTime(theEvent.starttime),
@@ -79,10 +81,18 @@ class EventForm extends Component {
         classValue: theEvent.class,
         grenValue: theEvent.gren,
         grentypeValue: theEvent.grentype,
+
+        dOptions: this.props.comp.days.map(x => x.name),
+        aOptions: this.props.comp.arenas.map(x => x.name),
+        cOptions: this.props.comp.classes.map(x => x.name),
+        gOptions: this.props.comp.grenar.map(x => x.name),
+        gtOptions: [ "run", "tech" ],
       });
     }
   }
-  */
+
+
+
 
   handleSubmit(event) {
     console.log("State: ",this.state);

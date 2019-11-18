@@ -24,10 +24,13 @@ class TableView extends Component {
   render() {
     return (
       <Box direction='column' pad='medium' background="light-1">
-        <Button id="butAddEvent"
-          icon={<Add />}
-          onClick={this.handleOpenAddForm}
-        />
+        <Box round="full" overflow="hidden" background="accent-1">
+          <Button id="butAddEvent"
+            hoverIndicator
+            icon={<Add />}
+            onClick={this.handleOpenAddForm}
+          />
+        </Box>
 
         <Text weight="bold" >{this.state.name}</Text>
 

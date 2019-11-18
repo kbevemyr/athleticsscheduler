@@ -3,6 +3,7 @@ import { Route, Switch, withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
 import './App.css';
+import CompetitionAdm from './CompetitionAdm';
 import Competition from './Competition';
 import TableView from './TableView';
 import EventForm from './EventForm';
@@ -24,6 +25,7 @@ class App extends Component {
 
   handleSetCompDataEvent(key) {
     this.props.getTheCompetitionData(key);
+    this.props.history.push("/overview");
   }
 
   handleSaveCompDataEvent(key) {
@@ -32,7 +34,7 @@ class App extends Component {
 
   handleNewCompDataEvent(key) {
     this.props.saveANewCompetitionData();
-    this.props.history.push("/");
+    this.props.history.push("/settings");
   }
 
   render() {
@@ -73,7 +75,8 @@ class App extends Component {
         </Box>
 
         <Switch>
-          <Route path="/" exact component={Competition} />
+          <Route path="/" exact component={CompetitionAdm} />
+          <Route path="/overview" component={Competition} />
           <Route path="/tables" component={TableView} />
           <Route path="/form/:id" component={EventForm} />
           <Route path="/event/:id" component={EventDetails} />

@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { Box, Anchor, Button, Text } from 'grommet';
+import { Box, Anchor, Text } from 'grommet';
 import { Table, TableBody, TableCell, TableHeader, TableRow } from 'grommet';
 import { FormEdit } from 'grommet-icons';
 import { presentTime, getEvent, getName } from './misc';
@@ -29,7 +29,6 @@ class EventDetails extends Component {
 
 
   componentDidMount() {
-    console.log("EventDetails lookup data for id "+this.props.match.params.id);
     var theEvent = undefined;
     if (this.props.id !== undefined) {
       theEvent = getEvent(this.props.comp, this.props.id);
