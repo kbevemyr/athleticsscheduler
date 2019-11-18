@@ -130,7 +130,7 @@ class Event extends Component {
             {event.class+" "+event.gren}
             <Box direction="row">
               <Box background="white" round>
-                <a href={"#form/"+this.props.id}>
+                <a href={"#event/"+this.props.id}>
                   <FormEdit size='small' />
                 </a>
               </Box>

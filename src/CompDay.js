@@ -3,10 +3,19 @@ import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
 import { getTypeArenas, getDayStarttime, getDayEndtime, getBoxSize } from './misc';
+import { getAllDays, getAllArenas, getAllGrens, getAllClasses } from './misc';
 
 import Arena from './Arena';
 import Timeline from './Timeline';
 import { Box, Stack } from 'grommet';
+
+function checks(comp) {
+  console.dir();
+  console.log("E grenar "+getAllGrens(comp.events).length);
+  console.log(getAllGrens(comp.events));
+  console.log("N grenar "+comp.grenar.length);
+  console.log(comp.grenar);
+}
 
 class CompDay extends Component {
   constructor(props) {
@@ -29,10 +38,11 @@ class CompDay extends Component {
   handleUnMarked() {
     console.log("handleUnMarked");
     this.setState({marked: false});
-    //this.state.unset;
   }
 
   render() {
+    checks(this.props.comp);
+
     let starttime = getDayStarttime(this.props.comp, this.props.id);
     let endtime = getDayEndtime(this.props.comp, this.props.id);
     let runarenas = getTypeArenas(this.props.comp, this.props.id, "run");

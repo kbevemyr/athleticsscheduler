@@ -6,6 +6,7 @@ import './App.css';
 import Competition from './Competition';
 import TableView from './TableView';
 import EventForm from './EventForm';
+import EventDetails from './EventDetails';
 import Settings from './Settings';
 import { getCompetitionData, saveCompetitionData, newCompetitionData } from './store/actions';
 
@@ -75,6 +76,7 @@ class App extends Component {
           <Route path="/" exact component={Competition} />
           <Route path="/tables" component={TableView} />
           <Route path="/form/:id" component={EventForm} />
+          <Route path="/event/:id" component={EventDetails} />
           <Route path="/settings" component={Settings} />
         </Switch>
 

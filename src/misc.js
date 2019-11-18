@@ -183,6 +183,11 @@ export function getEvent(comp, eid) {
   return e;
 }
 
+export function getName(id, comp, nameType) {
+  var name = comp[nameType].find(x => x.id === id).name;
+  return name;
+}
+
 export function newID() {
   var eID = Date.now();
   return eID+"";
