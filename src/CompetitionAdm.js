@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { getCompetitionData, saveCompetitionData, newCompetitionData } from './store/actions';
 
-import { Text, Box, Anchor, Menu } from 'grommet';
+import { Text, Box, Menu } from 'grommet';
 import { Cloud, Desktop } from 'grommet-icons';
 
 class CompetitionAdm extends Component {
@@ -32,6 +32,7 @@ class CompetitionAdm extends Component {
   render() {
     return (
         <Box>
+          <Desktop size='medium' />
           <Text>Local static data</Text>
           <Menu
             dropAlign={{ top: 'top', right: 'right' }}
@@ -42,6 +43,7 @@ class CompetitionAdm extends Component {
                     { label: 'new', onClick: () => { this.handleNewCompDataEvent() }},
                    ]}
             />
+          <Cloud size='medium' />
           <Text>Server data</Text>
           <Box direction="row">
 

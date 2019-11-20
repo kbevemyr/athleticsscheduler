@@ -44,7 +44,7 @@ class EventDetails extends Component {
   }
 
   handleClose(event) {
-    this.props.history.goBack();
+    this.props.onClose();
   }
 
   render() {
@@ -94,7 +94,10 @@ class EventDetails extends Component {
                 </Text>
               </TableCell>
               <TableCell>
-                <Anchor href={"#form/"+this.state.currentEvent.id} icon={<FormEdit />} />
+                <Anchor
+                  href={"#/overview/form/"+this.state.currentEvent.id}
+                  icon={<FormEdit />}
+                />
               </TableCell>
             </TableRow>
           </TableHeader>

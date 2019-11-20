@@ -269,10 +269,10 @@ export function getBoxSize(start, end) {
 
 
 /*
-  Event overlap, timewise
+  Event collision, timewise, between to events
 */
 
-export function overlap(e1, e2) {
+function collision(e1, e2) {
   var response = false;
   const st1 = parseInt(e1.starttime, 10);
   const et1 = parseInt(e1.starttime,10) + parseInt(e1.duration, 10);
@@ -299,12 +299,6 @@ function sameEvent(e1,e2) {
   }
 }
 
-/*
-function pp(e) {
-  return (e.id+", "+e.starttime+";"+e.duration+"  "+e.class+":"+e.gren);
-}
-*/
-
 // Checks the whole schema for time clashes between events.
 export function healthCheckSchema(eventsData) {
   var out = true;
@@ -315,8 +309,8 @@ export function healthCheckSchema(eventsData) {
       var rowj = eventsData[j];
       if(!sameEvent(rowi,rowj)) {
         if(rowi.class === rowj.class) {
-          if(overlap(rowi, rowj)) {
-            //console.log("OVERLAP: ["+pp(rowi)+"] || ["+pp(rowj)+"]");
+          if(collision(rowi, rowj)) {
+            //console.log("collision: ["+pp(rowi)+"] || ["+pp(rowj)+"]");
             var oObj = {key: rowi.id, value: rowj.id};
             abnormalEvents.push(oObj);
             out = false;
@@ -329,7 +323,7 @@ export function healthCheckSchema(eventsData) {
   return abnormalEvents;
 }
 
-// Checks the whole schema for time clashes between event.
+// Checks the whole schema for time clashes between event during a given day.
 // Returns an Array och {key:id1, value:id2} pairs
 export function healthCheckSchema2(events, day) {
   var eventsData = events.filter(e => e.day === day);
@@ -341,8 +335,8 @@ export function healthCheckSchema2(events, day) {
       var rowj = eventsData[j];
       if(!sameEvent(rowi,rowj)) {
         if(rowi.class === rowj.class) {
-          if(overlap(rowi, rowj)) {
-            //console.log("OVERLAP: ["+pp(rowi)+"] || ["+pp(rowj)+"]");
+          if(collision(rowi, rowj)) {
+            //console.log("collision: ["+pp(rowi)+"] || ["+pp(rowj)+"]");
             var oObj = {key: rowi.id, value: rowj.id};
             abnormalEvents.push(oObj);
             out = false;
@@ -364,7 +358,7 @@ export function healthCheckSchema2(events, day) {
   returnvalue - if x is visualied in overview, default is false
 */
 
-export function isCollision(xs, id) {
+export function inCollision(xs, id) {
   var obj = xs[id];
   var res = false;
   if (obj == null) {
@@ -380,4 +374,42 @@ export function getCollisions(xs, id) {
   var os = xs.filter(x => x.key === id);
 
   return os;
+}
+
+
+function pp(e) {
+  return (e.id+", "+e.starttime+";"+e.duration+"  "+e.class+":"+e.gren);
+}
+
+
+/*
+  Overlaps within an arena given a day
+*/
+
+function overlap (e1, e2) {
+  return false;
+}
+
+export function overlapCheckSchema2(events, day) {
+  var eventsData = events.filter(e => e.day === day);
+  var out = true;
+  var abnormalEvents = [];
+  for(var i=0; i < eventsData.length; i++) {
+    var rowi = eventsData[i];
+    for(var j=0; j < eventsData.length; j++) {
+      var rowj = eventsData[j];
+      if(!sameEvent(rowi,rowj)) {
+        if(rowi.class === rowj.class) {
+          if(overlap(rowi, rowj)) {
+            console.log("OVERLAP: ["+pp(rowi)+"] || ["+pp(rowj)+"]");
+            var oObj = {key: rowi.id, value: rowj.id};
+            abnormalEvents.push(oObj);
+            out = false;
+          }
+        }
+      }
+    }
+  }
+  console.log("overlapCheckSchema : "+out+" "+JSON.stringify(abnormalEvents));
+  return abnormalEvents;
 }

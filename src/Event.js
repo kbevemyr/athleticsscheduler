@@ -3,11 +3,11 @@ import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
 import { Stack, Box } from 'grommet';
-import { Alert, FormEdit } from 'grommet-icons';
+import { Alert } from 'grommet-icons';
 
 import { setColor, setActiveEvent, setActiveClass } from './store/actions';
 import { defaultColor, getTextColor, MinutesToPX, getEvent, getDayStarttime } from './misc';
-import { getEventLabel, isCollision } from './misc';
+import { getEventLabel, inCollision } from './misc';
 
 
 function getBoxColor(paintSchema, newColor, eventClass) {
@@ -107,7 +107,7 @@ class Event extends Component {
     };
 
     let linkStyle = {
-      "text-decoration": "none",
+      textDecoration: "none",
       color: textColor,
     };
 
@@ -131,7 +131,7 @@ class Event extends Component {
           onClick={e => this.handleMarkEvent(e, topE, eventData)}
         >
           <Stack anchor="top-right">
-            <a style={linkStyle} href={"#event/"+this.props.id}>
+            <a style={linkStyle} href={"#"+this.props.match.url+"/event/"+this.props.id}>
               {getEventLabel(this.props.comp, eventData.id)}
             </a>
             <Box direction="row">
@@ -139,7 +139,7 @@ class Event extends Component {
 
               </Box>
             </Box>
-            {isCollision(this.props.collisions, this.props.id) &&
+            {inCollision(this.props.collisions, this.props.id) &&
               <Box background="white">
                 <Alert color="status-warning" size='medium' />
               </Box>

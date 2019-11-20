@@ -34,41 +34,21 @@ class ControlPanel extends Component {
     );
 
     return (
-      <Box
-          background = {{
-            color: "#D1C1FF",
-            dark: false,
-            opacity: "medium",
-          }}
-          animation="slideLeft"
-          border={{
-            color: "#7553D3",
-            size: "medium",
-            side: "all",
-          }}
-          round={{
-            corner: "left",
-            size: "medium"
-          }}
-          elevation="medium"
-          margin="none"
-          pad="medium"
-          gap="xsmall"
-        >
+      <Box>
         <Heading level={3}>{this.props.name}</Heading>
         <Text size='small'>{getName(this.props.day, this.props.comp, 'days')} är vald.</Text>
         <Text alignSelf='end' size="small">Schema Version: {this.props.version}</Text>
 
-      <Menu label="Välj dag"
-        items={dayItems}
-      />
-      <Menu label="Export"
-          items={[
-            { label: "PDF", onClick: () => {exportPdf("pdfpage")} },
-            { label: "CSV", onClick: () => {} },
-          ]}
+        <Menu label="Välj dag"
+          items={dayItems}
         />
-        <CollisionPanel />
+        <Menu label="Export"
+            items={[
+              { label: "PDF", onClick: () => {exportPdf("pdfpage")} },
+              { label: "CSV", onClick: () => {} },
+            ]}
+          />
+          <CollisionPanel />
       </Box>
     );
   }

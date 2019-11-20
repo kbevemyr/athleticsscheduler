@@ -3,21 +3,17 @@ import { Switch, Route, withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
 import './App.css';
-import CompDay from './CompDay';
-import ControlPanel from './ControlPanel';
-import EventDetails from './EventDetails';
-import EventForm from './EventForm';
+import CompetitionAdm from './CompetitionAdm';
 
 import { Box, Layer } from 'grommet';
+import { Cloud } from 'grommet-icons';
 
-// Defines the area to generate pdf of a CompDay
-import Page from './Page';
 
-class Competition extends Component {
+class Splash extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sidePanelActive: true,
+      sidePanelActive: undefined,
     }
   }
 
@@ -33,17 +29,18 @@ class Competition extends Component {
   }
 
   render() {
+    const topMargin = { left: "0px", top: "10vh", right: "0px", bottom: "0px" };
+
     return (
       <Box direction="row">
           <Box flex={true}>
-            <Page id='pdfpage' >
-              <CompDay />
-            </Page>
+            <Cloud size='large' />
           </Box>
 
-          {this.state.sidePanelActive && (
+          {(this.state.sidePanelActive || this.props.adm) && (
             <Layer
-              position="right"
+              margin={topMargin}
+              position="top-right"
               modal={false}
               animation="slide"
               onClickOutside={this.handleCloseSidePanel}
@@ -67,14 +64,8 @@ class Competition extends Component {
                   gap="xsmall"
                 >
                   <Switch>
-                    <Route exact path={this.props.match.path}>
-                      <ControlPanel />
-                    </Route>
-                    <Route path={this.props.match.path+"/event/:id"}>
-                      <EventDetails onClose={this.handleCloseSidePanel} />
-                    </Route>
-                    <Route path={this.props.match.path+"/form/:id"}>
-                      <EventForm onClose={this.handleCloseSidePanel} />
+                    <Route path={this.props.match.path}>
+                      <CompetitionAdm />
                     </Route>
                   </Switch>
                 </Box>
@@ -90,7 +81,6 @@ class Competition extends Component {
 
 const mapStateToProps = state => ({
   name: state.competition.name,
-  version: state.competition.version,
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -99,9 +89,9 @@ const mapDispatchToProps = dispatch => ({
     },
 });
 
-const CompetitionContainer = connect(
+const SplashContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(Competition);
+)(Splash);
 
-export default withRouter(CompetitionContainer);
+export default withRouter(SplashContainer);

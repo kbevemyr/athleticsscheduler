@@ -14,19 +14,18 @@ class TableView extends Component {
     super(props);
     this.state = {
       name: "Table View",
-      formActive: undefined,
+      sidePanelActive: undefined,
     };
   }
 
-  handleOpenForm = (e) => {
-    console.log("handleOpenForm");
-    this.setState({ formActive: true });
+  handleOpenSidePanel = (e) => {
+    console.log("handleOpenSidePanel");
+    this.setState({ sidePanelActive: true });
   }
 
-  handleCloseForm = (e) => {
-    console.log("handleCloseForm");
-    this.setState({ formActive: undefined });
-    //this.props.history.push("/tables");
+  handleCloseSidePanel = (e) => {
+    console.log("handleCloseSidePanel");
+    this.setState({ sidePanelActive: undefined });
     this.props.history.goBack();
   }
 
@@ -47,7 +46,7 @@ class TableView extends Component {
           <EventTable key="eventstable" onEditRow={this.handleOpenForm} />
         </Box>
 
-        {this.state.formActive && (
+        {this.state.sidePanelActive && (
           <Layer
             position="right"
             modal

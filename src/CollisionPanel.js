@@ -3,8 +3,9 @@ import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
 import { Heading, Text, Box, CheckBox, Markdown } from 'grommet';
+import { Alert } from 'grommet-icons';
 
-import { healthCheckSchema2, isCollision, getEvent } from './misc';
+import { healthCheckSchema2, inCollision, overlapCheckSchema2, getEvent } from './misc';
 
 import { setCollision } from './store/actions';
 
@@ -27,18 +28,27 @@ class CollisionPanel extends Component {
     console.log("just to call healthCheckSchema2 for day "+this.props.day);
     var eventcollisions = healthCheckSchema2(this.props.events, this.props.day);
 
+    console.log("calling overlapCheckSchema for day "+this.props.day);
+    var eventoverlaps = overlapCheckSchema2(this.props.events, this.props.day);
+    console.log(eventoverlaps);
+
     let ret = <Text>There are no event collisions.</Text>;
     if (eventcollisions.length > 0) {
       ret =
       <Box>
-        <Heading level= {3}>{this.state.name}</Heading>
+        <Heading level= {3}>
+          <Box background="white">
+            <Alert color="status-warning" size='medium' />
+          </Box>
+          {this.state.name}
+        </Heading>
         {eventcollisions.map(x => {
           var event1 = getEvent(this.props.comp, x.key);
           var event2 = getEvent(this.props.comp, x.value);
           return (
             <CheckBox
               key={"collisionbox"+event1.id+event2.id+this.props.day}
-              checked={isCollision(this.props.collisions,event1.id)}
+              checked={inCollision(this.props.collisions,event1.id)}
               label={<Markdown>{"**"+event1.class+" "+event1.gren+"** || " + event2.class+" "+ event2.gren}</Markdown>}
               onChange={(e) => this.handleViewEvent(e, event1.id, event2.id)}
             />

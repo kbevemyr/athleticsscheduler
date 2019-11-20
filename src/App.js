@@ -3,17 +3,16 @@ import { Route, Switch, withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
 import './App.css';
+import Splash from './Splash';
 import CompetitionAdm from './CompetitionAdm';
 import Competition from './Competition';
 import TableView from './TableView';
-import EventForm from './EventForm';
-import EventDetails from './EventDetails';
 import Settings from './Settings';
 import { getCompetitionData, saveCompetitionData, newCompetitionData } from './store/actions';
 
 import { Grommet, grommet, Box, Anchor, Menu } from 'grommet';
 import { Menu as MenuIcon } from 'grommet-icons';
-import { Table, Columns, SettingsOption } from 'grommet-icons';
+import { Table, Columns, SettingsOption, Cloud } from 'grommet-icons';
 
 class App extends Component {
   constructor(props) {
@@ -52,35 +51,26 @@ class App extends Component {
         >
           <Box direction='row'>
             <Anchor href="#tables" icon={<Table />} />
-            <Anchor href="#" icon={<Columns />} />
+            <Anchor href="#overview" icon={<Columns />} />
           </Box>
 
-          <strong>Athletics Scheduler</strong>
+          <Anchor href="#">
+            <strong>Athletics Scheduler</strong>
+          </Anchor>
 
           <Box direction='row'>
             <Anchor href="#settings" icon={<SettingsOption />} />
-            <Menu
-              dropAlign={{ top: 'top', right: 'right' }}
-              items={[
-                      { label: '2017', onClick: () => { this.handleSetCompDataEvent('2017') }},
-                      { label: '2018', onClick: () => { this.handleSetCompDataEvent('2018') }},
-                      { label: '2019', onClick: () => { this.handleSetCompDataEvent('2019') }},
-                      { label: 'test', onClick: () => { this.handleSetCompDataEvent('test') }},
-                      { label: 'save', onClick: () => { this.handleSaveCompDataEvent('test') }},
-                      { label: 'new', onClick: () => { this.handleNewCompDataEvent() }},
-                     ]}
-              icon={<MenuIcon color='white' />}
-              />
+            <Anchor href="#splash/adm" icon={<Cloud />} />
           </Box>
         </Box>
 
         <Box direction="row-responsive">
           <Box id="view" flex={true}>
             <Switch>
-              <Route path="/" exact component={CompetitionAdm} />
+              <Route path="/" exact component={Splash} />
+              <Route path="/splash" render={() => <Splash adm={true} />} />
               <Route path="/overview" component={Competition} />
               <Route path="/tables" component={TableView} />
-              <Route path="/event/:id" component={EventDetails} />
               <Route path="/settings" component={Settings} />
             </Switch>
           </Box>
