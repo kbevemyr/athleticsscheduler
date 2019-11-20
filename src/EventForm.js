@@ -92,8 +92,6 @@ class EventForm extends Component {
   }
 
 
-
-
   handleSubmit(event) {
     console.log("State: ",this.state);
     var update = {
@@ -109,17 +107,17 @@ class EventForm extends Component {
     };
     console.log("Submit in EventForm: ", update);
     this.props.updateTheEvent(update);
-    this.props.history.goBack();
+    this.props.onClose();
   }
 
   handleCancel(event) {
-    this.props.history.goBack();
+    this.props.onClose();
   }
 
   render() {
 
     return (
-      <Box pad="medium" background="light-3" width="30%">
+      <Box pad="medium" background="light-3">
         <Text weight="bold">Edit Event {this.state.editId}</Text>
         <Form onSubmit={this.handleSubmit} onReset={this.handleCancel}>
           <FormField

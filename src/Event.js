@@ -7,7 +7,7 @@ import { Alert, FormEdit } from 'grommet-icons';
 
 import { setColor, setActiveEvent, setActiveClass } from './store/actions';
 import { defaultColor, getTextColor, MinutesToPX, getEvent, getDayStarttime } from './misc';
-import { isCollision } from './misc';
+import { getEventLabel, isCollision } from './misc';
 
 
 function getBoxColor(paintSchema, newColor, eventClass) {
@@ -47,35 +47,35 @@ class Event extends Component {
     this.handleHighLightEvent = this.handleHighLightEvent.bind(this);
   }
 
-  handleMarkEvent(e, y) {
+  handleMarkEvent(e, y, eventData) {
     if (e.shiftKey) {
-      this.handleHighLightEvent(e);
+      this.handleHighLightEvent(e, eventData);
     } else {
       console.log("handleMarkEvent "+y);
       this.props.onMarked(y, this.handleUnMarkEvent);
     }
   }
 
-  handleUnMarkEvent(e) {
+  handleUnMarkEvent(e, eventData) {
     if (e.shiftKey) {
-      this.handleHighLightEvent(e);
+      this.handleHighLightEvent(e, eventData);
     } else {
       console.log("handleUnMarkEvent ");
     }
   }
 
-  handleHighLightEvent(e) {
+  handleHighLightEvent(e, eventData) {
     console.log("handelHighLightEvent");
-    this.props.setTheActiveClass(this.state.event.class);
+    this.props.setTheActiveClass(eventData.class);
   }
 
   render() {
-    let event = getEvent(this.props.comp, this.props.id);
-    let starttime = parseInt(getEvent(this.props.comp, this.props.id).starttime, 10);
-    let duration = parseInt(getEvent(this.props.comp, this.props.id).duration, 10);
-    let preptime = parseInt(getEvent(this.props.comp, this.props.id).preptime, 10);
+    let eventData = getEvent(this.props.comp, this.props.id);
+    let starttime = parseInt(eventData.starttime, 10);
+    let duration = parseInt(eventData.duration, 10);
+    let preptime = parseInt(eventData.preptime, 10);
 
-    let color = getBoxColor(this.props.paintschema, this.props.setNewColor, event.class);
+    let color = getBoxColor(this.props.paintschema, this.props.setNewColor, eventData.class);
     if (isActive(this.props.activeIDs, this.props.id)) {
       //color = colorLuminance(color, 0.50);
     } else {
@@ -85,7 +85,7 @@ class Event extends Component {
     // Event Main Box
     let textColor = getTextColor(color);
     let heightE = MinutesToPX(duration);
-    let topE = MinutesToPX(starttime-parseInt(getDayStarttime(this.props.comp, event.day), 10));
+    let topE = MinutesToPX(starttime-parseInt(getDayStarttime(this.props.comp, eventData.day), 10));
     let markerStyle = {
       height: heightE,
       background: color,
@@ -106,6 +106,11 @@ class Event extends Component {
       top: prepTopE,
     };
 
+    let linkStyle = {
+      "text-decoration": "none",
+      color: textColor,
+    };
+
     return (
       <div
         id={"event-main"+this.props.id}
@@ -123,16 +128,15 @@ class Event extends Component {
         <div
           id={"marker"+this.props.id}
           style={markerStyle}
-          onDoubleClick={this.handleHighLightEvent}
-          onClick={e => this.handleMarkEvent(e, topE)}
+          onClick={e => this.handleMarkEvent(e, topE, eventData)}
         >
           <Stack anchor="top-right">
-            {event.class+" "+event.gren}
+            <a style={linkStyle} href={"#event/"+this.props.id}>
+              {getEventLabel(this.props.comp, eventData.id)}
+            </a>
             <Box direction="row">
               <Box background="white" round>
-                <a href={"#event/"+this.props.id}>
-                  <FormEdit size='small' />
-                </a>
+
               </Box>
             </Box>
             {isCollision(this.props.collisions, this.props.id) &&

@@ -74,14 +74,17 @@ class App extends Component {
           </Box>
         </Box>
 
-        <Switch>
-          <Route path="/" exact component={CompetitionAdm} />
-          <Route path="/overview" component={Competition} />
-          <Route path="/tables" component={TableView} />
-          <Route path="/form/:id" component={EventForm} />
-          <Route path="/event/:id" component={EventDetails} />
-          <Route path="/settings" component={Settings} />
-        </Switch>
+        <Box direction="row-responsive">
+          <Box id="view" flex={true}>
+            <Switch>
+              <Route path="/" exact component={CompetitionAdm} />
+              <Route path="/overview" component={Competition} />
+              <Route path="/tables" component={TableView} />
+              <Route path="/event/:id" component={EventDetails} />
+              <Route path="/settings" component={Settings} />
+            </Switch>
+          </Box>
+        </Box>
 
         <Box tag='footer'
              direction='row'

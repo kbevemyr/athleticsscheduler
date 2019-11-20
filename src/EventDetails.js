@@ -100,7 +100,7 @@ class EventDetails extends Component {
           </TableHeader>
           <TableBody>
             {values.map(x =>
-              <TableRow>
+              <TableRow key={"detailsPart"+x.label}>
                 <TableCell>
                   <Text><b>{x.label+":"}</b></Text>
                 </TableCell>
@@ -116,7 +116,7 @@ class EventDetails extends Component {
     }
 
     return (
-      <Box width='30%'>
+      <Box>
         {renderedEvent}
       </Box>
     );

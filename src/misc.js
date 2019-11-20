@@ -183,9 +183,40 @@ export function getEvent(comp, eid) {
   return e;
 }
 
+export function getEventLabel(comp, eid) {
+  var e = comp.events.find(x => x.id === eid);
+  let eClass = getName(e.class, comp, 'classes');
+  let eGren = getName(e.gren, comp, 'grenar');
+
+  return (eClass+" "+eGren);
+}
+
+function getEventFullPresentation(comp, eid) {
+  var e = comp.events.find(x => x.id === eid);
+  let labels = {
+    day: getName(e.day, comp, 'days'),
+    arena: getName(e.arena, comp, 'arenas'),
+    class: getName(e.class, comp, 'classes'),
+    gren: getName(e.gren, comp, 'grenar'),
+  };
+  e['days'] = labels.day;
+  e['arena'] = labels.arena;
+  e['class'] = labels.class;
+  e['gren'] = labels.gren;
+
+  return e;
+}
+
 export function getName(id, comp, nameType) {
-  var name = comp[nameType].find(x => x.id === id).name;
-  return name;
+  var x = comp[nameType].find(x => x.id === id);
+  let ret = "";
+  if(x !== undefined) {
+    ret = x.name;
+  } else {
+    console.log("getName failed "+id+" "+nameType);
+    console.log(comp[nameType]);
+  }
+  return ret;
 }
 
 export function newID() {

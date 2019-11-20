@@ -1,8 +1,8 @@
 import React, {Component} from "react";
-import { withRouter } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { Text, Anchor } from 'grommet';
+import { Text, Button } from 'grommet';
 import { FormEdit } from 'grommet-icons';
 
 import Table from '@material-ui/core/Table';
@@ -78,12 +78,6 @@ class EventTable extends Component {
       order: "asc",
       orderBy: "arena",
     };
-  }
-
-  handleOnRowClick (e) {
-    let data = e.target.value;
-    console.log("handleOnRowClick "+JSON.stringify(data));
-    this.props.history.push("/form/"+data);
   }
 
   createSortHandler = property => event => {
@@ -173,7 +167,12 @@ class EventTable extends Component {
                 key={"tr"+x.id}
               >
                 <TableCell>
-                  <Anchor href={"#form/"+x.id} icon={<FormEdit />} />
+                  <Link to={this.props.match.url+"/form/"+x.id}>
+                    <Button
+                      icon={<FormEdit />}
+                      onClick={this.props.onEditRow}
+                    />
+                  </Link>
                 </TableCell>
                 <TableCell component="th" scope="row">
                   {x.day}
