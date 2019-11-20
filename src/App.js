@@ -4,14 +4,12 @@ import { connect } from 'react-redux';
 
 import './App.css';
 import Splash from './Splash';
-import CompetitionAdm from './CompetitionAdm';
 import Competition from './Competition';
 import TableView from './TableView';
 import Settings from './Settings';
 import { getCompetitionData, saveCompetitionData, newCompetitionData } from './store/actions';
 
-import { Grommet, grommet, Box, Anchor, Menu } from 'grommet';
-import { Menu as MenuIcon } from 'grommet-icons';
+import { Grommet, grommet, Box, Anchor } from 'grommet';
 import { Table, Columns, SettingsOption, Cloud } from 'grommet-icons';
 
 class App extends Component {

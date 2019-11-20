@@ -33,8 +33,8 @@ class Splash extends Component {
 
     return (
       <Box direction="row">
-          <Box flex={true}>
-            <Cloud size='large' />
+          <Box flex={true} align="center" pad="xlarge">
+            <Cloud size='xlarge' />
           </Box>
 
           {(this.state.sidePanelActive || this.props.adm) && (

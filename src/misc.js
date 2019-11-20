@@ -191,6 +191,7 @@ export function getEventLabel(comp, eid) {
   return (eClass+" "+eGren);
 }
 
+/*
 function getEventFullPresentation(comp, eid) {
   var e = comp.events.find(x => x.id === eid);
   let labels = {
@@ -206,6 +207,7 @@ function getEventFullPresentation(comp, eid) {
 
   return e;
 }
+*/
 
 export function getName(id, comp, nameType) {
   var x = comp[nameType].find(x => x.id === id);
