@@ -72,6 +72,7 @@ class TableView extends Component {
                 margin="none"
                 pad="none"
                 gap="xsmall"
+                overflow="scroll"
               >
               <Switch>
                 <Route path={this.props.match.path+"/form/:id"}>

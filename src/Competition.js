@@ -68,6 +68,7 @@ class Competition extends Component {
                   margin="none"
                   pad="small"
                   gap="xsmall"
+                  overflow="scroll"
                 >
                   <Switch>
                     <Route exact path={this.props.match.path}>

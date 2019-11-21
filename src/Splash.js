@@ -65,6 +65,7 @@ class Splash extends Component {
                   margin="none"
                   pad="small"
                   gap="xsmall"
+                  overflow="scroll"
                 >
                   <Switch>
                     <Route path={this.props.match.path}>
