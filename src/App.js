@@ -8,32 +8,11 @@ import Splash from './Splash';
 import Competition from './Competition';
 import TableView from './TableView';
 import Settings from './Settings';
-import { getCompetitionData, saveCompetitionData, newCompetitionData } from './store/actions';
 
 import { Grommet, grommet, Box, Anchor } from 'grommet';
 import { Table, Columns, SettingsOption, Cloud } from 'grommet-icons';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-    this.handleSetCompDataEvent = this.handleSetCompDataEvent.bind(this);
-    this.handleSaveCompDataEvent = this.handleSaveCompDataEvent.bind(this);
-    this.handleNewCompDataEvent = this.handleNewCompDataEvent.bind(this);
-  }
-
-  handleSetCompDataEvent(key) {
-    this.props.getTheCompetitionData(key);
-    //this.props.history.push("/overview");
-  }
-
-  handleSaveCompDataEvent(key) {
-    this.props.saveTheCompetitionData(key, this.props.comp);
-  }
-
-  handleNewCompDataEvent(key) {
-    this.props.saveANewCompetitionData();
-    //this.props.history.push("/settings");
-  }
 
   render() {
     return (
@@ -96,14 +75,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    getTheCompetitionData: (cid) => {
-      dispatch(getCompetitionData(cid));
-    },
-    saveTheCompetitionData: (key, comp) => {
-      dispatch(saveCompetitionData(key, comp))
-    },
-    saveANewCompetitionData: () => {
-      dispatch(newCompetitionData())
+    setTheData: (cid) => {
+      //dispatch(action(cid));
     },
 });
 

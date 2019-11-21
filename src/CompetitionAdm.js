@@ -65,6 +65,7 @@ class CompetitionAdm extends Component {
 
 const mapStateToProps = state => ({
   compID: state.competition.key,
+  comp: state.competition,
 });
 
 const mapDispatchToProps = dispatch => ({
