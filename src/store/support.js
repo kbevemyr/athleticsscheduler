@@ -85,7 +85,7 @@ export function serverPost(key, body) {
           };
 
   if (body) {
-    opts["body"] = JSON.stringify(body);
+    opts["params"] = JSON.stringify(body);
   }
 
   console.log("serverPost.opts: "+JSON.stringify(opts));
