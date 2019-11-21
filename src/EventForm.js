@@ -4,8 +4,25 @@ import { connect } from 'react-redux';
 
 import { Box, Form, FormField, Select, MaskedInput, Button, Text } from 'grommet';
 import { updateEvent } from './store/actions';
-import { getEvent, timeStrToMinutes, presentTime, getEmptyEvent } from './misc';
+import { getEvent, timeStrToMinutes, presentTime, getEmptyEvent, getName } from './misc';
 
+
+function populateValues(x, comp) {
+  const stateObj = {
+    editId: x.id,
+    dayValue: {id: x.day, name: getName(x.day, comp, 'days')},
+    arenaValue: {id: x.arena, name: getName(x.arena, comp, 'arenas')},
+    starttimeStr: presentTime(x.starttime),
+    durationStr: presentTime(x.duration),
+    preptimeStr: presentTime(x.preptime),
+    classValue: {id: x.class, name: getName(x.class, comp, 'classes')},
+    grenValue: {id: x.gren, name: getName(x.gren, comp, 'grenar')},
+    grentypeValue: x.grentype,
+
+    gtOptions: [ "run", "tech" ],
+  };
+  return (stateObj);
+}
 
 class EventForm extends Component {
 
@@ -13,50 +30,16 @@ class EventForm extends Component {
     super(props);
 
     let currentEvent = getEmptyEvent();
-    this.state = {
-      editId: 9999,
-      dayValue: currentEvent.day,
-      arenaValue: currentEvent.arena,
-      starttimeStr: presentTime(currentEvent.starttime),
-      durationStr: presentTime(currentEvent.duration),
-      preptimeStr: presentTime(currentEvent.preptime),
-      classValue: currentEvent.class,
-      grenValue: currentEvent.gren,
-      grentypeValue: currentEvent.grentype,
-
-      dOptions: this.props.comp.days.map(x => x.name),
-      aOptions: this.props.comp.arenas.map(x => x.name),
-      cOptions: this.props.comp.classes.map(x => x.name),
-      gOptions: this.props.comp.grenar.map(x => x.name),
-      gtOptions: [ "run", "tech" ],
-    };
+    this.state = populateValues(currentEvent, this.props.comp);
 
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleCancel = this.handleCancel.bind(this);
 
-    var theEvent = this.props.comp.events.find(
-      x => x.id === this.props.match.params.id
-    );
-
-    if (theEvent != null) {
-      this.state = {
-        editId: this.props.match.params.id,
-        dayValue: theEvent.day,
-        arenaValue: theEvent.arena,
-        starttimeStr: presentTime(theEvent.starttime),
-        durationStr: presentTime(theEvent.duration),
-        preptimeStr: presentTime(theEvent.preptime),
-        classValue: theEvent.class,
-        grenValue: theEvent.gren,
-        grentypeValue: theEvent.grentype,
-
-        dOptions: this.props.comp.days.map(x => x.name),
-        aOptions: this.props.comp.arenas.map(x => x.name),
-        cOptions: this.props.comp.classes.map(x => x.name),
-        gOptions: this.props.comp.grenar.map(x => x.name),
-        gtOptions: [ "run", "tech" ],
-      };
-    }
+    this.handleChangeClass = this.handleChangeClass.bind(this);
+    this.handleChangeGren = this.handleChangeGren.bind(this);
+    this.handleChangeDay = this.handleChangeDay.bind(this);
+    this.handleChangeArena = this.handleChangeArena.bind(this);
+    this.handleChangeGrentype = this.handleChangeGrentype.bind(this);
   };
 
 
@@ -71,23 +54,7 @@ class EventForm extends Component {
     console.log("EventData eventdata "+JSON.stringify(theEvent));
 
     if (theEvent != null) {
-      this.setState({
-        editId: theEvent.id,
-        dayValue: theEvent.day,
-        arenaValue: theEvent.arena,
-        starttimeStr: presentTime(theEvent.starttime),
-        durationStr: presentTime(theEvent.duration),
-        preptimeStr: presentTime(theEvent.preptime),
-        classValue: theEvent.class,
-        grenValue: theEvent.gren,
-        grentypeValue: theEvent.grentype,
-
-        dOptions: this.props.comp.days.map(x => x.name),
-        aOptions: this.props.comp.arenas.map(x => x.name),
-        cOptions: this.props.comp.classes.map(x => x.name),
-        gOptions: this.props.comp.grenar.map(x => x.name),
-        gtOptions: [ "run", "tech" ],
-      });
+      this.setState(populateValues(theEvent, this.props.comp));
     }
   }
 
@@ -96,13 +63,13 @@ class EventForm extends Component {
     console.log("State: ",this.state);
     var update = {
       id: this.state.editId,
-      day: this.state.dayValue,
-      arena: this.state.arenaValue,
-      starttime: timeStrToMinutes(this.state.starttimeStr),
-      duration: timeStrToMinutes(this.state.durationStr),
-      preptime: timeStrToMinutes(this.state.preptimeStr),
-      class: this.state.classValue,
-      gren: this.state.grenValue,
+      day: this.state.dayValue.id,
+      arena: this.state.arenaValue.id,
+      starttime: timeStrToMinutes(this.state.starttimeStr)+"",
+      duration: timeStrToMinutes(this.state.durationStr)+"",
+      preptime: timeStrToMinutes(this.state.preptimeStr)+"",
+      class: this.state.classValue.id,
+      gren: this.state.grenValue.id,
       grentype: this.state.grentypeValue,
     };
     console.log("Submit in EventForm: ", update);
@@ -114,6 +81,29 @@ class EventForm extends Component {
     this.props.onClose();
   }
 
+  handleChangeClass(event) {
+    let option = event.option;
+    console.log("handleChangeClass");
+    console.log(event);
+    this.setState({ classValue: option });
+  }
+  handleChangeGren(event) {
+    let option = event.option;
+    this.setState({ grenValue: option });
+  }
+  handleChangeDay(event) {
+    let option = event.option;
+    this.setState({ dayValue: option });
+  }
+  handleChangeArena(event) {
+    let option = event.option;
+    this.setState({ arenaValue: option });
+  }
+  handleChangeGrentype(event) {
+    let option = event.option;
+    this.setState({ grentypeValue: option });
+  }
+
   render() {
 
     return (
@@ -121,52 +111,74 @@ class EventForm extends Component {
         <Text weight="bold">Edit Event {this.state.editId}</Text>
         <Form onSubmit={this.handleSubmit} onReset={this.handleCancel}>
           <FormField
-            name="class"
+            htmlFor="comp-class"
             label="Klass"
-            value = {this.state.classValue}
-            onChange = {(e) => this.setState({classValue: e.value})}
-            component={Select}
-            options={this.state.cOptions}
-            required={true}
-          />
-          <FormField
-            name="gren"
-            label="Gren"
-            value = {this.state.grenValue}
-            onChange = {(e) => this.setState({grenValue: e.value})}
-            component={Select}
-            options={this.state.gOptions}
-            required={true}
-          />
-          <FormField
-            name="grentype"
-            label="Grentyp"
-            value = {this.state.grentypeValue}
-            onChange = {(e) => this.setState({grentypeValue: e.value})}
-            component={Select}
-            options={this.state.gtOptions}
-            required={true}
-          />
-          <FormField
-            name="day"
-            label="Dag"
           >
             <Select
-              options = {this.props.comp.days}
-              onChange = {({option}) => this.setState({ dayValue: option })}
+              id="comp-class"
+              value={this.state.classValue.name}
+              options = {this.props.comp.classes}
+              onChange = {this.handleChangeClass}
               >
               {option => option.name}
             </Select>
           </FormField>
+
           <FormField
-            name="arenaValue"
+            htmlFor="comp-gren"
+            label="Gren"
+          >
+            <Select
+              id="comp-gren"
+              value={this.state.grenValue.name}
+              options = {this.props.comp.grenar}
+              onChange = {this.handleChangeGren}
+              >
+              {option => option.name}
+            </Select>
+          </FormField>
+
+          <FormField
+            htmlFor="comp-grentype"
+            label="Grentyp"
+          >
+            <Select
+              id="comp-grentype"
+              value={this.state.grentypeValue}
+              options = {this.state.gtOptions}
+              onChange = {this.handleChangeGrentype}
+              >
+            </Select>
+          </FormField>
+
+          <FormField
+            htmlFor="comp-day"
+            label="Dag"
+          >
+            <Select
+              id="comp-day"
+              value={this.state.dayValue.name}
+              options = {this.props.comp.days}
+              onChange = {this.handleChangeDay}
+              >
+              {option => option.name}
+            </Select>
+          </FormField>
+
+          <FormField
+            htmlFor="comp-arena"
             label="Arena"
-            value = {this.state.arenaValue}
-            onChange = {(e) => this.setState({arenaValue: e.value})}
-            component={Select}
-            options={this.state.aOptions}
-            required={true}
-          />
+          >
+            <Select
+              id="comp-arena"
+              value={this.state.arenaValue.name}
+              options = {this.props.comp.arenas}
+              onChange = {this.handleChangeArena}
+              >
+              {option => option.name}
+            </Select>
+          </FormField>
+
           <FormField
             name="preptime"
             label="Ställtid"
@@ -188,6 +200,7 @@ class EventForm extends Component {
               },
             ]}
           />
+
         <FormField
           name="starttime"
           label="Starttid"
@@ -209,6 +222,7 @@ class EventForm extends Component {
             },
           ]}
           />
+
           <FormField
             name="duration"
             label="Duration"

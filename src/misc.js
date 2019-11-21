@@ -210,13 +210,16 @@ function getEventFullPresentation(comp, eid) {
 */
 
 export function getName(id, comp, nameType) {
-  var x = comp[nameType].find(x => x.id === id);
-  let ret = "";
-  if(x !== undefined) {
-    ret = x.name;
-  } else {
-    console.log("getName failed "+id+" "+nameType);
-    console.log(comp[nameType]);
+  let ret = "nameof("+id+")";
+  if (comp !== undefined) {
+    var x = comp[nameType].find(x => x.id === id);
+
+    if(x !== undefined) {
+      ret = x.name;
+    } else {
+      console.log("getName failed "+id+" "+nameType);
+      console.log(comp[nameType]);
+    }
   }
   return ret;
 }
