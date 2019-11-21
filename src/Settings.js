@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { updateSettings } from './store/actions';
 
-import { Heading, Text, Form, FormField, TextInput, Button, Box } from 'grommet';
+import { Heading, Form, FormField, TextInput, Button, Box } from 'grommet';
 
 import NameTable from './NameTable';
 
