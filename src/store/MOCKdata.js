@@ -346,7 +346,7 @@ const comp2019eventsTest = [
 {id: "F19200m", day: "söndag", arena: "löpning", starttime: "941", duration: "10", class: "F19", gren: "200m", grentype: "run", preptime: "0"},
 {id: "P19200m", day: "söndag", arena: "löpning", starttime: "951", duration: "10", class: "P19", gren: "200m", grentype: "run", preptime: "0"},
 {id: "P13200m", day: "söndag", arena: "löpning", starttime: "961", duration: "20", class: "P13", gren: "200m", grentype: "run", preptime: "0"},
-{id: "F17400m", day: "söndag", arena: "löpning", starttime: "981", duration: "5", class: "F17", gren: "400m", grentype: "run", preptime: "0"},
+{id: "F17400m", day: "söndag", arena: "löpning", starttime: "981", duration: "15", class: "F17", gren: "400m", grentype: "run", preptime: "0"},
 {id: "P17400m", day: "söndag", arena: "löpning", starttime: "986", duration: "15", class: "P17", gren: "400m", grentype: "run", preptime: "0"},
 ];
 

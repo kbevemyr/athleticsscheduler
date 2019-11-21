@@ -167,7 +167,7 @@ class EventTable extends Component {
                 key={"tr"+x.id}
               >
                 <TableCell>
-                  <Link to={this.props.match.url+"/form/"+x.id}>
+                  <Link to={"#/tables/form/"+x.id}>
                     <Button
                       icon={<FormEdit />}
                       onClick={this.props.onEditRow}

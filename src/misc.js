@@ -108,7 +108,7 @@ export function colorLuminance(hex, lum) {
 */
 
 export const EmptyCompetition = {
-            "key": "",
+            "key": newID(),
             "name": "",
             "version": "",
             "days": [],
@@ -389,7 +389,22 @@ function pp(e) {
 */
 
 function overlap (e1, e2) {
-  return false;
+  var response = false;
+  const st1 = parseInt(e1.starttime, 10);
+  const et1 = parseInt(e1.starttime,10) + parseInt(e1.duration, 10);
+  const st2 = parseInt(e2.starttime, 10);
+  const et2 = parseInt(e2.starttime, 10) + parseInt(e2.duration, 10);
+
+  if(e1.day === e2.day) {
+    if(st2 < et1 && st2 > st1) {
+      response = true;
+    }
+    if(st1 < et2 && st1 > st2) {
+      response = true;
+    }
+  }
+
+  return response;
 }
 
 export function overlapCheckSchema2(events, day) {
@@ -401,7 +416,7 @@ export function overlapCheckSchema2(events, day) {
     for(var j=0; j < eventsData.length; j++) {
       var rowj = eventsData[j];
       if(!sameEvent(rowi,rowj)) {
-        if(rowi.class === rowj.class) {
+        if(rowi.arena === rowj.arena) {
           if(overlap(rowi, rowj)) {
             console.log("OVERLAP: ["+pp(rowi)+"] || ["+pp(rowj)+"]");
             var oObj = {key: rowi.id, value: rowj.id};

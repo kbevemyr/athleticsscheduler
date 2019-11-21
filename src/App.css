@@ -54,6 +54,7 @@ body {
   width: var(--event-width);
   border: 0;
   float: left;
+  padding: 1px;
 }
 
 .arena-header {

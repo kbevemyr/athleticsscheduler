@@ -7,7 +7,7 @@ import { addName, deleteName, changeName } from './store/actions';
 import { Heading, Text, TextInput, Button, Box } from 'grommet';
 //import { Table, TableHeader, TableBody, TableRow, TableCell} from 'grommet';
 import { Layer } from 'grommet';
-import { Add, FormEdit, FormTrash } from 'grommet-icons';
+import { Add, Save, FormEdit, FormTrash } from 'grommet-icons';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -38,18 +38,48 @@ class NameTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      newName: "",
+      nameId: "",
+      nameName: "",
+      nameMode: 'add',
       confirmation: undefined,
     };
 
     this.handleAddNewName = this.handleAddNewName.bind(this);
+    this.handleEditName = this.handleEditName.bind(this);
     this.handleDelName = this.handleDelName.bind(this);
+    this.handleChangeName = this.handleChangeName.bind(this);
   }
 
-  handleAddNewName(name) {
-    //console.log("handleAddNewName "+ this.props.type +" "+name);
-    this.setState({newName: ""});
-    this.props.addTheName(name, this.props.type);
+  resetInput() {
+    this.setState({nameMode: 'add'});
+    this.setState({nameId: ""});
+    this.setState({nameName: ""});
+  }
+
+  handleAddNewName(e) {
+    let name = this.state.nameName;
+    console.log("handleAddNewName "+ this.props.type +" "+name);
+    if(name !== "") {
+      this.props.addTheName(name, this.props.type);
+    }
+    this.resetInput();
+  }
+
+  handleEditName(id, name) {
+    console.log("handleEditName "+ this.props.type +" "+name)
+    this.setState({nameMode: 'edit'});
+    this.setState({nameId: id});
+    this.setState({nameName: name});
+  }
+
+  handleChangeName() {
+    let name = this.state.nameName;
+    console.log("handleChangeName "+ this.props.type +" "+name);
+    if(name !== "") {
+      this.props.changeTheName(this.state.nameId, name, this.props.type);
+      this.setState({nameMode: 'add'});
+    }
+    this.resetInput();
   }
 
   handleDelName(id) {
@@ -62,16 +92,14 @@ class NameTable extends Component {
           onCancel={() => this.setState({confirmation: undefined})}
         />
     });
-
-  }
-
-  handleChangeName(id, name) {
-    console.log("handleChangeName "+ this.props.type +" "+id);
-    this.setState({confirmation: true});
-    this.props.changeTheName(id, name, this.props.type);
   }
 
   render() {
+    let inputButton = (this.state.nameMode === 'edit') ?
+      <Button icon={<Save />} onClick={this.handleChangeName}/>
+      :
+      <Button icon={<Add />} onClick={this.handleAddNewName}/>
+      ;
 
     return (
       <Box gap='small' pad='small'>
@@ -80,10 +108,10 @@ class NameTable extends Component {
           <Box direction='row'>
               <TextInput
                 placeholder="add a new name"
-                value={this.state.newName}
-                onChange={(e) => this.setState({newName: e.target.value})}
+                value={this.state.nameName}
+                onChange={(e) => this.setState({nameName: e.target.value})}
               />
-            <Button icon={<Add />} onClick={() => this.handleAddNewName(this.state.newName)}/>
+            {inputButton}
           </Box>
           <Table stickyHeader size="small">
             <TableHead>
@@ -106,7 +134,7 @@ class NameTable extends Component {
                     <Box direction='row' pad='none'>
                       <Button
                         fill={false}
-                        icon={<FormEdit size='small' />} onClick={() => this.handleChangeName(row.id, row.name)}/>
+                        icon={<FormEdit size='small' />} onClick={() => this.handleEditName(row.id, row.name)}/>
                       <Button
                         fill={false}
                         icon={<FormTrash size='small' />} onClick={(e) => this.handleDelName(row.id)}/>

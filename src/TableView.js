@@ -30,6 +30,8 @@ class TableView extends Component {
   }
 
   render() {
+    const topMargin = { left: "0px", top: "10vh", right: "0px", bottom: "0px" };
+
     return (
       <Box>
         <Link to={this.props.match.url+"/form/9999"}>
@@ -37,22 +39,23 @@ class TableView extends Component {
             plain={false}
             hoverIndicator
             icon={<Add />}
-            onClick={this.handleOpenForm}
+            onClick={this.handleOpenSidePanel}
           />
         </Link>
 
         <Box direction='column' pad='medium' background="light-1">
           <Text weight="bold" >{this.state.name}</Text>
-          <EventTable key="eventstable" onEditRow={this.handleOpenForm} />
+          <EventTable key="eventstable" onEditRow={this.handleOpenSidePanel} />
         </Box>
 
         {this.state.sidePanelActive && (
           <Layer
-            position="right"
+            margin={topMargin}
+            position="top-right"
             modal
             animation="slide"
-            onClickOutside={this.handleCloseForm}
-            onEsc={this.handleCloseForm}
+            onClickOutside={this.handleCloseSidePanel}
+            onEsc={this.handleCloseSidePanel}
           >
             <Box
                 background = {{
@@ -72,7 +75,7 @@ class TableView extends Component {
               >
               <Switch>
                 <Route path={this.props.match.path+"/form/:id"}>
-                  <EventForm onClose={this.handleCloseForm}/>
+                  <EventForm onClose={this.handleCloseSidePanel}/>
                 </Route>
               </Switch>
             </Box>

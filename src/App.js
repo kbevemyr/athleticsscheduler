@@ -3,6 +3,7 @@ import { Route, Switch, withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
 import './App.css';
+//import './AthleticsScheduler_logo.jpg';
 import Splash from './Splash';
 import Competition from './Competition';
 import TableView from './TableView';
@@ -22,7 +23,7 @@ class App extends Component {
 
   handleSetCompDataEvent(key) {
     this.props.getTheCompetitionData(key);
-    this.props.history.push("/overview");
+    //this.props.history.push("/overview");
   }
 
   handleSaveCompDataEvent(key) {
@@ -31,7 +32,7 @@ class App extends Component {
 
   handleNewCompDataEvent(key) {
     this.props.saveANewCompetitionData();
-    this.props.history.push("/settings");
+    //this.props.history.push("/settings");
   }
 
   render() {

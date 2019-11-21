@@ -33,6 +33,8 @@ class Competition extends Component {
   }
 
   render() {
+    const topMargin = { left: "0px", top: "10vh", right: "0px", bottom: "0px" };
+
     return (
       <Box direction="row">
           <Box flex={true}>
@@ -43,7 +45,8 @@ class Competition extends Component {
 
           {this.state.sidePanelActive && (
             <Layer
-              position="right"
+              margin={topMargin}
+              position="top-right"
               modal={false}
               animation="slide"
               onClickOutside={this.handleCloseSidePanel}

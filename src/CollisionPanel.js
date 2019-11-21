@@ -37,7 +37,7 @@ class CollisionPanel extends Component {
       ret =
       <Box>
         <Heading level= {3}>
-          <Box background="white">
+          <Box background="white" width='medium'>
             <Alert color="status-warning" size='medium' />
           </Box>
           {this.state.name}

@@ -111,10 +111,10 @@ export function changeName(id, name, nametype) {
   }
 }
 
-export function updateSettings(setting) {
+export function updateSettings(settings) {
   return {
     type: UPDATE_SETTINGS,
-    setting,
+    settings,
   }
 }
 

@@ -16,6 +16,21 @@ class Settings extends Component {
       nameVal: this.props.name,
       versionVal: this.props.version,
     };
+
+    this.handleChangeName = this.handleChangeName.bind(this);
+    this.handleChangeVersion = this.handleChangeVersion.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
+  }
+
+  handleChangeName(event) {
+    console.log("handleChangeName");
+    this.setState({nameVal: event.target.value});
+  }
+
+  handleChangeVersion(event) {
+    console.log("handleChangeVersion");
+    this.setState({versionVal: event.target.value});
   }
 
   handleSubmit(event) {
@@ -47,22 +62,21 @@ class Settings extends Component {
           flex={true}
           >
 
-          <Form onSubmit={this.handleUpdateSettings} onReset={this.handleCancel}>
-            <FormField name="name" label="Name">
+          <Form onSubmit={this.handleSubmit} onReset={this.handleCancel}>
+            <FormField htmlFor="comp-name" label="Name">
               <TextInput
+                id='comp-name'
                 value = {this.state.nameVal}
-                placeholder = {this.props.name}
-                onChange = {(e) => this.setState({nameVal: e.value})}
+                onChange = {this.handleChangeName}
                 >
               </TextInput>
             </FormField>
 
-            <Text>{this.props.key}</Text>
-
-            <FormField name="version" label="Version">
+            <FormField htmlFor="comp-version" label="Version">
               <TextInput
+                id='comp-version'
                 value = {this.state.versionVal}
-                onChange = {(e) => this.setState({versionVal: e.value})}
+                onChange = {this.handleChangeVersion}
                 >
               </TextInput>
             </FormField>
@@ -90,25 +104,12 @@ class Settings extends Component {
   }
 }
 
-/*
-<Grid
-  rows={['small','small']}
-  columns={['medium', 'small','medium']}
-  gap='small'
-  areas={[
-    {name: 'misc',          start: [0, 0], end:[0, 1]},
-    {name: 'days',          start: [1, 1], end:[1, 1]},
-    {name: 'arenas',        start: [2, 1], end:[2, 1]},
-  ]}
->
-*/
-
 
   // Store handling
 
   const mapStateToProps = state => ({
     name: state.competition.name,
-    key: state.competition.key,
+    compKey: state.competition.key,
     version: state.competition.version,
   });
 

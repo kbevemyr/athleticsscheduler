@@ -35,6 +35,8 @@ class Splash extends Component {
       <Box direction="row">
           <Box flex={true} align="center" pad="xlarge">
             <Cloud size='xlarge' />
+            <Box background="url(//localhost:3000/images/AthleticsScheduler_logo.jpeg)">
+            </Box>
           </Box>
 
           {(this.state.sidePanelActive || this.props.adm) && (
