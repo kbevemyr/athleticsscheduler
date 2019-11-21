@@ -28,6 +28,8 @@ class Splash extends Component {
     this.props.history.goBack();
   }
 
+// <Box background="url(//localhost:3000/images/AthleticsScheduler_logo.jpeg)">
+
   render() {
     const topMargin = { left: "0px", top: "10vh", right: "0px", bottom: "0px" };
 
@@ -35,8 +37,7 @@ class Splash extends Component {
       <Box direction="row">
           <Box flex={true} align="center" pad="xlarge">
             <Cloud size='xlarge' />
-            <Box background="url(//localhost:3000/images/AthleticsScheduler_logo.jpeg)">
-            </Box>
+
           </Box>
 
           {(this.state.sidePanelActive || this.props.adm) && (
