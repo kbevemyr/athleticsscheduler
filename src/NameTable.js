@@ -103,7 +103,7 @@ class NameTable extends Component {
 
     return (
       <Box gap='small' pad='small'>
-        <Heading level={4}>{this.props.label}</Heading>
+        <Heading level={4} margin='xsmall'>{this.props.label}</Heading>
         <Box>
           <Box direction='row'>
               <TextInput
@@ -126,7 +126,7 @@ class NameTable extends Component {
             </TableHead>
             <TableBody>
             {this.props.comp[this.props.type].map(row =>
-                <TableRow key={"NT"+row.id}>
+                <TableRow key={"NT"+this.props.type+row.id}>
                   <TableCell  scope="row">
                     {row.name}
                   </TableCell>

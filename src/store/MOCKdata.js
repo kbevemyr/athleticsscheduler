@@ -15,7 +15,6 @@ const SERVERclassesTest = [
   {"id":"F05","name":"F05"},
   {"id":"P05","name":"P05"},
   {"id":"F07","name":"F07"},
-  {"id":"P07","name":"P07"},
   {"id":"F08","name":"F08"},
   {"id":"P08","name":"P08"}
 ];

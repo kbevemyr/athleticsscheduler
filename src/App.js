@@ -7,10 +7,10 @@ import './App.css';
 import Splash from './Splash';
 import Competition from './Competition';
 import TableView from './TableView';
-import Settings from './Settings';
+import CompetitionAdm from './CompetitionAdm';
 
 import { Grommet, grommet, Box, Anchor } from 'grommet';
-import { Table, Columns, SettingsOption, Cloud } from 'grommet-icons';
+import { Table, Columns, SettingsOption } from 'grommet-icons';
 
 class App extends Component {
 
@@ -37,8 +37,7 @@ class App extends Component {
           </Anchor>
 
           <Box direction='row'>
-            <Anchor href="#settings" icon={<SettingsOption />} />
-            <Anchor href="#splash/adm" icon={<Cloud />} />
+            <Anchor href="#adm" icon={<SettingsOption />} />
           </Box>
         </Box>
 
@@ -46,10 +45,10 @@ class App extends Component {
           <Box id="view" flex={true}>
             <Switch>
               <Route path="/" exact component={Splash} />
-              <Route path="/splash" render={() => <Splash adm={true} />} />
+              <Route path="/splash" render={() => <Splash />} />
               <Route path="/overview" component={Competition} />
               <Route path="/tables" component={TableView} />
-              <Route path="/settings" component={Settings} />
+              <Route path="/adm" component={CompetitionAdm} />
             </Switch>
           </Box>
         </Box>

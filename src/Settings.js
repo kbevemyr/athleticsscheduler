@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 
 import { updateSettings } from './store/actions';
 
-import { Heading, Form, FormField, TextInput, Button, Box } from 'grommet';
+import { Heading, TextInput, Button, Box } from 'grommet';
+import { Save } from 'grommet-icons';
 
 import NameTable from './NameTable';
 
@@ -12,46 +13,31 @@ class Settings extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      title: "Competition Settings",
       nameVal: this.props.name,
-      versionVal: this.props.version,
     };
 
+    this.handleChange = this.handleChange.bind(this);
     this.handleChangeName = this.handleChangeName.bind(this);
-    this.handleChangeVersion = this.handleChangeVersion.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleCancel = this.handleCancel.bind(this);
   }
 
-  handleChangeName(event) {
+  handleChange(event) {
     console.log("handleChangeName");
     this.setState({nameVal: event.target.value});
   }
 
-  handleChangeVersion(event) {
-    console.log("handleChangeVersion");
-    this.setState({versionVal: event.target.value});
-  }
-
-  handleSubmit(event) {
-    console.log("handleUpdateSettings");
+  handleChangeName(event) {
+    console.log("handleChangeName");
     var update = {
       name: this.state.nameVal,
-      version: this.state.versionVal,
     };
-    console.log("Submit in SettingsForm: ", update);
     this.props.updateTheSettings(update);
-    //this.props.history.goBack();
   }
 
-  handleCancel(event) {
-    //this.props.history.goBack();
-  }
 
   render() {
     return (
       <Box>
-        <Heading level={1}>{this.props.name}</Heading>
+        <Heading level={3} margin='small'>Tävlingsinställningar</Heading>
         <Box
           key='settingsarea'
           pad='medium'
@@ -62,28 +48,16 @@ class Settings extends Component {
           flex={true}
           >
 
-          <Form onSubmit={this.handleSubmit} onReset={this.handleCancel}>
-            <FormField htmlFor="comp-name" label="Name">
+          <Box gap='small' pad='small'>
+            <Heading level={4} margin='xsmall'>Tävlingsnamn</Heading>
+            <Box direction="row">
               <TextInput
-                id='comp-name'
                 value = {this.state.nameVal}
-                onChange = {this.handleChangeName}
-                >
-              </TextInput>
-            </FormField>
-
-            <FormField htmlFor="comp-version" label="Version">
-              <TextInput
-                id='comp-version'
-                value = {this.state.versionVal}
-                onChange = {this.handleChangeVersion}
-                >
-              </TextInput>
-            </FormField>
-
-            <Button type="reset" primary label="Cancel" />
-            <Button type="submit" primary label="Submit" />
-          </Form>
+                onChange={this.handleChange}
+                />
+              <Button icon={<Save />} onClick={this.handleChangeName}/>
+            </Box>
+          </Box>
 
           <Box
             pad='none'

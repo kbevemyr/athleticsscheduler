@@ -17,7 +17,7 @@ class Competition extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sidePanelActive: true,
+      sidePanelActive: undefined, // Details or Edit mode.
     }
   }
 
@@ -43,11 +43,10 @@ class Competition extends Component {
             </Page>
           </Box>
 
-          {this.state.sidePanelActive && (
             <Layer
               margin={topMargin}
               position="top-right"
-              modal={false}
+              modal={ this.state.sidePanelActive ? true : false }
               animation="slide"
               onClickOutside={this.handleCloseSidePanel}
               onEsc={this.handleCloseSidePanel}

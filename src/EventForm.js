@@ -51,10 +51,12 @@ class EventForm extends Component {
       theEvent = getEvent(this.props.comp, this.props.match.params.id);
     }
 
-    console.log("EventData eventdata "+JSON.stringify(theEvent));
+    console.log("EventData "+JSON.stringify(theEvent));
 
     if (theEvent != null) {
-      this.setState(populateValues(theEvent, this.props.comp));
+      let newState = populateValues(theEvent, this.props.comp);
+      console.log(newState);
+      this.setState(newState);
     }
   }
 
@@ -83,8 +85,8 @@ class EventForm extends Component {
 
   handleChangeClass(event) {
     let option = event.option;
-    console.log("handleChangeClass");
-    console.log(event);
+    //console.log("handleChangeClass");
+    //console.log(event);
     this.setState({ classValue: option });
   }
   handleChangeGren(event) {
@@ -119,6 +121,7 @@ class EventForm extends Component {
               value={this.state.classValue.name}
               options = {this.props.comp.classes}
               onChange = {this.handleChangeClass}
+              required={true}
               >
               {option => option.name}
             </Select>
@@ -133,6 +136,7 @@ class EventForm extends Component {
               value={this.state.grenValue.name}
               options = {this.props.comp.grenar}
               onChange = {this.handleChangeGren}
+              required={true}
               >
               {option => option.name}
             </Select>
@@ -147,6 +151,7 @@ class EventForm extends Component {
               value={this.state.grentypeValue}
               options = {this.state.gtOptions}
               onChange = {this.handleChangeGrentype}
+              required={true}
               >
             </Select>
           </FormField>
@@ -160,6 +165,7 @@ class EventForm extends Component {
               value={this.state.dayValue.name}
               options = {this.props.comp.days}
               onChange = {this.handleChangeDay}
+              required={true}
               >
               {option => option.name}
             </Select>
@@ -174,76 +180,86 @@ class EventForm extends Component {
               value={this.state.arenaValue.name}
               options = {this.props.comp.arenas}
               onChange = {this.handleChangeArena}
+              required={true}
               >
               {option => option.name}
             </Select>
           </FormField>
 
           <FormField
-            name="preptime"
+            htmlFor="comp-preptime"
             label="Ställtid"
-            component={MaskedInput}
-            value={this.state.preptimeStr}
-            onChange={(e) => this.setState({preptimeStr: e.target.value})}
-            required={true}
-            mask={[
-              {
-                length: 1,
-                regexp: /^1[1-2]$|^[0-9]$/,
-                placeholder: 'h',
-              },
-              { fixed: ':' },
-              {
-                length: 2,
-                regexp: /^[0-5][0-9]$|^[0-9]$/,
-                placeholder: 'mm',
-              },
-            ]}
-          />
+          >
+            <MaskedInput
+              id="comp-preptime"
+              value={this.state.preptimeStr}
+              onChange={(e) => this.setState({preptimeStr: e.target.value})}
+              required={true}
+              mask={[
+                {
+                  length: 1,
+                  regexp: /^1[1-2]$|^[0-9]$/,
+                  placeholder: 'h',
+                },
+                { fixed: ':' },
+                {
+                  length: 2,
+                  regexp: /^[0-5][0-9]$|^[0-9]$/,
+                  placeholder: 'mm',
+                },
+              ]}
+            />
+        </FormField>
 
         <FormField
-          name="starttime"
+          htmlFor="comp-starttime"
           label="Starttid"
-          component={MaskedInput}
-          value={this.state.starttimeStr}
-          onChange={(e) => this.setState({starttimeStr: e.target.value})}
-          required={true}
-          mask={[
-            {
-              length: 2,
-              regexp: /^[0-1]*[0-9]$|^2[0-4]$/,
-              placeholder: 'hh',
-            },
-            { fixed: ':' },
-            {
-              length: 2,
-              regexp: /^[0-5]*[0-9]$/,
-              placeholder: 'mm',
-            },
-          ]}
-          />
+          >
+            <MaskedInput
+              id="comp-starttime"
+              value={this.state.starttimeStr}
+              onChange={(e) => this.setState({starttimeStr: e.target.value})}
+              required={true}
+              mask={[
+                {
+                  length: 2,
+                  regexp: /^[0-1]*[0-9]$|^2[0-4]$/,
+                  placeholder: 'hh',
+                },
+                { fixed: ':' },
+                {
+                  length: 2,
+                  regexp: /^[0-5]*[0-9]$/,
+                  placeholder: 'mm',
+                },
+              ]}
+            />
+          </FormField>
 
           <FormField
-            name="duration"
+            htmlFor="comp-duration"
             label="Duration"
-            component={MaskedInput}
-            value={this.state.durationStr}
-            onChange={(e) => this.setState({durationStr: e.target.value})}
-            required={true}
-            mask={[
-              {
-                length: 1,
-                regexp: /^1[0-2]$|^[0-9]$/,
-                placeholder: 'h',
-              },
-              { fixed: ':' },
-              {
-                length: 2,
-                regexp: /^[0-5][0-9]$|^[0-9]$/,
-                placeholder: 'mm',
-              },
-            ]}
-          />
+            >
+            <MaskedInput
+              id="comp-duration"
+              value={this.state.durationStr}
+              onChange={(e) => this.setState({durationStr: e.target.value})}
+              required={true}
+              mask={[
+                {
+                  length: 1,
+                  regexp: /^1[0-2]$|^[0-9]$/,
+                  placeholder: 'h',
+                },
+                { fixed: ':' },
+                {
+                  length: 2,
+                  regexp: /^[0-5][0-9]$|^[0-9]$/,
+                  placeholder: 'mm',
+                },
+              ]}
+            />
+        </FormField>
         <Button type="reset" primary label="Cancel" />
           <Button type="submit" primary label="Submit" />
         </Form>

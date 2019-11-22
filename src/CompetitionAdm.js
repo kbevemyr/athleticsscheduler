@@ -1,62 +1,109 @@
 import React, {Component} from 'react';
-import { withRouter } from "react-router-dom";
+import { Switch, Route, Link, withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { getCompetitionData, saveCompetitionData, newCompetitionData } from './store/actions';
+import Settings from './Settings';
+import OpenDialog from './OpenDialog';
+import SaveDialog from './SaveDialog';
 
-import { Text, Box, Menu } from 'grommet';
-import { Cloud, Desktop } from 'grommet-icons';
+import { newCompetitionData } from './store/actions';
+
+import { Box, Button, Layer } from 'grommet';
+import { CloudDownload, CloudUpload, New } from 'grommet-icons';
 
 class CompetitionAdm extends Component {
   constructor(props) {
     super(props);
-    this.handleSetCompDataEvent = this.handleSetCompDataEvent.bind(this);
-    this.handleSaveCompDataEvent = this.handleSaveCompDataEvent.bind(this);
+    this.state = {
+      sidePanelActive: undefined,
+    };
+
+    this.handleOpenSidePanel = this.handleOpenSidePanel.bind(this);
+    this.handleCloseSidePanel = this.handleCloseSidePanel.bind(this);
     this.handleNewCompDataEvent = this.handleNewCompDataEvent.bind(this);
   }
 
-  handleSetCompDataEvent(key) {
-    this.props.getTheCompetitionData(key);
-    this.props.history.push("/overview");
+  handleOpenSidePanel = (e) => {
+    console.log("handleOpenSidePanel");
+    this.setState({ sidePanelActive: true });
   }
 
-  handleSaveCompDataEvent(key) {
-    this.props.saveTheCompetitionData(key, this.props.comp);
+  handleCloseSidePanel = (e) => {
+    console.log("handleCloseSidePanel");
+    this.setState({ sidePanelActive: undefined });
+    this.props.history.goBack();
   }
 
   handleNewCompDataEvent(key) {
     this.props.saveANewCompetitionData();
-    this.props.history.push("/");
+    //this.props.history.push("/");
   }
 
   render() {
-    return (
-        <Box>
-          <Desktop size='medium' />
-          <Text>Local static data</Text>
-          <Menu
-            dropAlign={{ top: 'top', right: 'right' }}
-            items={[
-                    { label: '2017', onClick: () => { this.handleSetCompDataEvent('2017') }},
-                    { label: '2018', onClick: () => { this.handleSetCompDataEvent('2018') }},
-                    { label: '2019', onClick: () => { this.handleSetCompDataEvent('2019') }},
-                    { label: 'new', onClick: () => { this.handleNewCompDataEvent() }},
-                   ]}
-            />
-          <Cloud size='medium' />
-          <Text>Server data</Text>
-          <Box direction="row">
+    const topMargin = { left: "0px", top: "10vh", right: "0px", bottom: "0px" };
+    const buttonSize = 'large';
 
-          </Box>
-            <Menu
-              dropAlign={{ top: 'top', right: 'right' }}
-              items={[
-                      { label: 'test', onClick: () => { this.handleSetCompDataEvent('test') }},
-                      { label: 'save', onClick: () => { this.handleSaveCompDataEvent('test') }},
-                      { label: 'new', onClick: () => { this.handleNewCompDataEvent() }},
-                     ]}
-              />
+    return (
+      <Box>
+        <Box direction='row'>
+          <Link to={this.props.match.url+"/open"}>
+            <Button
+              icon={<CloudDownload size={buttonSize} />}
+              onClick={this.handleOpenSidePanel}
+            />
+          </Link>
+          <Link to={this.props.match.url+"/save"}>
+            <Button
+              icon={<CloudUpload size={buttonSize} />}
+              onClick={this.handleOpenSidePanel}
+            />
+          </Link>
+          <Button
+            icon={<New size={buttonSize} />}
+            onClick={this.handleNewCompDataEvent}
+          />
         </Box>
+        <Settings />
+
+      {this.state.sidePanelActive && (
+        <Layer
+          margin={topMargin}
+          position="top-right"
+          modal={true}
+          animation="slide"
+          onClickOutside={this.handleCloseSidePanel}
+          onEsc={this.handleCloseSidePanel}
+        >
+          <Box
+              background = {{
+                color: "#D1C1FF",
+                dark: false,
+                opacity: "medium",
+              }}
+              border={{
+                color: "#7553D3",
+                size: "medium",
+                side: "all",
+              }}
+              animation="slideLeft"
+              elevation="medium"
+              margin="none"
+              pad="small"
+              gap="xsmall"
+              overflow="scroll"
+            >
+              <Switch>
+                <Route path={this.props.match.path+"/open"} >
+                  <OpenDialog />
+                </Route>
+                <Route path={this.props.match.path+"/save"} >
+                  <SaveDialog />
+                </Route>
+              </Switch>
+            </Box>
+          </Layer>
+        )}
+      </Box>
     );
   }
 }
@@ -69,12 +116,6 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    getTheCompetitionData: (cid) => {
-      dispatch(getCompetitionData(cid));
-    },
-    saveTheCompetitionData: (key, comp) => {
-      dispatch(saveCompetitionData(key, comp))
-    },
     saveANewCompetitionData: () => {
       dispatch(newCompetitionData())
     },
