@@ -15,7 +15,7 @@ class Splash extends Component {
           <Box flex={true} align="center" height="small" width="small" pad="medium">
             <Image
               fit="contain"
-              src="//localhost:3000/images/AthleticsScheduler_logo.jpeg"
+              src="images/AthleticsScheduler_logo.jpeg"
             />
           </Box>
       </Box>
