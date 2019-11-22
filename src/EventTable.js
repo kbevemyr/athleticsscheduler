@@ -2,8 +2,8 @@ import React, {Component} from "react";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { Text, Button } from 'grommet';
-import { FormEdit } from 'grommet-icons';
+import { Text, Button, Box, Layer } from 'grommet';
+import { FormEdit, FormTrash } from 'grommet-icons';
 
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -13,8 +13,24 @@ import TableRow from '@material-ui/core/TableRow';
 import TableSortLabel from '@material-ui/core/TableSortLabel';
 
 import { getEvent, presentTime, getCollisions, healthCheckSchema } from './misc';
-import { setActiveEvent } from './store/actions';
+import { setActiveEvent, deleteEvent } from './store/actions';
 
+const ConfirmationDialog = ({ onClose, onCancel })  => (
+      <Layer
+        position='top'
+        onClickOutside={onCancel}
+        >
+        <Box pad='large' gap='medium'>
+          <Text>
+            Är du säker att du vill tabort detta?
+          </Text>
+          <Box direction='row' gap='medium' align='center'>
+            <Button label='Yes' onClick={onClose} />
+            <Button label='No' primary={true} onClick={onCancel} />
+          </Box>
+        </Box>
+      </Layer>
+);
 
 function presentEvents(comp, collisions) {
   var ds = {};
@@ -77,6 +93,7 @@ class EventTable extends Component {
       name: "Table View of Events",
       order: "asc",
       orderBy: "arena",
+      confirmation: undefined,
     };
   }
 
@@ -93,6 +110,18 @@ class EventTable extends Component {
     }
 
     this.setState({ order, orderBy });
+  }
+
+  handleDeleteEvent(id) {
+    console.log("handleDeleteEvent "+id);
+    let action = () => this.props.deleteTheEvent(id);
+    this.setState({
+      confirmation:
+        <ConfirmationDialog
+          onClose={() => {action(); this.setState({confirmation: undefined});}}
+          onCancel={() => this.setState({confirmation: undefined})}
+        />
+    });
   }
 
   render() {
@@ -138,6 +167,7 @@ class EventTable extends Component {
     ];
 
     return (
+      <Box>
         <Table stickyHeader size="small">
           <TableHead>
             <TableRow>
@@ -167,12 +197,19 @@ class EventTable extends Component {
                 key={"tr"+x.id}
               >
                 <TableCell>
-                  <Link to={this.props.match.url+"/form/"+x.id}>
+                  <Box direction="row">
+                    <Link to={this.props.match.url+"/form/"+x.id}>
+                      <Button
+                        icon={<FormEdit />}
+                        onClick={this.props.onEditRow}
+                      />
+                    </Link>
                     <Button
-                      icon={<FormEdit />}
-                      onClick={this.props.onEditRow}
+                      fill={false}
+                      icon={<FormTrash />}
+                      onClick={(e) => this.handleDeleteEvent(x.id)}
                     />
-                  </Link>
+                  </Box>
                 </TableCell>
                 <TableCell component="th" scope="row">
                   {x.day}
@@ -205,7 +242,8 @@ class EventTable extends Component {
             )}
           </TableBody>
         </Table>
-
+        {this.state.confirmation}
+      </Box>
     );
   }
 }
@@ -221,6 +259,9 @@ class EventTable extends Component {
   const mapDispatchToProps = dispatch => ({
       setTheActiveEvent: (id) => {
         dispatch(setActiveEvent(id));
+    },
+      deleteTheEvent: (id) => {
+        dispatch(deleteEvent(id));
     },
   });
 

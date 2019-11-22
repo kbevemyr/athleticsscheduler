@@ -1,7 +1,7 @@
 import {
   FETCH_USERDATA, SET_COMPETITION, SET_NEWCOLOR, SAVE_COMPETITION,
-  UPDATE_EVENT, SET_ACTIVE_DAY, SET_ACTIVE_EVENT, SET_ACTIVE_CLASS, UPDATE_COLLISION,
-  UPDATE_SETTINGS, ADD_NAME, DELETE_NAME, CHANGE_NAME,
+  UPDATE_EVENT, REMOVE_EVENT, SET_ACTIVE_DAY, SET_ACTIVE_EVENT, SET_ACTIVE_CLASS,
+  UPDATE_COLLISION, UPDATE_SETTINGS, ADD_NAME, DELETE_NAME, CHANGE_NAME,
 } from './actions';
 
 import { COLORS, defaultColor } from '../misc';
@@ -98,6 +98,12 @@ function rootReducer (state = initialstate, action) {
         }
         return Object.assign({}, state, {
           competition: Object.assign({}, state.competition, {events: updatedEvents}),
+        })
+
+      case REMOVE_EVENT:
+        let reducedEvents = state.competition.events.filter((x) => x.id !== action.id);
+        return Object.assign({}, state, {
+          competition: Object.assign({}, state.competition, {events: reducedEvents}),
         })
 
       case SET_ACTIVE_DAY:
