@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { updateSettings } from './store/actions';
 
-import { Heading, TextInput, Button, Box } from 'grommet';
+import { Heading, TextInput, Button, Box, Text } from 'grommet';
 import { Save } from 'grommet-icons';
 
 import NameTable from './NameTable';
@@ -14,6 +14,7 @@ class Settings extends Component {
     super(props);
     this.state = {
       nameVal: this.props.name,
+      onEdit: false,
     };
 
     this.handleChange = this.handleChange.bind(this);
@@ -21,7 +22,7 @@ class Settings extends Component {
   }
 
   handleChange(event) {
-    console.log("handleChangeName");
+    console.log("handleChange");
     this.setState({nameVal: event.target.value});
   }
 
@@ -31,10 +32,12 @@ class Settings extends Component {
       name: this.state.nameVal,
     };
     this.props.updateTheSettings(update);
+    this.setState({onEdit: false});
   }
 
 
   render() {
+
     return (
       <Box>
         <Heading level={3} margin='small'>Tävlingsinställningar</Heading>
@@ -50,13 +53,20 @@ class Settings extends Component {
 
           <Box gap='small' pad='small'>
             <Heading level={4} margin='xsmall'>Tävlingsnamn</Heading>
-            <Box direction="row">
-              <TextInput
-                value = {this.state.nameVal}
-                onChange={this.handleChange}
-                />
-              <Button icon={<Save />} onClick={this.handleChangeName}/>
-            </Box>
+            {this.state.onEdit ?
+              <Box direction="row">
+                <TextInput
+                  value = {this.state.nameVal}
+                  onChange={this.handleChange}
+                  />
+                <Button icon={<Save />} onClick={this.handleChangeName}/>
+              </Box>
+            :
+              <Button
+                label={this.props.name}
+                onClick={e => this.setState({onEdit: true, nameVal: this.props.name})}
+              />
+            }
           </Box>
 
           <Box
@@ -74,7 +84,7 @@ class Settings extends Component {
           </Box>
         </Box>
       </Box>
-);
+    );
   }
 }
 

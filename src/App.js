@@ -35,21 +35,20 @@ function PrivateRoute(args) {
 }
 
 function App() {
-  //const [userdata, setUserdata] = useState({});
+  //const [isAuthenticated, setAuthenticated] = useState(false);
   const [isAuthenticated, setAuthenticated] = useState(false);
 
   const authenticate = (sid, last) => {
     console.log("authenticate: " + sid);
     window.localStorage.setItem('mysid', sid);
     setAuthenticated(true);
-    //updateUserdata(sid, last);
   }
 
   const signout = () => {
     console.log("signout");
     window.localStorage.removeItem('mysid');
+    // TODO: confirmation dialog
     setAuthenticated(false);
-    //setUserdata(generateEmptyData());
   }
 
   const nop = () => {

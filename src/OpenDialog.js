@@ -26,12 +26,13 @@ class OpenDialog extends Component {
       <Box>
         <CloudDownload />
         <Text>Open schedule</Text>
-        <Menu
+        <Menu label="Local test data"
           dropAlign={{ top: 'top', right: 'right' }}
           items={[
                   { label: 'local 2017', onClick: () => { this.handleSetCompDataEvent('2017') }},
                   { label: 'local 2018', onClick: () => { this.handleSetCompDataEvent('2018') }},
                   { label: 'local 2019', onClick: () => { this.handleSetCompDataEvent('2019') }},
+                  { label: 'local 2019 Indoor', onClick: () => { this.handleSetCompDataEvent('2019indoor') }},
                   { label: 'server test', onClick: () => { this.handleSetCompDataEvent('test') }},
                  ]}
           />
