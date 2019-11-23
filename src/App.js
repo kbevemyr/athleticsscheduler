@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 //import { connect } from 'react-redux';
 
@@ -35,7 +35,7 @@ function PrivateRoute(args) {
 }
 
 function App() {
-  const [userdata, setUserdata] = useState({});
+  //const [userdata, setUserdata] = useState({});
   const [isAuthenticated, setAuthenticated] = useState(false);
 
   const authenticate = (sid, last) => {
