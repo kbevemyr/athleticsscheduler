@@ -505,6 +505,44 @@ const comp2018eventsTest = [
     {id: "F15800m", day: "söndag", arena: "l", starttime: "933", duration: "24", class: "F15", gren: "800m", grentype: "run", preptime: "0"}
 ];
 
+const compIndoor2019days = [
+  {id: "l", name: "lördag"},
+  {id: "s", name: "söndag"},
+];
+const compIndoor2019arenas = [
+  {id: "lgda", name: "Längd A"},
+  {id: "lgdb", name: "Längd B"},
+  {id: "hjda", name: "Höjd A"},
+  {id: "hjdb", name: "Höjd B"},
+  {id: "kl", name: "Kula"},
+  {id: "vkt", name: "Vikt"},
+  {id: "stv", name: "Stav"},
+];
+const compIndoor2019classes = [
+  {"id":"P8","name":"P8"},
+  {"id":"F8","name":"F8"},
+  {"id":"F9","name":"F9"},
+  {"id":"P9","name":"P9"},
+  {"id":"F10","name":"F10"},
+  {"id":"P10","name":"P10"},
+  {"id":"F11","name":"F11"},
+  {"id":"P11","name":"P11"},
+  {"id":"F12","name":"F12"},
+  {"id":"P12","name":"P12"},
+  {"id":"F13","name":"F13"},
+  {"id":"P13","name":"P13"},
+  {"id":"F15","name":"F15"},
+  {"id":"P15","name":"P15"},
+];
+const compIndoor2019grenar = [
+  {id: "grenlgd", name: "längd"},
+  {id: "grenhjd", name: "höjd"},
+  {id: "grenkl", name: "kula"},
+  {id: "grenvkt", name: "vikt"},
+  {id: "grenstv", name: "stav"},
+];
+const compIndoor2019events = [
+];
 
 /*
   Testdata for athleticsscheduler, SAYO Indoor 2017
@@ -548,6 +586,16 @@ const comp2019 = {
   "grenar": comp2019grenarTest,
 }
 
+const indoor2019 = {
+  "name": "SAYO Indoor 2019",
+  "version": "1.0",
+  "days": compIndoor2019days,
+  "arenas": compIndoor2019arenas,
+  "events": compIndoor2019events,
+  "classes": compIndoor2019classes,
+  "grenar": compIndoor2019grenar,
+}
+
 //export const comptest = SERVERcontestTest2017;
 export const comptest = comp2018;
-export const localComps = [SERVERcontestTest2017, comp2018, comp2019];
+export const localComps = [SERVERcontestTest2017, comp2018, comp2019, indoor2019];
