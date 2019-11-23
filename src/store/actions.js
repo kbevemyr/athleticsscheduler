@@ -130,6 +130,20 @@ export function updateSettings(settings) {
 
 // Backend functions calls
 
+/*
+  config section for server access
+*/
+const urlBase = "//gt16.se";
+const urlProtocol = window.location.protocol;
+
+export function loginUser(username, passwd) {
+  console.log("loginUser: "+username);
+  const adr = urlProtocol + urlBase + "/idrott/login";
+  const url=adr+"?user="+username+"&password="+passwd;
+  return fetch(url)
+    .then(response => response.json());
+}
+
 export function newCompetitionData () {
   return dispatch => {
     console.log("newCompetitionData");

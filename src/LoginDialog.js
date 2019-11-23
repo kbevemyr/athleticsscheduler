@@ -1,0 +1,124 @@
+import React, {Component} from 'react';
+import { Redirect, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+
+import {loginUser} from './store/actions';
+
+class LoginDialog extends Component {
+  constructor(props) {
+    super(props);
+    this.handleCancelEvent = this.handleCancelEvent.bind(this);
+    this.handleLoginEvent = this.handleLoginEvent.bind(this);
+    this.handleKeyEvent = this.handleKeyEvent.bind(this);
+    console.log("LoginDialog constructor");
+    this.state = {
+      redirectToReferrer: false,
+      unvalue: "",
+      pwvalue: "",
+      message: "",
+    }
+  }
+
+  handleCancelEvent() {
+    console.log("got CancelEvent");
+  }
+
+  handleLoginEvent() {
+    const {unvalue, pwvalue} = this.state;
+    console.log("got LoginEvent");
+    loginUser(unvalue, pwvalue)
+      .then((res) => {
+        //console.log("after login "+JSON.stringify(res));
+        if(res.status === "error") {
+          this.setState({message: res.reason})
+        } else {
+          // The callback in the callback should be removed
+          this.props.callback(res.sid, () => this.setState({redirectToReferrer: true}));
+        }
+      });
+  }
+
+  handleKeyEvent(e) {
+    //console.log("got keyEvent: "+e.key);
+    if(e.key === 'Enter') {
+      this.handleLoginEvent();
+    }
+  }
+
+  render() {
+    let { from } = this.props.location.state || { from: { pathname: "/" } };
+    let { redirectToReferrer } = this.state;
+
+    console.log("redirvalue "+JSON.stringify(redirectToReferrer));
+    if (redirectToReferrer) {
+      console.log("redir " + JSON.stringify(from));
+      return (<Redirect to={from} />);
+    }
+
+    return (
+      <div id="LoginDialogComponent">
+        <div className="dialog">
+          <div className="dialog-title">Logga in</div>
+            <div className="dialog-body">
+              <form>
+                <div className="unit">
+                    <label htmlFor="username">Epost</label>
+                    <input type="text"
+                      tabIndex="1"
+                      autoComplete="username"
+                      id="username"
+                      name="username"
+                      onChange={(e) => this.setState({unvalue: e.target.value})}
+                    />
+                </div>
+
+                <div className="unit">
+                    <label htmlFor="passwd">Lösenord</label>
+                    <input type="password"
+                           tabIndex="2"
+                           autoComplete="current-password"
+                           id="passwd"
+                           name="passwd"
+                           minLength="8"
+                           required
+                           onKeyDown={this.handleKeyEvent}
+                           onChange={(e) => this.setState({pwvalue: e.target.value})}
+                    />
+                </div>
+
+                {this.state.message !== "" &&
+                  <div className="unit">
+                    <p className="message">{this.state.message}</p>
+                  </div>
+                }
+
+                <div className="dialog-buttons">
+                  <button type="button" tabIndex="4" id="butLoginDialogCancel" className="button" onClick={this.handleCancelEvent}>Avbryt</button>
+                  <button type="button" tabIndex="3" id="butLoginDialogAdd" className="button" onClick={this.handleLoginEvent}>Logga in</button>
+                </div>
+              </form>
+            </div>
+        </div>
+      </div>
+    );
+  }
+}
+
+// Store handling
+
+const mapStateToProps = state => ({
+  name: state.competition.name,
+});
+
+const mapDispatchToProps = dispatch => ({
+    getTheCompetitionData: (cid) => {
+      //dispatch(getCompetitionData(cid));
+    },
+});
+
+const LoginDialogContainer = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(LoginDialog);
+
+export default withRouter(LoginDialogContainer);
