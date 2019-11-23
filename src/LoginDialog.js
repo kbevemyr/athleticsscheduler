@@ -4,10 +4,12 @@ import { connect } from 'react-redux';
 
 import {loginUser} from './store/actions';
 
+import { Layer, Heading, Box, Form, FormField, TextInput, Text, Button } from 'grommet';
+
 class LoginDialog extends Component {
   constructor(props) {
     super(props);
-    this.handleCancelEvent = this.handleCancelEvent.bind(this);
+    this.handleBack = this.handleBack.bind(this);
     this.handleLoginEvent = this.handleLoginEvent.bind(this);
     this.handleKeyEvent = this.handleKeyEvent.bind(this);
     console.log("LoginDialog constructor");
@@ -19,8 +21,8 @@ class LoginDialog extends Component {
     }
   }
 
-  handleCancelEvent() {
-    console.log("got CancelEvent");
+  handleBack() {
+    this.props.history.goBack();
   }
 
   handleLoginEvent() {
@@ -56,50 +58,54 @@ class LoginDialog extends Component {
     }
 
     return (
-      <div id="LoginDialogComponent">
-        <div className="dialog">
-          <div className="dialog-title">Logga in</div>
-            <div className="dialog-body">
-              <form>
-                <div className="unit">
-                    <label htmlFor="username">Epost</label>
-                    <input type="text"
-                      tabIndex="1"
-                      autoComplete="username"
-                      id="username"
-                      name="username"
-                      onChange={(e) => this.setState({unvalue: e.target.value})}
-                    />
-                </div>
+      <Layer
+        onClickOutside={this.handleBack}
+        onEsc={this.handleBack}
+      >
+        <Box key="logindialogcomponent" pad='medium'>
+          <Heading level= {2} >Logga in</Heading>
 
-                <div className="unit">
-                    <label htmlFor="passwd">Lösenord</label>
-                    <input type="password"
-                           tabIndex="2"
-                           autoComplete="current-password"
-                           id="passwd"
-                           name="passwd"
-                           minLength="8"
-                           required
-                           onKeyDown={this.handleKeyEvent}
-                           onChange={(e) => this.setState({pwvalue: e.target.value})}
-                    />
-                </div>
+          <Box gap='medium' pad='small'>
+            <Form onSubmit={this.handleSubmit} onReset={this.handleCancel}>
+              <FormField
+                htmlFor="un"
+                label="Användarname"
+              >
+                <TextInput
+                  id="un"
+                  placeholder="username or email"
+                  value={this.state.unvalue}
+                  onChange={(e) => this.setState({unvalue: e.target.value})}
+                  tabIndex="1"
+                />
+              </FormField>
 
-                {this.state.message !== "" &&
-                  <div className="unit">
-                    <p className="message">{this.state.message}</p>
-                  </div>
-                }
-
-                <div className="dialog-buttons">
-                  <button type="button" tabIndex="4" id="butLoginDialogCancel" className="button" onClick={this.handleCancelEvent}>Avbryt</button>
-                  <button type="button" tabIndex="3" id="butLoginDialogAdd" className="button" onClick={this.handleLoginEvent}>Logga in</button>
-                </div>
-              </form>
-            </div>
-        </div>
-      </div>
+              <FormField
+                htmlFor="pw"
+                label="Lösenord"
+              >
+                <TextInput
+                  id="pw"
+                  type="password"
+                  placeholder="minst 8 tecken"
+                  value={this.state.pwvalue}
+                  onChange={(e) => this.setState({pwvalue: e.target.value})}
+                  required
+                  onKeyDown={this.handleKeyEvent}
+                  tabIndex="2"
+                />
+              </FormField>
+              {this.state.message !== "" &&
+                <Text>
+                  {this.state.message}
+                </Text>
+              }
+              <Button label="Ångra" tabIndex="5" onClick={this.handleBack} />
+              <Button label="Logg in" tabIndex="4" primary onClick={this.handleLoginEvent} />
+            </Form>
+          </Box>
+        </Box>
+      </Layer>
     );
   }
 }
