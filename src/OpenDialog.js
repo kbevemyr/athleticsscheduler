@@ -20,6 +20,7 @@ class OpenDialog extends Component {
     this.state = {
       recent: undefined,
     }
+    this.props.getTheKeys();
     this.handleSetCompDataEvent = this.handleSetCompDataEvent.bind(this);
   }
 
