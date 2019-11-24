@@ -17,7 +17,7 @@ class Competition extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      sidePanelActive: undefined, // Details or Edit mode.
+      sidePanelActive: undefined,
     }
   }
 
@@ -28,12 +28,13 @@ class Competition extends Component {
 
   handleCloseSidePanel = (e) => {
     console.log("handleCloseSidePanel");
-    this.setState({ sidePanelActive: undefined });
+    this.setState({ sidePanelActive: false });
     this.props.history.goBack();
   }
 
   render() {
     const topMargin = { left: "0px", top: "10vh", right: "0px", bottom: "0px" };
+    const modalState = this.props.location.pathname === "/overview" ? false: true;
 
     return (
       <Box direction="row">
@@ -43,46 +44,45 @@ class Competition extends Component {
             </Page>
           </Box>
 
-            <Layer
-              margin={topMargin}
-              position="top-right"
-              modal={ this.state.sidePanelActive ? true : false }
-              animation="slide"
-              onClickOutside={this.handleCloseSidePanel}
-              onEsc={this.handleCloseSidePanel}
+          <Layer
+            margin={topMargin}
+            position="top-right"
+            modal={ modalState }
+            animation="slide"
+            onClickOutside={this.handleCloseSidePanel}
+            onEsc={this.handleCloseSidePanel}
+          >
+          <Box
+              background = {{
+                color: "#D1C1FF",
+                dark: false,
+                opacity: "medium",
+              }}
+              border={{
+                color: "#7553D3",
+                size: "medium",
+                side: "all",
+              }}
+              animation="slideLeft"
+              elevation="medium"
+              margin="none"
+              pad="small"
+              gap="xsmall"
+              overflow="scroll"
             >
-              <Box
-                  background = {{
-                    color: "#D1C1FF",
-                    dark: false,
-                    opacity: "medium",
-                  }}
-                  border={{
-                    color: "#7553D3",
-                    size: "medium",
-                    side: "all",
-                  }}
-                  animation="slideLeft"
-                  elevation="medium"
-                  margin="none"
-                  pad="small"
-                  gap="xsmall"
-                  overflow="scroll"
-                >
-                  <Switch>
-                    <Route exact path={this.props.match.path}>
-                      <ControlPanel />
-                    </Route>
-                    <Route path={this.props.match.path+"/event/:id"}>
-                      <EventDetails onClose={this.handleCloseSidePanel} />
-                    </Route>
-                    <Route path={this.props.match.path+"/form/:id"}>
-                      <EventForm onClose={this.handleCloseSidePanel} />
-                    </Route>
-                  </Switch>
-                </Box>
-              </Layer>
-            )}
+              <Switch>
+                <Route exact path={this.props.match.path}>
+                  <ControlPanel />
+                </Route>
+                <Route path={this.props.match.path+"/event/:id"}>
+                  <EventDetails onClose={this.handleCloseSidePanel} />
+                </Route>
+                <Route path={this.props.match.path+"/form/:id"}>
+                  <EventForm onClose={this.handleCloseSidePanel} />
+                </Route>
+              </Switch>
+            </Box>
+          </Layer>
       </Box>
     );
   }

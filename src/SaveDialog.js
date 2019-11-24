@@ -23,6 +23,7 @@ class SaveDialog extends Component {
     let version = this.state.versionVal;
     if(version !== "") {
       this.props.saveTheCompetitionData(key, this.props.comp);
+      this.props.onClose();
     }
   }
 

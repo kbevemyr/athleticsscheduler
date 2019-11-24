@@ -30,7 +30,11 @@ class Arena extends Component {
         <div className="arena-eventarea" style={divStyle}>
         {es.map(x =>
            (
-            <Event key={x} id={x} onMarked={this.props.onMarkedEvent}/>
+            <Event
+              key={x}
+              id={x}
+              onMarked={this.props.onMarkedEvent}
+            />
            ))
         }
         </div>

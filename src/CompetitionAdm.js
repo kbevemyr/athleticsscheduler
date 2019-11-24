@@ -24,12 +24,12 @@ class CompetitionAdm extends Component {
   }
 
   handleOpenSidePanel = (e) => {
-    console.log("handleOpenSidePanel");
+    //console.log("handleOpenSidePanel");
     this.setState({ sidePanelActive: true });
   }
 
   handleCloseSidePanel = (e) => {
-    console.log("handleCloseSidePanel");
+    //console.log("handleCloseSidePanel");
     this.setState({ sidePanelActive: undefined });
     this.props.history.goBack();
   }
@@ -45,7 +45,7 @@ class CompetitionAdm extends Component {
 
     return (
       <Box>
-        <Box direction='row'>
+        <Box direction='row' justify='end'>
           <Link to={this.props.match.url+"/open"}>
             <Button
               icon={<CloudDownload size={buttonSize} />}
@@ -94,10 +94,10 @@ class CompetitionAdm extends Component {
             >
               <Switch>
                 <Route path={this.props.match.path+"/open"} >
-                  <OpenDialog />
+                  <OpenDialog onClose={this.handleCloseSidePanel}/>
                 </Route>
                 <Route path={this.props.match.path+"/save"} >
-                  <SaveDialog />
+                  <SaveDialog onClose={this.handleCloseSidePanel}/>
                 </Route>
               </Switch>
             </Box>

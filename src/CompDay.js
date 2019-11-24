@@ -60,7 +60,13 @@ class CompDay extends Component {
                 className="compday-areanaarea">
                 <Timeline key={key} id={key} height={arenaheight} day={this.props.id} grentyp="run"/>
                 {runarenas.map(x =>
-                      (<Arena key={x} id={x} day={this.props.id} height={arenaheight} onMarkedEvent={this.handleMarked}/>)
+                      (<Arena
+                        key={x}
+                        id={x}
+                        day={this.props.id}
+                        height={arenaheight}
+                        onMarkedEvent={this.handleMarked}
+                      />)
                     )
                 }
               </Box>
