@@ -1,5 +1,5 @@
 import {
-  FETCH_USERDATA, SET_COMPETITION, SET_NEWCOLOR, SAVE_COMPETITION,
+  FETCH_USERDATA, SET_KEYS, SET_COMPETITION, SET_NEWCOLOR, SAVE_COMPETITION,
   UPDATE_EVENT, REMOVE_EVENT, SET_ACTIVE_DAY, SET_ACTIVE_EVENT, SET_ACTIVE_CLASS,
   UPDATE_COLLISION, UPDATE_SETTINGS, ADD_NAME, DELETE_NAME, CHANGE_NAME,
 } from './actions';
@@ -19,7 +19,7 @@ const initialstate = {
   activeID: {},
   activeC: "",
   collisions: {}, // Visar vilka kollisioner man vill se i översikten.
-  keys: [], 
+  keys: [],
 }
 
 function rootReducer (state = initialstate, action) {
@@ -31,6 +31,8 @@ function rootReducer (state = initialstate, action) {
         isFetching: false,
         userprofile: action.data.username,
       })
+      case SET_KEYS:
+        return Object.assign({}, state, {keys: action.keys})
 
       case SET_NEWCOLOR:
         var newColor = defaultColor;

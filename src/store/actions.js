@@ -3,6 +3,8 @@ import { localComps } from './MOCKdata';
 import { EmptyCompetition } from '../misc';
 
 export const FETCH_USERDATA = 'FETCH_USERDATA';
+
+export const SET_KEYS = 'SET_KEYS';
 export const SET_COMPETITION = 'SET_COMPETITION';
 export const SET_NEWCOLOR = 'SET_NEWCOLOR';
 export const SAVE_COMPETITION = 'SAVE_COMPETITION';
@@ -25,7 +27,7 @@ export const CHANGE_NAME = 'CHANGE_NAME';
 
 function gotKeys(keys) {
   return {
-    type: UPDATE_SETTINGS,
+    type: SET_KEYS,
     keys
   }
 }

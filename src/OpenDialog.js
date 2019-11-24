@@ -69,7 +69,7 @@ class OpenDialog extends Component {
 
 const mapStateToProps = state => ({
   key: state.competition.key,
-  keys: state.competition.keys,
+  keys: state.keys,
 });
 
 const mapDispatchToProps = dispatch => ({
