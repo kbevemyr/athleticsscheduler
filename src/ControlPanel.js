@@ -44,7 +44,7 @@ class ControlPanel extends Component {
         />
         <Menu label="Export"
             items={[
-              { label: "PDF", onClick: () => {exportPdf("pdfpage")} },
+              { label: "PDF", onClick: () => {exportPdf("pdfpage", this.props.name+" "+this.props.version)} },
               { label: "CSV", onClick: () => {} },
             ]}
           />

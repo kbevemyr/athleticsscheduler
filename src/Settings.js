@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { updateSettings } from './store/actions';
 
-import { Heading, TextInput, Button, Anchor, Box } from 'grommet';
+import { Heading, TextInput, Button, Anchor, Box, Text } from 'grommet';
 import { Save } from 'grommet-icons';
 
 import NameTable from './NameTable';
@@ -67,6 +67,7 @@ class Settings extends Component {
                 onClick={e => this.setState({onEdit: true, nameVal: this.props.name})}
               />
             }
+            <Text>{this.props.version}</Text>
           </Box>
 
           <Box

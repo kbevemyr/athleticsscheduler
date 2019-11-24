@@ -30,8 +30,7 @@ class OpenDialog extends Component {
   }
 
   render() {
-    const TESTKEYS = ["test:SAYO2019Indoor_ver1","test"];
-    let serverKeys = TESTKEYS.map(key => {
+    let serverKeys = this.props.keys.map(key => {
       return renderMenuItem(key, () => this.handleSetCompDataEvent(key));
     });
     console.log(serverKeys);

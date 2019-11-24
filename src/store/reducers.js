@@ -19,7 +19,7 @@ const initialstate = {
   activeID: {},
   activeC: "",
   collisions: {}, // Visar vilka kollisioner man vill se i översikten.
-  //parking: [],
+  keys: [], 
 }
 
 function rootReducer (state = initialstate, action) {
