@@ -4,11 +4,15 @@ import { connect } from 'react-redux';
 
 import './App.css';
 
-import { getCompetitionData } from './store/actions';
+import { getCompetitionData, getKeys } from './store/actions';
 
 import { Box, Heading, Menu } from 'grommet';
 import { CloudDownload } from 'grommet-icons';
 
+function renderMenuItem(label, action) {
+  let item = {label: label, onClick: action};
+  return(item);
+}
 
 class OpenDialog extends Component {
   constructor(props) {
@@ -26,6 +30,12 @@ class OpenDialog extends Component {
   }
 
   render() {
+    const TESTKEYS = ["test:SAYO2019Indoor_ver1","test"];
+    let serverKeys = TESTKEYS.map(key => {
+      return renderMenuItem(key, () => this.handleSetCompDataEvent(key));
+    });
+    console.log(serverKeys);
+
     return (
       <Box>
         <CloudDownload />
@@ -43,28 +53,31 @@ class OpenDialog extends Component {
                  ]}
           />
 
+        <Menu label="Server data"
+            dropAlign={{ top: 'top', right: 'right'}}
+            items={
+             serverKeys
+            }
+          />
+
       </Box>
     );
   }
 }
 
-/*
-        <Button label="Latest" />
-        <Menu label="Recent"
-          dropAlign={{ top: 'top', right: 'right'}}
-          items={this.state.recent}
-        />
-*/
-
 // Store handling
 
 const mapStateToProps = state => ({
   key: state.competition.key,
+  keys: state.competition.keys,
 });
 
 const mapDispatchToProps = dispatch => ({
     getTheCompetitionData: (cid) => {
       dispatch(getCompetitionData(cid));
+    },
+    getTheKeys: () => {
+      dispatch(getKeys());
     },
 });
 

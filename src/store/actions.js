@@ -22,14 +22,13 @@ export const CHANGE_NAME = 'CHANGE_NAME';
 
 // Action Creators - Functions that create actions
 
-/*
-function gotUserdata(data) {
+
+function gotKeys(keys) {
   return {
-    type: FETCH_USERDATA,
-    data
+    type: UPDATE_SETTINGS,
+    keys
   }
 }
-*/
 
 function gotCompetition(data) {
   return {
@@ -212,5 +211,22 @@ export function getCompetitionData (key) {
     };
   }
 
+  return data;
+}
+
+export function getKeys() {
+  let data = dispatch => {
+    serverGet("get_keys", {}).then(
+      (res) => {
+        if(res.status === "error") {
+          console.log("getKeys. failed: "+res.reason);
+        }
+        else {
+          console.log("getKeys. OK "+JSON.stringify(res));
+          dispatch(gotKeys(res.value));
+        }
+      }
+    )
+  };
   return data;
 }
