@@ -70,6 +70,7 @@ class Event extends Component {
   }
 
   render() {
+    let overlap = this.props.overlap ? 0.3 : 1.0;
     let eventData = getEvent(this.props.comp, this.props.id);
     let starttime = parseInt(eventData.starttime, 10);
     let duration = parseInt(eventData.duration, 10);
@@ -102,8 +103,10 @@ class Event extends Component {
       background: prepColor,
       color: prepTextColor,
     };
+
     let mainStyle = {
       top: prepTopE,
+      opacity: overlap,
     };
 
     let linkStyle = {
@@ -135,9 +138,11 @@ class Event extends Component {
               {getEventLabel(this.props.comp, eventData.id)}
             </a>
             <Box direction="row">
-              <Box background="white" round>
-
-              </Box>
+              {this.props.overlap &&
+                <Box background="white">
+                  <Alert color="status-critical" size='medium' />
+                </Box>
+              }
             </Box>
             {inCollision(this.props.collisions, this.props.id) &&
               <Box background="white">

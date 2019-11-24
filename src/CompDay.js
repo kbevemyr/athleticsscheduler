@@ -44,6 +44,7 @@ class CompDay extends Component {
     var wTech = (techarenas.length + 0.5)*100;
     let hOffset = 27;
 
+
     // Line present when Event is marked.
     let lineStyle = {stroke: "#333333", "strokeWidth": 2};
 

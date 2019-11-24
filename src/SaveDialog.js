@@ -29,16 +29,16 @@ class SaveDialog extends Component {
 
   render() {
     return (
-      <Box>
+      <Box pad='small'>
         <CloudUpload />
-        <Heading weigth="2" >Save schedule</Heading>
-        <Box>
+        <Heading level="3" >Save to server</Heading>
+        <Box gap='small'>
           <TextInput
             placeholder="add a new version"
             value={this.state.versionVal}
             onChange={(e) => this.setState({versionVal: e.target.value})}
           />
-          <Button label="Save test" onClick={ () => this.handleSaveCompDataEvent('test') } />
+        <Button label="Save test" onClick={ () => this.handleSaveCompDataEvent('test:'+this.state.versionVal) } />
         </Box>
       </Box>
     );

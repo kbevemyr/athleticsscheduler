@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { updateSettings } from './store/actions';
 
-import { Heading, TextInput, Button, Box } from 'grommet';
+import { Heading, TextInput, Button, Anchor, Box } from 'grommet';
 import { Save } from 'grommet-icons';
 
 import NameTable from './NameTable';
@@ -40,7 +40,7 @@ class Settings extends Component {
 
     return (
       <Box>
-        <Heading level={3} margin='small'>Tävlingsinställningar</Heading>
+        <Heading level={2} margin='small'>Tävlingsinställningar</Heading>
         <Box
           key='settingsarea'
           pad='medium'
@@ -62,7 +62,7 @@ class Settings extends Component {
                 <Button icon={<Save />} onClick={this.handleChangeName}/>
               </Box>
             :
-              <Button
+              <Anchor
                 label={this.props.name}
                 onClick={e => this.setState({onEdit: true, nameVal: this.props.name})}
               />

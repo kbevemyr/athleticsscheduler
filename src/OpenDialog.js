@@ -6,7 +6,7 @@ import './App.css';
 
 import { getCompetitionData } from './store/actions';
 
-import { Box, Text, Menu } from 'grommet';
+import { Box, Heading, Menu } from 'grommet';
 import { CloudDownload } from 'grommet-icons';
 
 
@@ -29,7 +29,7 @@ class OpenDialog extends Component {
     return (
       <Box>
         <CloudDownload />
-        <Text>Open schedule</Text>
+        <Heading level="3">Open schedule</Heading>
 
         <Menu label="Local test data"
           dropAlign={{ top: 'top', right: 'right' }}
@@ -37,14 +37,11 @@ class OpenDialog extends Component {
                   { label: 'local 2017', onClick: () => { this.handleSetCompDataEvent('2017') }},
                   { label: 'local 2018', onClick: () => { this.handleSetCompDataEvent('2018') }},
                   { label: 'local 2019', onClick: () => { this.handleSetCompDataEvent('2019') }},
-                  { label: 'local 2019 Indoor', onClick: () => { this.handleSetCompDataEvent('2019indoor') }},
+                  { label: 'local 2019 Indoor ver1', onClick: () => { this.handleSetCompDataEvent('2019indoorv1') }},
+                  { label: 'local 2019 Indoor ver2', onClick: () => { this.handleSetCompDataEvent('2019indoorv2') }},
                   { label: 'server test', onClick: () => { this.handleSetCompDataEvent('test') }},
                  ]}
           />
-        <Menu label="Recent"
-          dropAlign={{ top: 'top', right: 'right'}}
-          items={this.state.recent}
-        />
 
       </Box>
     );
@@ -53,6 +50,10 @@ class OpenDialog extends Component {
 
 /*
         <Button label="Latest" />
+        <Menu label="Recent"
+          dropAlign={{ top: 'top', right: 'right'}}
+          items={this.state.recent}
+        />
 */
 
 // Store handling

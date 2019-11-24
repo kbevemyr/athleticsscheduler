@@ -12,10 +12,10 @@ class Splash extends Component {
   render() {
     return (
       <Box direction="row">
-          <Box flex={true} align="center" height="small" width="small" pad="medium">
+          <Box flex={true} pad="none">
             <Image
-              fit="contain"
-              src="images/AthleticsScheduler_logo.jpeg"
+              fit="cover"
+              src="images/people-doing-marathon-618612.jpg"
             />
           </Box>
       </Box>

@@ -284,7 +284,7 @@ function collision(e1, e2) {
   const st2 = parseInt(e2.starttime, 10);
   const et2 = parseInt(e2.starttime, 10) + parseInt(e2.duration, 10);
 
-  if(e1.day === e2.day) {
+  if(e1.day === e2.day && e1.gren !== e2.gren) {
     if(st2 <= et1 && st2 >= st1) {
       response = true;
     }
@@ -381,14 +381,14 @@ export function getCollisions(xs, id) {
   return os;
 }
 
-
+/*
 function pp(e) {
   return (e.id+", "+e.starttime+";"+e.duration+"  "+e.class+":"+e.gren);
 }
-
+*/
 
 /*
-  Overlaps within an arena given a day
+  Overlaps within an arena given a day and arena
 */
 
 function overlap (e1, e2) {
@@ -398,7 +398,7 @@ function overlap (e1, e2) {
   const st2 = parseInt(e2.starttime, 10);
   const et2 = parseInt(e2.starttime, 10) + parseInt(e2.duration, 10);
 
-  if(e1.day === e2.day) {
+  if(e1.day === e2.day && e1.arena === e2.arena) {
     if(st2 < et1 && st2 > st1) {
       response = true;
     }
@@ -410,10 +410,11 @@ function overlap (e1, e2) {
   return response;
 }
 
-export function overlapCheckSchema2(events, day) {
-  var eventsData = events.filter(e => e.day === day);
-  var out = true;
+export function overlapCheckSchema2(events, arena, day) {
+  var eventsData = events.filter(e => (e.day === day && e.arena === arena));
+  var out = false;
   var abnormalEvents = [];
+  var overlapEvents = {};
   for(var i=0; i < eventsData.length; i++) {
     var rowi = eventsData[i];
     for(var j=0; j < eventsData.length; j++) {
@@ -421,15 +422,17 @@ export function overlapCheckSchema2(events, day) {
       if(!sameEvent(rowi,rowj)) {
         if(rowi.arena === rowj.arena) {
           if(overlap(rowi, rowj)) {
-            console.log("OVERLAP: ["+pp(rowi)+"] || ["+pp(rowj)+"]");
+            //console.log("OVERLAP: ["+pp(rowi)+"] || ["+pp(rowj)+"]");
             var oObj = {key: rowi.id, value: rowj.id};
             abnormalEvents.push(oObj);
-            out = false;
+            overlapEvents[rowi.id] = true;
+            out = true;
           }
         }
       }
     }
   }
   console.log("overlapCheckSchema : "+out+" "+JSON.stringify(abnormalEvents));
-  return abnormalEvents;
+  console.log("overlapCheckSchema : "+out+" "+JSON.stringify(overlapEvents));
+  return overlapEvents;
 }

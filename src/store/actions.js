@@ -183,8 +183,10 @@ export function getCompetitionData (key) {
     index = 1;
   } else if (key === "2019") {
     index = 2;
-  } else if (key === "2019indoor") {
+  } else if (key === "2019indoorv1") {
     index = 3;
+  } else if (key === "2019indoorv2") {
+    index = 4;
   } else { //goto server
     index = -1;
   }

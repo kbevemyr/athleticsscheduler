@@ -9,7 +9,7 @@ import Competition from './Competition';
 import TableView from './TableView';
 import CompetitionAdm from './CompetitionAdm';
 
-import { Grommet, grommet, Box, Anchor, Button } from 'grommet';
+import { Grommet, grommet, Box, Anchor, Button, Text } from 'grommet';
 import { Table, Columns, SettingsOption, Logout } from 'grommet-icons';
 
 function PrivateRoute(args) {
@@ -59,7 +59,7 @@ function App() {
   return (
     <Grommet theme={grommet} full={true} >
       <Box
-        tag='header'
+        as='header'
         background='brand'
         pad='small'
         elevation='small'
@@ -74,7 +74,7 @@ function App() {
         </Box>
 
         <Anchor href="#">
-          <strong>Athletics Scheduler</strong>
+          <Text>Athletics Scheduler</Text>
         </Anchor>
 
         <Box direction='row'>
@@ -120,7 +120,7 @@ function App() {
         </Box>
       </Box>
 
-      <Box tag='footer'
+      <Box as='footer'
            direction='row'
            justify='start'
            pad='medium'

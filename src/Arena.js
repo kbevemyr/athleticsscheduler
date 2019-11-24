@@ -2,10 +2,9 @@ import React, {Component} from "react";
 import { withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { getEventsID, getArena } from './misc';
+import { getEventsID, getArena, overlapCheckSchema2 } from './misc';
 
 import Event from './Event';
-//import { Grid, Box } from 'grommet'; Testade att ha en arena som en grid
 
 class Arena extends Component {
   constructor(props) {
@@ -18,6 +17,10 @@ class Arena extends Component {
   render() {
     let name = getArena(this.props.comp, this.props.id).name;
     let es = getEventsID(this.props.comp, this.props.id, this.props.day);
+
+    console.log("calling overlapCheckSchema2("+this.props.id+", "+this.props.day+")");
+    var eventOverlaps = overlapCheckSchema2(this.props.comp.events, this.props.id, this.props.day);
+    console.log(eventOverlaps);
 
     //console.log("EVENTDATA "+this.eventstest[0].duration);
     //var divStyle = {height: getArenaSize()};
@@ -33,6 +36,7 @@ class Arena extends Component {
             <Event
               key={x}
               id={x}
+              overlap={eventOverlaps[x]}
               onMarked={this.props.onMarkedEvent}
             />
            ))

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { Heading, Text, Box, CheckBox, Markdown } from 'grommet';
 import { Alert } from 'grommet-icons';
 
-import { healthCheckSchema2, inCollision, overlapCheckSchema2, getEvent } from './misc';
+import { healthCheckSchema2, inCollision, getEvent } from './misc';
 
 import { setCollision } from './store/actions';
 
@@ -28,19 +28,15 @@ class CollisionPanel extends Component {
     console.log("just to call healthCheckSchema2 for day "+this.props.day);
     var eventcollisions = healthCheckSchema2(this.props.events, this.props.day);
 
-    console.log("calling overlapCheckSchema for day "+this.props.day);
-    var eventoverlaps = overlapCheckSchema2(this.props.events, this.props.day);
-    console.log(eventoverlaps);
-
     let ret = <Text>There are no event collisions.</Text>;
     if (eventcollisions.length > 0) {
       ret =
       <Box>
         <Heading level= {3}>
-          <Box background="white" width='medium'>
+          <div>
+            {this.state.name}
             <Alert color="status-warning" size='medium' />
-          </Box>
-          {this.state.name}
+          </div>
         </Heading>
         {eventcollisions.map(x => {
           var event1 = getEvent(this.props.comp, x.key);
