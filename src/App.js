@@ -36,7 +36,7 @@ function PrivateRoute(args) {
 
 function App() {
   //const [isAuthenticated, setAuthenticated] = useState(false);
-  const [isAuthenticated, setAuthenticated] = useState(false);
+  const [isAuthenticated, setAuthenticated] = useState(true);
 
   const authenticate = (sid, last) => {
     console.log("authenticate: " + sid);

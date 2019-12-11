@@ -4,13 +4,15 @@ import { connect } from 'react-redux';
 
 import './App.css';
 
-import { getCompetitionData, getKeys } from './store/actions';
+import { templateKeys, getTemplateData } from './store/templates';
+import { localKeys, getLocalData } from './store/MOCKdata';
+import { getKeys, getCompetitionData } from './store/actions';
 
 import { Box, Heading, Menu } from 'grommet';
 import { CloudDownload } from 'grommet-icons';
 
-function renderMenuItem(label, action) {
-  let item = {label: label, onClick: action};
+function renderKeyMenuItem(key, action) {
+  let item = {label: key, onClick: action};
   return(item);
 }
 
@@ -24,40 +26,44 @@ class OpenDialog extends Component {
     this.handleSetCompDataEvent = this.handleSetCompDataEvent.bind(this);
   }
 
-  handleSetCompDataEvent(key) {
-    this.props.getTheCompetitionData(key);
+  handleSetCompDataEvent(datastore, key) {
+    this.props.getTheCompetitionData(datastore, key);
     //this.props.history.push("/overview");
     this.props.onClose();
   }
 
   render() {
-    let serverKeys = this.props.keys.map(key => {
-      return renderMenuItem(key, () => this.handleSetCompDataEvent(key));
-    });
-    console.log(serverKeys);
+    let serverKeyItems =
+      this.props.keys.map(key => {
+        return renderKeyMenuItem(key, () => this.handleSetCompDataEvent('server', key));
+      });
+    let localKeyItems =
+      localKeys.map(key => {
+        return renderKeyMenuItem(key,  () => this.handleSetCompDataEvent('local', key));
+      });
+    let templateKeyItems =
+      templateKeys.map(key => {
+        return renderKeyMenuItem(key, () => this.handleSetCompDataEvent('template', key));
+      });
 
     return (
       <Box>
         <CloudDownload />
         <Heading level="3">Open schedule</Heading>
 
-        <Menu label="Local test data"
+        <Menu label="Localt test data"
           dropAlign={{ top: 'top', right: 'right' }}
-          items={[
-                  { label: 'local 2017', onClick: () => { this.handleSetCompDataEvent('2017') }},
-                  { label: 'local 2018', onClick: () => { this.handleSetCompDataEvent('2018') }},
-                  { label: 'local 2019', onClick: () => { this.handleSetCompDataEvent('2019') }},
-                  { label: 'local 2019 Indoor ver1', onClick: () => { this.handleSetCompDataEvent('2019indoorv1') }},
-                  { label: 'local 2019 Indoor ver2', onClick: () => { this.handleSetCompDataEvent('2019indoorv2') }},
-                  { label: 'server test', onClick: () => { this.handleSetCompDataEvent('test') }},
-                 ]}
+          items={localKeyItems}
           />
 
-        <Menu label="Server data"
+        <Menu label="Schemamallar"
+          dropAlign={{ top: 'top', right: 'right' }}
+          items={templateKeyItems}
+          />
+
+        <Menu label="Scheman från server"
             dropAlign={{ top: 'top', right: 'right'}}
-            items={
-             serverKeys
-            }
+            items={serverKeyItems}
           />
 
       </Box>
@@ -73,8 +79,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-    getTheCompetitionData: (cid) => {
-      dispatch(getCompetitionData(cid));
+    getTheCompetitionData: (datastore, cid) => {
+      dispatch(getCompetitionData(datastore, cid));
     },
     getTheKeys: () => {
       dispatch(getKeys());

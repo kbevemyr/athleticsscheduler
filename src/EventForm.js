@@ -188,7 +188,7 @@ class EventForm extends Component {
 
           <FormField
             htmlFor="comp-preptime"
-            label="Ställtid"
+            label="Ställtid (h:mm)"
           >
             <MaskedInput
               id="comp-preptime"
@@ -198,13 +198,13 @@ class EventForm extends Component {
               mask={[
                 {
                   length: 1,
-                  regexp: /^1[1-2]$|^[0-9]$/,
+                  regexp: /^[0-9]$/,
                   placeholder: 'h',
                 },
                 { fixed: ':' },
                 {
                   length: 2,
-                  regexp: /^[0-5][0-9]$|^[0-9]$/,
+                  regexp: /^[0-5]?[0-9]$/,
                   placeholder: 'mm',
                 },
               ]}
@@ -213,7 +213,7 @@ class EventForm extends Component {
 
         <FormField
           htmlFor="comp-starttime"
-          label="Starttid"
+          label="Starttid (hh:mm)"
           >
             <MaskedInput
               id="comp-starttime"
@@ -223,13 +223,13 @@ class EventForm extends Component {
               mask={[
                 {
                   length: 2,
-                  regexp: /^[0-1]*[0-9]$|^2[0-4]$/,
+                  regexp: /^[0-1]?[0-9]$|^2[0-3]$/,
                   placeholder: 'hh',
                 },
                 { fixed: ':' },
                 {
                   length: 2,
-                  regexp: /^[0-5]*[0-9]$/,
+                  regexp: /^[0-5]?[0-9]$/,
                   placeholder: 'mm',
                 },
               ]}
@@ -238,7 +238,7 @@ class EventForm extends Component {
 
           <FormField
             htmlFor="comp-duration"
-            label="Duration"
+            label="Duration (h:mm)"
             >
             <MaskedInput
               id="comp-duration"
@@ -248,13 +248,13 @@ class EventForm extends Component {
               mask={[
                 {
                   length: 1,
-                  regexp: /^1[0-2]$|^[0-9]$/,
+                  regexp: /^[0-9]$/,
                   placeholder: 'h',
                 },
                 { fixed: ':' },
                 {
                   length: 2,
-                  regexp: /^[0-5][0-9]$|^[0-9]$/,
+                  regexp: /^[0-5]?[0-9]$/,
                   placeholder: 'mm',
                 },
               ]}

@@ -1,6 +1,7 @@
 import { serverGet, serverPost } from './support.js';
-import { localComps } from './MOCKdata';
 import { EmptyCompetition } from '../misc';
+import { getLocalData } from './MOCKdata';
+import { getTemplateData } from './templates';
 
 export const FETCH_USERDATA = 'FETCH_USERDATA';
 
@@ -170,50 +171,32 @@ export function saveCompetitionData (key, comp){
   }
 }
 
-export function getCompetitionData (key) {
+export function getCompetitionData (datastore, key) {
   console.log("actions. getCompetitionData "+key);
-  var index = -1;
-  var data = [];
   let args = {
     key: key,
   };
 
-  if (key === "2017") {
-    index = 0;
-  } else if (key === "2018") {
-    index = 1;
-  } else if (key === "2019") {
-    index = 2;
-  } else if (key === "2019indoorv1") {
-    index = 3;
-  } else if (key === "2019indoorv2") {
-    index = 4;
-  } else { //goto server
-    index = -1;
-  }
-
-  if(index > -1) {
-    data = dispatch => {
-      console.log("getCompetitionData. local ");
-      dispatch(gotCompetition(localComps[index]));
+  switch (datastore) {
+    case 'local':
+      return dispatch => {dispatch(gotCompetition(getLocalData(key)))};
+    case 'template':
+      return dispatch => {dispatch(gotCompetition(getTemplateData(key)))};
+    case 'server':
+      return dispatch => {
+        serverGet("get", args).then(
+          (res) => {
+            if(res.status === "error") {
+              console.log("getCompetitionData. failed: "+res.reason);
+            }
+            else {
+              console.log("getCompetitionData. OK "+JSON.stringify(res));
+              dispatch(gotCompetition(res.value));
+            }
+          }
+        )
+      }
     }
-  } else {
-    data = dispatch => {
-      serverGet("get", args).then(
-        (res) => {
-          if(res.status === "error") {
-            console.log("getCompetitionData. failed: "+res.reason);
-          }
-          else {
-            console.log("getCompetitionData. OK "+JSON.stringify(res));
-            dispatch(gotCompetition(res.value));
-          }
-        }
-      )
-    };
-  }
-
-  return data;
 }
 
 export function getKeys() {
@@ -227,6 +210,11 @@ export function getKeys() {
           console.log("getKeys. OK "+JSON.stringify(res));
           dispatch(gotKeys(res.value));
         }
+      },
+      (err) => {
+        console.log("getKeys failed: ");
+        console.log(err);
+        dispatch(gotKeys([]));
       }
     )
   };

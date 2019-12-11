@@ -8,7 +8,7 @@ import ControlPanel from './ControlPanel';
 import EventDetails from './EventDetails';
 import EventForm from './EventForm';
 
-import { Box, Layer } from 'grommet';
+import { Box, Layer, Heading, Text } from 'grommet';
 
 // Defines the area to generate pdf of a CompDay
 import Page from './Page';
@@ -40,6 +40,9 @@ class Competition extends Component {
       <Box direction="row">
           <Box flex={true}>
             <Page id='pdfpage' >
+              <Heading level="3">{this.props.name}
+              <Text weight="normal" size="medium" textAlign="end" alignSelf="stretch"> version ({this.props.version})</Text>
+              </Heading>
               <CompDay />
             </Page>
           </Box>

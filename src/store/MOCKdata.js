@@ -816,6 +816,9 @@ const indoor2019v2 = {
   "grenar": compIndoor2019grenar,
 }
 
-//export const comptest = SERVERcontestTest2017;
-export const comptest = comp2018;
-export const localComps = [SERVERcontestTest2017, comp2018, comp2019, indoor2019v1, indoor2019v2];
+const localComps = [SERVERcontestTest2017, comp2018, comp2019, indoor2019v1, indoor2019v2];
+
+export const localKeys = localComps.map(x => x.name);
+export function getLocalData (key) {
+  return localComps.find(data => data.name === key);
+}

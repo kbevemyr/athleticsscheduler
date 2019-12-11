@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 
 import { setActiveDay } from './store/actions';
 
-import { Box, Heading, Text, Menu } from 'grommet';
+import { Box, Heading, Text, Menu, Accordion, AccordionPanel, Button } from 'grommet';
 
 import CollisionPanel from './CollisionPanel';
+import ExportDialog from './ExportDialog';
 
 import { getName } from './misc';
 
@@ -37,18 +38,21 @@ class ControlPanel extends Component {
       <Box>
         <Heading level={3}>{this.props.name}</Heading>
         <Text size='small'>{getName(this.props.day, this.props.comp, 'days')} är vald.</Text>
-        <Text alignSelf='end' size="small">Schema Version: {this.props.version}</Text>
 
         <Menu label="Välj dag"
           items={dayItems}
         />
-        <Menu label="Export"
-            items={[
-              { label: "PDF", onClick: () => {exportPdf("pdfpage", this.props.name+" "+this.props.version)} },
-              { label: "CSV", onClick: () => {} },
-            ]}
-          />
-          <CollisionPanel />
+      <Button label="Print" onClick={() => exportPdf("pdfpage", this.props.name+" "+this.props.version)} />
+        <Accordion>
+          <AccordionPanel label="Export">
+            <ExportDialog />
+          </AccordionPanel>
+          <AccordionPanel label="Collisions">
+            <CollisionPanel />
+          </AccordionPanel>
+          <AccordionPanel label="Overlaps">
+          </AccordionPanel>
+        </Accordion>
       </Box>
     );
   }

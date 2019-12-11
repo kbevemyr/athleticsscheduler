@@ -224,15 +224,19 @@ export function getName(id, comp, nameType) {
   return ret;
 }
 
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
 export function newID() {
-  var eID = Date.now();
-  return eID+"";
+  var timestamp = Date.now();
+  return timestamp+""+getRandomInt(100);
 }
 
 export function getEmptyEvent() {
   var newId = 9999;
   // Id sätts när man sparar ner det, 9999 får indikera att det är ett nytt id.
-  return {id: newId, day: "", arena: "", starttime: "540", duration: "60", preptime: "20", class: "", gren: "", grentype: ""}
+  return {id: newId, day: "", arena: "", starttime: "540", duration: "10", preptime: "20", class: "", gren: "", grentype: ""}
 }
 
 /**
@@ -265,6 +269,16 @@ export function presentTime(timeunits) {
     if (mm < 10) {mm = "0"+mm;}
 
     return (hh+":"+mm);
+}
+
+// ska man göra så här eller ska man sätta durationvärdet när man uppdaterar durationData?
+export function getDuration(event) {
+  if (event.durationData !== null) {
+    return event.duration;
+  } else {
+    let {noStarts, lengthRound} = event.durationData;
+    return (noStarts*lengthRound);
+  }
 }
 
 export function getBoxSize(start, end) {
@@ -435,4 +449,45 @@ export function overlapCheckSchema2(events, arena, day) {
   console.log("overlapCheckSchema : "+out+" "+JSON.stringify(abnormalEvents));
   console.log("overlapCheckSchema : "+out+" "+JSON.stringify(overlapEvents));
   return overlapEvents;
+}
+
+
+/*
+  Export to CVS
+*/
+
+const CVS_ROWSTART = "";
+const CVS_POSTSEP = "; ";
+const CVS_ROWEND = "\n";
+const CVS_START = "";
+const CVS_END = "";
+
+function genEventCvsRow(event) {
+  let klass = event.class;
+  let { gren, grentype, day, arena, preptime, starttime, duration } = event;
+  let cvsRow = CVS_ROWSTART+klass+CVS_POSTSEP+gren+CVS_POSTSEP+day+CVS_POSTSEP+arena+CVS_ROWEND;
+
+  return cvsRow;
+}
+
+export function genCvsOutput(competition, attributes, size) {
+  let { events, days, arenas, classes, grenar } = competition;
+
+  let cvsRows = [];
+  if(events) {
+    if (size > 0) {
+      for(var i=0; i<size && i < events.length; i++) {
+        cvsRows[i] = genEventCvsRow(events[i]);
+      }
+    } else {
+     cvsRows = events.map(x => {
+          return genEventCvsRow(x);
+        }
+      )
+    }
+  }
+
+  let txt = "";
+  cvsRows.forEach((row) => txt=txt+row);
+  return CVS_START+txt+CVS_END;
 }

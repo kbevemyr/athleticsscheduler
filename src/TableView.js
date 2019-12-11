@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import { Switch, Route, Link, withRouter } from "react-router-dom";
 import { connect } from 'react-redux';
 
-import { Text, Box, Layer, Button } from 'grommet';
+import { Text, Heading, Box, Layer, Button } from 'grommet';
 //import {ChipSet, Chip} from '@material/react-chips';
 import { Add } from 'grommet-icons';
 
@@ -44,7 +44,9 @@ class TableView extends Component {
         </Link>
 
         <Box direction='column' pad='medium' background="light-1">
-          <Text weight="bold" >{this.state.name}</Text>
+          <Heading level="3">{this.props.name}
+            <Text weight="normal" size="medium" textAlign="end" alignSelf="stretch"> version ({this.props.version})</Text>
+          </Heading>
           <EventTable key="eventstable" onEditRow={this.handleOpenSidePanel} />
         </Box>
 
@@ -91,6 +93,8 @@ class TableView extends Component {
 
   const mapStateToProps = state => ({
     comp: state.competition,
+    name: state.competition.name,
+    version: state.competition.version,
     id: state.activeID,
   });
 
