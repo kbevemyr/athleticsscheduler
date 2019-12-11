@@ -4,8 +4,8 @@ import { connect } from 'react-redux';
 
 import './App.css';
 
-import { templateKeys, getTemplateData } from './store/templates';
-import { localKeys, getLocalData } from './store/MOCKdata';
+import { templateKeys } from './store/templates';
+import { localKeys } from './store/MOCKdata';
 import { getKeys, getCompetitionData } from './store/actions';
 
 import { Box, Heading, Menu } from 'grommet';

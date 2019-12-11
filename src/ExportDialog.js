@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 
 import { genCvsOutput } from './misc';
 
-import { Box, Text, Heading, Button, RadioButtonGroup, Paragraph } from 'grommet';
+import { Box, Heading, Button, RadioButtonGroup } from 'grommet';
 
 const EXPORTFORMATS = ['cvs', 'json'];
 

@@ -55,7 +55,18 @@ const templateYouth = {
   "events": [],
 };
 
-const templateData = [templateYouth];
+const templateAll = {
+  "key": "templateAll",
+  "name": "Template All Classes Competition",
+  "version": "template0",
+  "days": [],
+  "arenas": [],
+  "classes": youthClasses.concat(juniorClasses).concat(seniorClasses).map(x => genNameObj(x)),
+  "grenar": runGrenar.concat(hoppGrenar).concat(kastGrenar).map(x => genNameObj(x)),
+  "events": [],
+};
+
+const templateData = [templateYouth, templateAll];
 
 export const templateKeys = templateData.map(x => x.name);
 export function getTemplateData (key) {

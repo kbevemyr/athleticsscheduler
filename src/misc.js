@@ -464,14 +464,16 @@ const CVS_END = "";
 
 function genEventCvsRow(event) {
   let klass = event.class;
-  let { gren, grentype, day, arena, preptime, starttime, duration } = event;
-  let cvsRow = CVS_ROWSTART+klass+CVS_POSTSEP+gren+CVS_POSTSEP+day+CVS_POSTSEP+arena+CVS_ROWEND;
+  //let { gren, grentype, day, arena, preptime, starttime, duration } = event;
+  let { gren, day, arena, starttime } = event;
+  let cvsRow = CVS_ROWSTART+klass+CVS_POSTSEP+gren+CVS_POSTSEP+day+CVS_POSTSEP+arena+CVS_POSTSEP+starttime+CVS_ROWEND;
 
   return cvsRow;
 }
 
 export function genCvsOutput(competition, attributes, size) {
-  let { events, days, arenas, classes, grenar } = competition;
+  //let { events, days, arenas, classes, grenar } = competition;
+  let { events } = competition;
 
   let cvsRows = [];
   if(events) {

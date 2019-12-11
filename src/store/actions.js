@@ -196,6 +196,8 @@ export function getCompetitionData (datastore, key) {
           }
         )
       }
+    default:
+      return;
     }
 }
 
